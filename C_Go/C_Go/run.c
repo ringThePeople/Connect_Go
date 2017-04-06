@@ -6,4 +6,6 @@ void main() {
 
 	printf("I love JH");
 	printf("Me too");
+
+	printf("please check line!!!\n");
 }

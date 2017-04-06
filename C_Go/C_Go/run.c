@@ -34,4 +34,4 @@ void push(int board[][7],int turn)
 		}
 	}
 	
-}
+}//4.06 21:46 JH

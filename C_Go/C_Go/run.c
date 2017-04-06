@@ -9,6 +9,4 @@ void main() {
 	
 
 	printf("jjm");
-	printf("hi");
-
 }

@@ -1,11 +1,10 @@
 #include <stdio.h>
-#include <stdbool.h>
 
 bool sub_check(int arr[][7], int x, int y)	//check LeftUp, Up, RightUp, Right
 {
 	int stone = arr[x][y];
 	int i, j;
-	if (x>2 && y<4)
+	if(x>2 && y<4)
 		for (i = 1; i < 4; i++)
 		{
 			if (arr[x - i][y + i] != stone)
@@ -58,8 +57,6 @@ int winCheck(int arr[][7])	// 0:: not yet finished ,  (1 or 2) winner , 3 draw
 }//	04/06 21:41		by Jongmin
 void main() {
 	int board[6][7] = { 0 }; //empty state :: 0 , player 1 :: 1 ,  player 2 :: 2
-							 //initialized by JM
-
 
 	int turn = 0;
 	
@@ -73,51 +70,5 @@ void main() {
 
 	getchar();
 
-	int height;
-
 	
 }
-void print_board(int board[][7])
-{
-	int i, j;	//.○●
-
-
-	for (i = 5; i >= 0; i--) {
-		for (j = 6; j >= 0; j--) {
-			if (board[i][j] == 0)
-				printf("%2s", " .");
-			else if (board[i][j] == 1)
-				printf("%2s", "●");
-			else
-				printf("%2s", "○");
-		}
-		printf("\n");
-	}
-	printf("ㅣ0ㅣ1ㅣ2ㅣ3ㅣ4ㅣ5ㅣ6ㅣ");
-
-} // 04/06 21:23 jeongin 
-
-void push(int board[][7],int turn)
-{
-	int num,player;//num : insert place, turning : who will push
-	int height;//table height
-	player = turn % 2;//player 1 turn : 1, player 2 turn : 0
-	printf("|0|1|2|3|4|5|6|\n\n");
-	printf("위치의 번호를 입력하시오 : ");
-	scanf_s("%d", &num); //Push Point Insert
-	if (turn = 1)
-	{
-		if (board[height + 1][num]==0)
-		{
-			board[height + 1][num] = 1;
-		}
-	}
-	else if (turn = 0)
-	{
-		if (board[height + 1][num] ==0)
-		{
-			board[height + 1][num] = 2;
-		}
-	}
-	
-}//4.06 21:46 JH

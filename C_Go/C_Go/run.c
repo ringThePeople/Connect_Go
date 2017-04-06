@@ -15,7 +15,7 @@ void print_board(int board[][7]) {
 		printf("\n");
 	}
 
-}
+} // 04/06 21:23 jeongin 
 
 void main() {
 	int board[6][7] = { 0 }; //empty state :: 0 , player 1 :: 1 ,  player 2 :: 2

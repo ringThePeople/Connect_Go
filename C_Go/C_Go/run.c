@@ -1,15 +1,10 @@
 #include <stdio.h>
 
+
 void main() {
+	int board[6][7] = { 0 }; //empty state :: 0 , player 1 :: 1 ,  player 2 :: 2
 
-	printf("We are winner!\n");
-
-	printf("I love JH\n");
-	printf("Me too\n");
+	int turn = 0;
 
 	
-
-	printf("jjm");
-	printf("hi");
-
 }

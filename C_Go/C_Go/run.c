@@ -1,23 +1,7 @@
 #include <stdio.h>
 
-void print_board(int board[][7]) {
-	int i,j;	//.∞≒
-void push(int board[][7],int);
-
-	for (i = 5; i >= 0; i--) {
-		for (j = 6; j >= 0; j--) {
-			if (board[i][j] == 0)
-				printf("%2s", " .");
-			else if (board[i][j] == 1)
-				printf("%2s", "≒");
-			else
-				printf("%2s", "∞");
-		}
-		printf("\n");
-	}
-	printf("太0太1太2太3太4太5太6太");
-
-} // 04/06 21:23 jeongin 
+void push(int board[][7], int);
+void print_board(int board[][7]);
 
 void main() {
 	int board[6][7] = { 0 }; //empty state :: 0 , player 1 :: 1 ,  player 2 :: 2
@@ -38,6 +22,25 @@ void main() {
 
 	
 }
+void print_board(int board[][7])
+{
+	int i, j;	//.∞≒
+
+
+	for (i = 5; i >= 0; i--) {
+		for (j = 6; j >= 0; j--) {
+			if (board[i][j] == 0)
+				printf("%2s", " .");
+			else if (board[i][j] == 1)
+				printf("%2s", "≒");
+			else
+				printf("%2s", "∞");
+		}
+		printf("\n");
+	}
+	printf("太0太1太2太3太4太5太6太");
+
+} // 04/06 21:23 jeongin 
 
 void push(int board[][7],int turn)
 {
@@ -49,16 +52,16 @@ void push(int board[][7],int turn)
 	scanf_s("%d", &num); //Push Point Insert
 	if (turn = 1)
 	{
-		if (board[num][height+1]==0)
+		if (board[height + 1][num]==0)
 		{
-			board[num][height + 1] = 1;
+			board[height + 1][num] = 1;
 		}
 	}
 	else if (turn = 0)
 	{
-		if (board[num][height + 1]==0)
+		if (board[height + 1][num] ==0)
 		{
-			board[num][height + 1] = 2;
+			board[height + 1][num] = 2;
 		}
 	}
 	

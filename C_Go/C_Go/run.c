@@ -6,4 +6,6 @@ void main() {
 
 	printf("jeongin\n");
 
+	printf("hi");
+
 }

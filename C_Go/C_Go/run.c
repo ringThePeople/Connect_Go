@@ -5,7 +5,7 @@ bool sub_check(int arr[][7], int x, int y)	//check LeftUp, Up, RightUp, Right
 {
 	int stone = arr[x][y];
 	int i, j;
-	if(x>2 && y<4)
+	if (x>2 && y<4)
 		for (i = 1; i < 4; i++)
 		{
 			if (arr[x - i][y + i] != stone)
@@ -58,10 +58,10 @@ int winCheck(int arr[][7])	// 0:: not yet finished ,  (1 or 2) winner , 3 draw
 }//	04/06 21:41		by Jongmin
 void main() {
 	int board[6][7] = { 0 }; //empty state :: 0 , player 1 :: 1 ,  player 2 :: 2
-	//initialized by JM
+							 //initialized by JM
 
-	
+
 	int turn = 0;
 
-	
+
 }

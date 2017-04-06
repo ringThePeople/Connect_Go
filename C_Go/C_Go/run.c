@@ -98,7 +98,7 @@ bool sub_check(int arr[][7], int x, int y)	//check LeftUp, Up, RightUp, Right
 	if (x>2 && y>2)
 		for (i = 1; i < 4; i++)
 		{
-			if (arr[x - i][y - i] != stone)
+			if (arr[y - i][x - i] != stone)
 				break;
 			if (i == 3)
 				return true;
@@ -106,7 +106,7 @@ bool sub_check(int arr[][7], int x, int y)	//check LeftUp, Up, RightUp, Right
 	if (y>2)
 		for (i = 1; i < 4; i++)
 		{
-			if (arr[x][y - i] != stone)
+			if (arr[y - i][x] != stone)
 				break;
 			if (i == 3)
 				return true;
@@ -114,7 +114,7 @@ bool sub_check(int arr[][7], int x, int y)	//check LeftUp, Up, RightUp, Right
 	if (x<4 && y>2)
 		for (i = 1; i < 4; i++)
 		{
-			if (arr[x + i][y - i] != stone)
+			if (arr[y - i][x + i] != stone)
 				break;
 			if (i == 3)
 				return true;
@@ -122,7 +122,7 @@ bool sub_check(int arr[][7], int x, int y)	//check LeftUp, Up, RightUp, Right
 	if (x<4)
 		for (i = 1; i < 4; i++)
 		{
-			if (arr[x + i][y] != stone)
+			if (arr[y][x + i] != stone)
 				break;
 			if (i == 3)
 				return true;

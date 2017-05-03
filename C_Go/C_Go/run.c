@@ -9,6 +9,8 @@ int winCheck(int arr[][7]);
 int column_check(int arr[][7], int x, int y);
 void winnerPrint(int first, int winCheck);
 void Do_by_condition(int arr[][7]);
+int row_check(int arr[][7], int x, int y);
+
 
 //main function
 void main() {
@@ -203,9 +205,10 @@ void winnerPrint(int first, int winCheck)
 
 
 //connect Go :: in board :: '1'
-void Do_by_condition(int arr[][7])
+void Do_by_condition(int arr[][7])	//condition module by Jongmin
 {
 	int yindex[7] = { -1 };
+	int score[7] = { -1 };
 
 	int i, j;
 	for (i = 0; i < 7; i++) //i :: x index
@@ -219,12 +222,51 @@ void Do_by_condition(int arr[][7])
 			}
 		}
 	} // if yindex :: -1 -> that line don't have empty position
+	//find which position can be done
+
+	for (i = 0; i < 7; i++)
+	{
+		if (yindex[i] == -1)
+			continue;
+		else
+		{
+			
+
+
+
+		}
+	}
+
 
 
 }
 
-//
-//int row_check(int arr[][7], int x, int y)
-//{
-//
-//}
+
+int row_check(int arr[][7], int x, int y)	//check whether this position make win or not by 'row - 4' 
+{
+	int cnt = 0;
+	int i, j;
+	for (i = x+1; i < 7; i++)
+	{
+		if (arr[y][i] == 1)
+		{
+			cnt++;
+		}
+		else
+			break;
+	}
+	for (i = x - 1; i >= 0; i--)
+	{
+		if (arr[y][i] == 1)
+		{
+			cnt++;
+		}
+		else
+			break;
+	}
+
+	if (cnt == 3)
+		return 2000;
+	else
+		return 0;
+}

@@ -10,7 +10,7 @@ int column_check(int arr[][7], int x, int y);
 void winnerPrint(int first, int winCheck);
 void Do_by_condition(int arr[][7]);
 int row_check(int arr[][7], int x, int y);
-int fiveStone(int arr[][7], int x, int y);
+int fiveStone(int arr[][7], int x, int y, int who);
 
 
 //main function

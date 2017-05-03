@@ -6,6 +6,7 @@ void print_board(int board[][7]);
 void push(int board[][7], int turn);
 bool sub_check(int arr[][7], int x, int y);
 int winCheck(int arr[][7]);
+int column_check(int arr[][7], int x, int y);
 void winnerPrint(int first, int winCheck);
 void Do_by_condition(int arr[][7]);
 
@@ -156,6 +157,36 @@ int winCheck(int arr[][7])	// 0:: not yet finished ,  (1 or 2) winner , 3 draw
 }//	04/06 21:41		by Jongmin
 
 
+//세로로 이기는 경우 or 지는 경우 체크
+int column_check(int arr[][7], int x, int y) {
+
+	int i;
+	int count = 0;
+
+	for (i = y; i >= 0; i--) {
+		if (arr[i][x] == 1)
+			count++;
+		else if (arr[i][x] == 2)
+			return 0;
+
+		if (count == 3)
+			return 2000;
+	}
+
+	count = 0;
+
+	for (i = y; i >= 0; i--) {
+		if (arr[i][x] == 2)
+			count++;
+		else if (arr[i][x] == 1)
+			return 0;
+
+		if (count == 3)
+			return 1000;
+	}
+
+	return 0;
+} // 세로로 이기는 경우 or 지는 경우 by JeongIn.
 
 void winnerPrint(int first, int winCheck)
 {

@@ -7,6 +7,7 @@ void push(int board[][7], int turn);
 bool sub_check(int arr[][7], int x, int y);
 int winCheck(int arr[][7]);
 void winnerPrint(int first, int winCheck);
+void Do_by_condition(int arr[][7]);
 
 //main function
 void main() {
@@ -18,7 +19,7 @@ void main() {
 
 	// --> 04/06 21:37 jeongin
 	int first;
-	printf("Who start first?");
+	printf("Who start first?\n(Connect-Go : 1 , You : 2)");
 	scanf_s("%d", &first);
 	// <-- 04/06 21:37 jeongin
 
@@ -162,6 +163,37 @@ void winnerPrint(int first, int winCheck)
 	
 	if (winCheck == 3)
 		printf("!!  Draw !!\n\n");
+	else if (winCheck == 1)
+		printf("Connect-Go win\n\n");
 	else
-		printf("Winner is %d\n\n", first);
+		printf("Connect-GO resign\n\n");
 }// 04/06 23:14		by Jongmin
+
+
+
+//connect Go :: in board :: '1'
+void Do_by_condition(int arr[][7])
+{
+	int yindex[7] = { -1 };
+
+	int i, j;
+	for (i = 0; i < 7; i++) //i :: x index
+	{
+		for (j = 0; j < 6; j++)
+		{
+			if (arr[j][i] == 0)
+			{
+				yindex[i] = j;
+				break;
+			}
+		}
+	} // if yindex :: -1 -> that line don't have empty position
+
+
+}
+
+//
+//int row_check(int arr[][7], int x, int y)
+//{
+//
+//}

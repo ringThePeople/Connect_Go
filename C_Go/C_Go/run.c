@@ -242,7 +242,7 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 }
 
 
-int row_check(int arr[][7], int x, int y)	//check whether this position make win or not by 'row - 4' 
+int row_check(int arr[][7], int x, int y)	//check whether this position make win or not by 'row - 4'  //Jongmin
 {
 	int cnt = 0;
 	int i, j;
@@ -267,6 +267,131 @@ int row_check(int arr[][7], int x, int y)	//check whether this position make win
 
 	if (cnt == 3)
 		return 2000;
+	
+	cnt = 0;
+
+	for (i = x + 1; i < 7; i++)
+	{
+		if (arr[y][i] == 1)
+		{
+			cnt++;
+		}
+		else
+			break;
+	}
+	for (i = x - 1; i >= 0; i--)
+	{
+		if (arr[y][i] == 1)
+		{
+			cnt++;
+		}
+		else
+			break;
+	}
+
+	if (cnt == 3)
+		return 1000;
+	else
+		return 0;
+}
+
+
+int diagonal_check(int arr[][7], int x, int y)		//check whether this position make win or not by 'diagonal - 4'			//Jongmin 
+{
+	int i;
+	int cnt = 0;
+	for (i = 1; i < 4; i++)				//first, check like '/'
+	{
+		if (y + i > 5 || x + i > 6)
+			break;
+		if (arr[y + i][x + i] == 1)
+			cnt++;
+		else
+			break;
+	}
+	for (i = 1; i < 4; i++)				//first, check like '/'
+	{
+		if (y - i < 0 || x - i < 0)
+			break;
+		if (arr[y - i][x - i] == 1)
+			cnt++;
+		else
+			break;
+	}
+
+	if (cnt == 3)
+		return 2000;
+
+	cnt = 0;
+	for (i = 1; i < 4; i++)				//second, check like '| :: reverse /'
+	{
+		if (y - i < 0 || x + i > 6)
+			break;
+		if (arr[y - i][x + i] == 1)
+			cnt++;
+		else
+			break;
+	}
+	for (i = 1; i < 4; i++)				//second, check like '| :: reverse /'
+	{
+		if (y + i > 5 || x - i < 0)
+			break;
+		if (arr[y + i][x - i] == 1)
+			cnt++;
+		else
+			break;
+	}
+
+	if (cnt == 3)
+		return 2000;
+
+
+
+	//opositie check
+	cnt = 0;
+	for (i = 1; i < 4; i++)				//first, check like '/'
+	{
+		if (y + i > 5 || x + i > 6)
+			break;
+		if (arr[y + i][x + i] == 2)
+			cnt++;
+		else
+			break;
+	}
+	for (i = 1; i < 4; i++)				//first, check like '/'
+	{
+		if (y - i < 0 || x - i < 0)
+			break;
+		if (arr[y - i][x - i] == 2)
+			cnt++;
+		else
+			break;
+	}
+	if (cnt == 3)
+		return 1000;
+
+	cnt = 0;
+	for (i = 1; i < 4; i++)				//second, check like '| :: reverse /'
+	{
+		if (y - i < 0 || x + i > 6)
+			break;
+		if (arr[y - i][x + i] == 2)
+			cnt++;
+		else
+			break;
+	}
+	for (i = 1; i < 4; i++)				//second, check like '| :: reverse /'
+	{
+		if (y + i > 5 || x - i < 0)
+			break;
+		if (arr[y + i][x - i] == 2)
+			cnt++;
+		else
+			break;
+	}
+
+	if (cnt == 3)
+		return 1000;
 	else
 		return 0;
 }

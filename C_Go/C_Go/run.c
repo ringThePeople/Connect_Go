@@ -10,6 +10,7 @@ int column_check(int arr[][7], int x, int y);
 void winnerPrint(int first, int winCheck);
 void Do_by_condition(int arr[][7]);
 int row_check(int arr[][7], int x, int y);
+int fiveStone(int arr[][7], int x, int y);
 
 
 //main function
@@ -159,7 +160,7 @@ int winCheck(int arr[][7])	// 0:: not yet finished ,  (1 or 2) winner , 3 draw
 }//	04/06 21:41		by Jongmin
 
 
-//세로로 이기는 경우 or 지는 경우 체크
+// --> 2017/05/03 15:19 세로로 이기는 경우 or 지는 경우 체크
 int column_check(int arr[][7], int x, int y) {
 
 	int i;
@@ -188,7 +189,7 @@ int column_check(int arr[][7], int x, int y) {
 	}
 
 	return 0;
-} // 세로로 이기는 경우 or 지는 경우 by JeongIn.
+} // <-- 2017/05/03 15:19 세로로 이기는 경우 or 지는 경우 by JeongIn. 
 
 void winnerPrint(int first, int winCheck)
 {
@@ -395,3 +396,70 @@ int diagonal_check(int arr[][7], int x, int y)		//check whether this position ma
 	else
 		return 0;
 }
+
+// - > 2017/05/03 16:30 by JeongIn 
+// check 5 stone
+int fiveStone(int arr[][7], int x, int y, int who) {
+
+	bool check = false;
+
+	if (x > 0 && x < 6) {
+
+		if (x < 4) { // 1,2,3
+			if (arr[y][x - 1] == who && arr[y][x + 1] == who && arr[y][x + 2] == who && arr[y][x + 3] == who)
+				check = true;
+
+			if (y == 1 || y == 2) { //positive diagonal
+				if (arr[y - 1][x - 1] == who && arr[y + 1][x + 1] == who && arr[y + 2][x + 2] == who && arr[y + 3][x + 3] == who)
+					check = true;
+			}
+
+			if (y == 3 || y == 4) { //negative diagonal
+				if (arr[y + 1][x - 1] == who && arr[y - 1][x + 1] == who && arr[y - 2][x + 2] == who && arr[y - 3][x + 3] == who)
+					check = true;
+			}
+		}
+
+		if (x > 1 && x < 5) { // 2,3,4
+			if (arr[y][x - 2] == who && arr[y][x - 1] == who && arr[y][x + 1] == who && arr[y][x + 2] == who)
+				check = true;
+
+			if (y == 2 || y == 3 || y == 4) { 
+				//positive diagonal
+				if (arr[y - 2][x - 2] == who && arr[y - 1][x - 1] == who && arr[y + 1][x + 1] == who && arr[y + 2][x + 2] == who)
+					check = true;
+			
+				//negative diagonal
+				if (arr[y + 2][x - 2] == who && arr[y + 1][x - 1] == who && arr[y - 1][x + 1] == who && arr[y - 2][x + 2] == who)
+					check = true;
+			}
+
+		}
+
+		if (x > 2) { // 3,4,5
+			if (arr[y][x - 3] == who && arr[y][x - 2] == who && arr[y][x - 1] == who && arr[y][x + 1] == who)
+				check = true;
+
+			if (y == 3 || y == 4) { //positive diagonal
+				if (arr[y - 3][x - 3] == who && arr[y - 2][x - 2] == who && arr[y - 1][x - 1] == who && arr[y + 1][x + 2] == who)
+					check = true;
+			}
+
+			if (y == 1 || y == 2) { //negative diagonal
+				if (arr[y + 3][x - 3] == who && arr[y + 2][x - 2] == who && arr[y + 1][x - 1] == who && arr[y - 1][x + 2] == who)
+					check = true;
+			}
+		}
+
+	}
+
+	if (check == true) {
+		if (who == 1)
+			return -2000;
+
+		if (who == 2)
+			return -2000;
+	}
+
+}
+// < - 2017/05/03 16:30 by JeongIn

@@ -4,7 +4,8 @@
 //initialize functions
 void print_board(int board[][7]);
 void push(int board[][7], int turn);
-bool sub_check(int arr[][7], int x, int y);
+//bool sub_check(int arr[][7], int x, int y);
+bool sub_check(int arr[][7], int y);
 int winCheck(int arr[][7]);
 int column_check(int arr[][7], int x, int y);
 void winnerPrint(int first, int winCheck);
@@ -94,69 +95,197 @@ void push(int board[][7], int turn)
 }//4.06 21:46 JH
 
 
+//some problem ..when it is connected five.. so develope more..
+//bool sub_check(int arr[][7], int x, int y)	//check LeftUp, Up, RightUp, Right
+//{
+//	int stone = arr[y][x];
+//	int i, j;
+//	if (x>2 && y>2)
+//		for (i = 1; i < 4; i++)
+//		{
+//			if (arr[y - i][x - i] != stone)
+//				break;
+//			if (i == 3)
+//				return true;
+//		}
+//	if (y>2)
+//		for (i = 1; i < 4; i++)
+//		{
+//			if (arr[y - i][x] != stone)
+//				break;
+//			if (i == 3)
+//				return true;
+//		}
+//	if (x<4 && y>2)
+//		for (i = 1; i < 4; i++)
+//		{
+//			if (arr[y - i][x + i] != stone)
+//				break;
+//			if (i == 3)
+//				return true;
+//		}
+//	if (x<4)
+//		for (i = 1; i < 4; i++)
+//		{
+//			if (arr[y][x + i] != stone)
+//				break;
+//			if (i == 3)
+//				return true;
+//		}
+//
+//	return false;
+//}// 04/06 21:40		by Jongmin
+//
+//
+//int winCheck(int arr[][7])	// 0:: not yet finished ,  (1 or 2) winner , 3 draw
+//{
+//	int linked = 0;
+//	int i, j;
+//	for (i = 5; i >= 0; i--)
+//	{
+//		for (j = 0; j < 7; j++)
+//		{
+//			if (arr[i][j] == 0)
+//				continue;
+//			if (sub_check(arr, j, i)) // important thing is x::j, y :: i
+//				return arr[i][j];
+//		}
+//	}
+//
+//	for (i = 0; i < 6; i++)
+//		for (j = 0; j < 7; j++)
+//			if (arr[i][j] == 0)
+//				return 0;
+//	return 3;
+//}//	04/06 21:41		by Jongmin
 
-bool sub_check(int arr[][7], int x, int y)	//check LeftUp, Up, RightUp, Right
+bool sub_check(int arr[][7], int y)		//redevelope subcheck by Jongmin
 {
-	int stone = arr[y][x];
-	int i, j;
-	if (x>2 && y>2)
-		for (i = 1; i < 4; i++)
-		{
-			if (arr[y - i][x - i] != stone)
-				break;
-			if (i == 3)
-				return true;
-		}
-	if (y>2)
-		for (i = 1; i < 4; i++)
-		{
-			if (arr[y - i][x] != stone)
-				break;
-			if (i == 3)
-				return true;
-		}
-	if (x<4 && y>2)
-		for (i = 1; i < 4; i++)
-		{
-			if (arr[y - i][x + i] != stone)
-				break;
-			if (i == 3)
-				return true;
-		}
-	if (x<4)
-		for (i = 1; i < 4; i++)
-		{
-			if (arr[y][x + i] != stone)
-				break;
-			if (i == 3)
-				return true;
-		}
+	int i;
+	int cnt = 0;
+	int stone = arr[y][3];
 
-	return false;
-}// 04/06 21:40		by Jongmin
+	for (i = 1; i < 4; i++)		//win, row case
+	{
+		if (arr[y][3 + i] != stone)
+			break;
+		cnt++;
+	}
+	for (i = 1; i < 4; i++)
+	{
+		if (arr[y][3 - i] != stone)
+			break;
+		cnt++;
+	}
+	if (cnt == 3)
+		return true;
+	cnt = 0;
+	
+	for (i = 1; i < 4; i++)		//win , '/' diagonal
+	{
+		if (y + i > 5)
+			break;
+
+		if (arr[y + i][3 + i] != stone)
+			break;
+		cnt++;
+	}
+	for (i = 1; i < 4; i++)
+	{
+		if (y - i < 0)
+			break;
+
+		if (arr[y - i][3 - i] != stone)
+			break;
+		cnt++;
+	}
+	if (cnt == 3)
+		return true;
+	cnt = 0;
+
+	for (i = 1; i < 4; i++)			//win , 'reverse / ' diagonal
+	{
+		if (y + i > 5)
+			break;
+
+		if (arr[y + i][3 - i] != stone)
+			break;
+		cnt++;
+	}
+	for (i = 1; i < 4; i++)
+	{
+		if (y - i < 0)
+			break;
+
+		if (arr[y - i][3 + i] != stone)
+			break;
+		cnt++;
+	}
+	if (cnt == 3)
+		return true;
+
+	else
+		return false;
+}
 
 
 int winCheck(int arr[][7])	// 0:: not yet finished ,  (1 or 2) winner , 3 draw
 {
-	int linked = 0;
-	int i, j;
-	for (i = 5; i >= 0; i--)
+	int i,j;
+	int stone = 0;
+	int check = 0;
+	for (i = 0; i < 7; i++)
 	{
-		for (j = 0; j < 7; j++)
-		{
-			if (arr[i][j] == 0)
-				continue;
-			if (sub_check(arr, j, i)) // important thing is x::j, y :: i
-				return arr[i][j];
-		}
+		check = 0;
+		stone = arr[0][i];
+		if (stone == 0)
+			continue;
+
+		for (j = 1; j < 4; j++)
+			if (arr[j][i] != stone)
+				check = -1;
+		if (check == 0 && arr[4][i] != stone)
+			return stone;
+
+		check = 0;
+		stone = arr[1][i];
+		if (stone == 0)
+			continue;
+
+		for (j = 2; j < 5; j++)
+			if (arr[j][i] != stone)
+				check = -1;
+		if (check == 0 && arr[5][i] != stone && arr[0][i] != stone)
+			return stone;
+
+		check = 0;
+		stone = arr[2][i];
+		if (stone == 0)
+			continue;
+
+		for (j = 3; j < 6; j++)
+			if (arr[j][i] != stone)
+				check = -1;
+		if (check == 0 && arr[1][i] != stone)
+			return stone;
+	}
+
+	for (i = 0; i < 6; i++)
+	{
+		if (sub_check(arr, i))
+			return arr[i][3];
 	}
 
 	for (i = 0; i < 6; i++)
 		for (j = 0; j < 7; j++)
 			if (arr[i][j] == 0)
 				return 0;
+	
 	return 3;
-}//	04/06 21:41		by Jongmin
+
+
+
+}//	05/03 21:41		by Jongmin
 
 
 //세로로 이기는 경우 or 지는 경우 체크

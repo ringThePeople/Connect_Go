@@ -7,12 +7,12 @@ void push(int board[][7], int turn);
 //bool sub_check(int arr[][7], int x, int y);
 bool sub_check(int arr[][7], int y);
 int winCheck(int arr[][7]);
-int column_check(int arr[][7], int x, int y, int who); // 세로로 연속된 3개가 있는지 체크
 void winnerPrint(int first, int winCheck);
 void Do_by_condition(int arr[][7]);
-int row_check(int arr[][7], int x, int y, int who);	//it can be 4 through row
 int fiveStone(int arr[][7], int x, int y, int who);
-int diagonal_check(int arr[][7], int x, int y, int who);		//check whether this position make win or not by 'diagonal - 4'			//Jongmin 
+int row_check_make_four(int arr[][7], int x, int y, int who);	//it can be 4 through row
+int diagonal_check_make_four(int arr[][7], int x, int y, int who);		//check whether this position make win or not by 'diagonal - 4'			//Jongmin 
+int column_check_make_four(int arr[][7], int x, int y, int who); // 세로로 연속된 3개가 있는지 체크
 
 
 //main function
@@ -291,7 +291,7 @@ int winCheck(int arr[][7])	// 0:: not yet finished ,  (1 or 2) winner , 3 draw
 
 
 // --> 2017/05/03 15:19 세로로 연속된 3개가 있는지 체크
-int column_check(int arr[][7], int x, int y, int who) {
+int column_check_make_four(int arr[][7], int x, int y, int who) {
 
 	int i;
 	int count = 0;
@@ -375,7 +375,7 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 }
 
 
-int row_check(int arr[][7], int x, int y, int who)	//check whether this position make win or not by 'row - 4'  //Jongmin
+int row_check_make_four(int arr[][7], int x, int y, int who)	//check whether this position make win or not by 'row - 4'  //Jongmin
 {
 	int cnt = 0;
 	int i, j;
@@ -429,7 +429,7 @@ int row_check(int arr[][7], int x, int y, int who)	//check whether this position
 }
 
 
-int diagonal_check(int arr[][7], int x, int y, int who)		//check whether this position make win or not by 'diagonal - 4'			//Jongmin 
+int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check whether this position make win or not by 'diagonal - 4'			//Jongmin 
 {
 	int i;
 	int cnt = 0;
@@ -547,3 +547,4 @@ int fiveStone(int arr[][7], int x, int y, int who) {
 
 }
 // < - 2017/05/03 16:30 by JeongIn
+

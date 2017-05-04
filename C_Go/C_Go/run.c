@@ -7,7 +7,7 @@ void push(int board[][7], int turn);
 //bool sub_check(int arr[][7], int x, int y);
 bool sub_check(int arr[][7], int y);
 int winCheck(int arr[][7]);
-int column_check(int arr[][7], int x, int y);
+int column_check(int arr[][7], int x, int y, int who); // 세로로 연속된 3개가 있는지 체크
 void winnerPrint(int first, int winCheck);
 void Do_by_condition(int arr[][7]);
 int row_check(int arr[][7], int x, int y, int who);	//it can be 4 through row
@@ -290,22 +290,23 @@ int winCheck(int arr[][7])	// 0:: not yet finished ,  (1 or 2) winner , 3 draw
 }//	05/03 21:41		by Jongmin
 
 
-// --> 2017/05/03 15:19 세로로 이기는 경우 or 지는 경우 체크
-int column_check(int arr[][7], int x, int y) {
+// --> 2017/05/03 15:19 세로로 연속된 3개가 있는지 체크
+int column_check(int arr[][7], int x, int y, int who) {
 
 	int i;
 	int count = 0;
 
 	for (i = y; i >= 0; i--) {
-		if (arr[i][x] == 1)
+		if (arr[i][x] == who)
 			count++;
-		else if (arr[i][x] == 2)
+		else if (arr[i][x] != who)
 			return 0;
 
 		if (count == 3)
 			return 2000;
 	}
 
+	/*
 	count = 0;
 
 	for (i = y; i >= 0; i--) {
@@ -317,9 +318,10 @@ int column_check(int arr[][7], int x, int y) {
 		if (count == 3)
 			return 1000;
 	}
+	*/
 
 	return 0;
-} // <-- 2017/05/03 15:19 세로로 이기는 경우 or 지는 경우 by JeongIn. 
+} // <-- 2017/05/03 15:19 세로로 연속된 3개가 있는지 체크 by JeongIn. 
 
 void winnerPrint(int first, int winCheck)
 {
@@ -537,10 +539,10 @@ int fiveStone(int arr[][7], int x, int y, int who) {
 
 	if (check == true) {
 		if (who == 1)
-			return -2000;
+			return -1000;
 
 		if (who == 2)
-			return -2000;
+			return -1000;
 	}
 
 }

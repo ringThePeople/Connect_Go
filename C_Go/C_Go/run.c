@@ -1178,6 +1178,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 
 			return 300;
 		}
+
 		break;
 	case 3:
 		if (arr[y][2] == who)
@@ -1219,17 +1220,151 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 
 				return 100;
 			}
+			if (arr[y][0] == who && arr[y][4] != who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][1] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+			if (arr[y][5] == who && arr[y][1] != who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][4] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+
+			return 300;
 		}
 		else if (arr[y][4] == who)
 		{
+			if (arr[y][2] == enm)
+			{
+				if (arr[y][5] == enm || arr[y][6] == enm)
+					return 0;
+				if (arr[y][6] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][5] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+				return 100;
+			}
+			else if (arr[y][5] == enm)
+			{
+				if (arr[y][1] == enm || arr[y][2] == enm)
+					return 0;
+				if (arr[y][0] == who)
+					return 0;
 
+				if (arr[y][1] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][2] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+			}
+			if (arr[y][1] == who && arr[y][5] != who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][2] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+			if (arr[y][6] == who && arr[y][2] != who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][5] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+			if (arr[y][0] == who)
+				return 150;
+
+			return 300;
 		}
 		break;
 	case 4:
 		break;
 	case 5:
+		if (arr[y][4] == who)
+		{
+
+		}
+		else if (arr[y][6] == who)
+		{
+			if (arr[y][4] == enm || arr[y][3] == enm)
+				return 0;
+			if (arr[y][2] == who)
+				return 0;
+			if (arr[y][3] == who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][4] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+		}
 		break;
 	case 6:
+		if (arr[y][5] == who)
+		{
+			if (arr[y][3] == enm || arr[y][4] == enm)
+				return 0;
+			if (arr[y][2] == who)
+				return 0;
+			if (arr[y][3] == who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][4] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+			return 100;
+		}
 		break;
 	}
 

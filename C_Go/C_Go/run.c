@@ -327,7 +327,7 @@ int column_check_make_four(int arr[][7], int x, int y, int who) {
 			return 0;
 
 		if (count == 3)
-			return 50000;
+			return 500000;
 	}
 
 	/*
@@ -431,7 +431,7 @@ int row_check_make_four(int arr[][7], int x, int y, int who)	//check whether thi
 	}
 
 	if (cnt == 3)
-		return 50000;
+		return 500000;
 	
 	//cnt = 0;
 
@@ -485,7 +485,7 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 	}
 
 	if (cnt == 3)
-		return 50000;
+		return 500000;
 
 	cnt = 0;
 	for (i = 1; i < 4; i++)				//second, check like '| :: reverse /'
@@ -508,7 +508,7 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 	}
 
 	if (cnt == 3)
-		return 50000;
+		return 500000;
 	else
 		return 0;
 }
@@ -603,13 +603,13 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y - 1][x + 3] == 0)
-						return 400;
+						return 1000;
 					else
-						return 200;
+						return 500;
 				}
 				else	//y == 0 can be difensed
 				{
-					return 200;
+					return 500;
 				}
 			}
 		}
@@ -620,13 +620,13 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y - 1][x + 3] == 0)
-						return 400;
+						return 1000;
 					else
-						return 200;
+						return 500;
 				}
 				else	//y == 0 can be difensed
 				{
-					return 200;
+					return 500;
 				}
 			}
 		}
@@ -640,13 +640,13 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y - 1][3] == 0)
-						return 400;
+						return 1000;
 					else
-						return 200;
+						return 500;
 				}
 				else	//y == 0 can be difensed
 				{
-					return 200;
+					return 500;
 				}
 			}
 		}
@@ -657,13 +657,13 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y - 1][x + 2] == 0)
-						return 400;
+						return 1000;
 					else
-						return 200;
+						return 500;
 				}
 				else	//y == 0 can be difensed
 				{
-					return 200;
+					return 500;
 				}
 			}
 		}
@@ -677,13 +677,13 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y - 1][3] == 0)
-						return 400;
+						return 1000;
 					else
-						return 200;
+						return 500;
 				}
 				else	//y == 0 can be difensed
 				{
-					return 200;
+					return 500;
 				}
 			}
 		}
@@ -694,13 +694,13 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y - 1][x + 1] == 0)
-						return 400;
+						return 1000;
 					else
-						return 200;
+						return 500;
 				}
 				else	//y == 0 can be difensed
 				{
-					return 200;
+					return 500;
 				}
 			}
 		}
@@ -718,11 +718,11 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y - 1][3] == 0)
-						return 400;
-					else return 200;
+						return 1000;
+					else return 500;
 				}
 				else
-					return 200;
+					return 500;
 			}
 		}
 		else
@@ -732,12 +732,12 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y][x - 1] == 0)
-						return 400;
+						return 1000;
 					else
-						return 200;
+						return 500;
 				}
 				else
-					return 200;
+					return 500;
 			}
 		}
 	}
@@ -750,11 +750,11 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y - 1][3] == 0)
-						return 400;
-					else return 200;
+						return 1000;
+					else return 500;
 				}
 				else
-					return 200;
+					return 500;
 			}
 		}
 		else
@@ -764,12 +764,12 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y][x - 2] == 0)
-						return 400;
+						return 1000;
 					else
-						return 200;
+						return 500;
 				}
 				else
-					return 200;
+					return 500;
 			}
 		}
 	}
@@ -783,11 +783,11 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y - 1][3] == 0)
-						return 400;
-					else return 200;
+						return 1000;
+					else return 500;
 				}
 				else
-					return 200;
+					return 500;
 			}
 		}
 		else
@@ -797,18 +797,19 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 				if (y > 0)
 				{
 					if (arr[y][x - 3] == 0)
-						return 400;
+						return 1000;
 					else
-						return 200;
+						return 500;
 				}
 				else
-					return 200;
+					return 500;
 			}
 		}
 	}
 
 	return 0;
 }
+
 // - > 가로로 연속된 3개를 만들 수 있는지 체크 By JeongIn
 int row_check_make_three(int arr[][7], int x, int y, int who) { // 가로로 연속된 3개를 만들 수 있는지 체크
 
@@ -818,17 +819,17 @@ int row_check_make_three(int arr[][7], int x, int y, int who) { // 가로로 연속된
 			if (arr[y][x + 1] == who && arr[y][x + 2] == who && arr[y][x - 1] == 0 && arr[y][x + 3] == 0) {
 				if (y > 0) {
 					if (arr[y - 1][x - 1] != 0 && arr[y - 1][x + 3] != 0) {
-						return 1000;
+						return 10000;
 					}
 					else if (arr[y - 1][x - 1] == 0 && arr[y - 1][x + 3] == 0) {
-						return 150;
+						return 2000;
 					}
 					else {
-						return 15;
+						return 1000;
 					}
 				}
 				else {
-					return 1000;
+					return 10000;
 				}
 			}
 		}
@@ -837,17 +838,17 @@ int row_check_make_three(int arr[][7], int x, int y, int who) { // 가로로 연속된
 			if (arr[y][x - 1] == who && arr[y][x + 1] == who && arr[y][x - 2] == 0 && arr[y][x + 2] == 0) {
 				if (y > 0) {
 					if (arr[y - 1][x - 2] != 0 && arr[y - 1][x + 2] != 0) {
-						return 1000;
+						return 10000;
 					}
 					else if (arr[y - 1][x - 2] == 0 && arr[y - 1][x + 2] == 0) {
-						return 150;
+						return 2000;
 					}
 					else {
-						return 15;
+						return 1000;
 					}
 				}
 				else {
-					return 1000;
+					return 10000;
 				}
 			}
 		}
@@ -856,17 +857,17 @@ int row_check_make_three(int arr[][7], int x, int y, int who) { // 가로로 연속된
 			if (arr[y][x - 2] == who && arr[y][x - 1] == who && arr[y][x - 3] == 0 && arr[y][x + 1] == 0) {
 				if (y > 0) {
 					if (arr[y - 1][x - 3] != 0 && arr[y - 1][x + 1] != 0) {
-						return 1000;
+						return 10000;
 					}
 					else if (arr[y - 1][x - 3] == 0 && arr[y - 1][x + 1] == 0) {
-						return 150;
+						return 2000;
 					}
 					else {
-						return 15;
+						return 1000;
 					}
 				}
 				else {
-					return 1000;
+					return 10000;
 				}
 			}
 		}
@@ -885,17 +886,17 @@ int diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 			if (arr[y + 1][x + 1] == who && arr[y + 2][x + 2] == who && arr[y - 1][x - 1] == 0 && arr[y + 3][x + 3] == 0) {
 				if (y > 1) {
 					if (arr[y - 2][x - 1] != 0 && arr[y + 2][x + 3] != 0) {
-						return 1000;
+						return 10000;
 					}
 					else if (arr[y - 2][x - 1] == 0 && arr[y + 2][x + 3] == 0) {
-						return 150;
+						return 2000;
 					}
 					else {
-						return 15;
+						return 1000;
 					}
 				}
 				else {
-					return 1000;
+					return 10000;
 				}
 			}
 		}
@@ -904,17 +905,17 @@ int diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 			if (arr[y - 1][x - 1] == who && arr[y + 1][x + 1] == who && arr[y - 2][x - 2] == 0 && arr[y + 2][x + 2] == 0) {
 				if (y > 2) {
 					if (arr[y - 3][x - 2] != 0 && arr[y + 1][x + 2] != 0) {
-						return 1000;
+						return 10000;
 					}
 					else if (arr[y - 3][x - 2] == 0 && arr[y + 1][x + 2] == 0) {
-						return 150;
+						return 2000;
 					}
 					else {
-						return 15;
+						return 1000;
 					}
 				}
 				else {
-					return 1000;
+					return 10000;
 				}
 			}
 		}
@@ -923,17 +924,17 @@ int diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 			if (arr[y - 2][x - 2] == who && arr[y - 1][x - 1] == who && arr[y - 3][x - 3] == 0 && arr[y + 1][x + 1] == 0) {
 				if (y > 3) {
 					if (arr[y - 4][x - 3] != 0 && arr[y][x + 1] != 0) {
-						return 1000;
+						return 10000;
 					}
 					else if (arr[y - 4][x - 3] == 0 && arr[y][x + 1] == 0) {
-						return 150;
+						return 2000;
 					}
 					else {
-						return 15;
+						return 1000;
 					}
 				}
 				else {
-					return 1000;
+					return 10000;
 				}
 			}
 		}
@@ -957,7 +958,7 @@ int column_check_make_three(int arr[][7], int x, int y, int who)	//simple implem
 			break;
 	}
 	if (cnt == 2)
-		return 100;
+		return 500;
 	else
 		return 0;
 }
@@ -969,7 +970,271 @@ int check_make_three(int arr[][7], int x, int y, int who)	//control by Jongmin
 }
 
 
+int column_check_make_two(int arr[][7], int x, int y, int who)		//Jongmin
+{
+	int cnt = 0;
+	int i;
+	if (y == 1)
+	{
+		if (arr[0][x] == who)
+			return 50;
+	}
+	if (y > 1)
+	{
+		if (arr[y - 1][x] == who && arr[y - 2][x] != who)			//for checking not to give double point when connected three
+			return 50;
+	}
 
+	return 0;
+}
+
+int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination... by Jongmin
+{
+	int enm = 2;
+	if (who == 2)
+		enm = 1;
+
+	switch (x)
+	{
+	case 0:
+		if (arr[y][1] == who)
+		{
+			if (arr[y][2] == enm || arr[y][3] == enm)
+				return 0;
+			if (arr[y][4] == who)
+				return 0;
+
+
+			if (arr[y][3] == who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][2] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+			else
+				return 100;
+		}
+		break;
+	case 1:
+	{
+		if (arr[y][0] == who)
+		{
+			if (arr[y][2] == enm || arr[y][3] == enm)
+				return 0;
+			if (arr[y][4] == who)
+				return 0;
+
+			if (arr[y][3] == who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][2] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+			else
+				return 100;
+		}
+		else if (arr[y][2] == who)
+		{
+			if (arr[y][0] == enm)
+			{
+				if (arr[y][3] == enm || arr[y][4] == enm)
+					return 0;
+				if (arr[y][5] == who)
+					return 0;
+
+				if (arr[4] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][3] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+				return 100;
+			}
+			else
+			{
+				if (arr[y][3] == enm)
+					return 0;
+				
+				if (arr[y][4] == enm)
+					return 150;
+				if (arr[y][4] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][3] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+				if (arr[y][5] == who)
+					return 150;
+
+				return 300;
+			}
+		}
+	}
+		break;
+	case 2:
+		if (arr[y][1] == who)
+		{
+			if (arr[y][3] == enm)
+				return 0;
+			if (arr[y][0] == enm)
+			{
+				if (arr[y][4] == enm)
+					return 0;
+				if (arr[y][5] == who)
+					return 0;
+				if (arr[y][4] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][3] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+				return 150;
+			}
+			else if (arr[y][0] == 0)
+			{
+				if (arr[y][4] == enm)
+					return 150;
+				if (arr[y][5] == who)
+					return 150;
+				if (arr[y][4] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][3] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+				return 300;
+			}
+		}
+		else if (arr[y][3] == who)
+		{
+			if (arr[y][1] == enm || arr[y][4] == enm)
+				return 0;
+			if (arr[y][0] == who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][0] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+			if (arr[y][5] == who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][5] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+			if (arr[y][0] == enm)
+				return 150;
+			if (arr[y][5] == enm)
+				return 150;
+			if (arr[y][6] == who)
+				return 150;
+
+			return 300;
+		}
+		break;
+	case 3:
+		if (arr[y][2] == who)
+		{
+			if (arr[y][1] == enm)
+			{
+				if (arr[y][4] == enm || arr[y][5] == enm)
+					return 0;
+				if (arr[y][5] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][4] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+				return 100;
+			}
+			else if (arr[y][4] == enm)
+			{
+				if (arr[y][0] == enm)
+					return 0;
+				if (arr[y][0] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][1] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+
+				return 100;
+			}
+		}
+		else if (arr[y][4] == who)
+		{
+
+		}
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	}
+
+	return 0;
+}
 
 
 // To do things

@@ -10,12 +10,18 @@ int winCheck(int arr[][7]);
 void winnerPrint(int first, int winCheck);
 void Do_by_condition(int arr[][7]);
 int fiveStone(int arr[][7], int x, int y, int who);
+
+int check_make_four(int arr[][7], int x, int y, int who);	//simple check by Jongmin
 int row_check_make_four(int arr[][7], int x, int y, int who);	//it can be 4 through row
 int diagonal_check_make_four(int arr[][7], int x, int y, int who);		//check whether this position make win or not by 'diagonal - 4'			//Jongmin 
 int column_check_make_four(int arr[][7], int x, int y, int who); // 세로로 연속된 3개가 있는지 체크
+
+int check_make_three(int arr[][7], int x, int y, int who);
 int row_check_make_three(int arr[][7], int x, int y, int who); // 가로로 연속된 3개를 만들 수 있는지 체크
 int diagonal_check_make_three(int arr[][7], int x, int y, int who); // 대각선 연속된 3개를 만들 수 있는지 체크
-int check_make_four(int arr[][7], int x, int y, int who);	//simple check by Jongmin
+int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who);
+int column_check_make_three(int arr[][7], int x, int y, int who);
+
 
 
 //main function
@@ -321,7 +327,7 @@ int column_check_make_four(int arr[][7], int x, int y, int who) {
 			return 0;
 
 		if (count == 3)
-			return 2000;
+			return 50000;
 	}
 
 	/*
@@ -384,7 +390,7 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 		else
 		{
 			score[i] = check_make_four(arr, i, yindex[i], 1);
-			score[i] += check_make_four(arr, i, yindex[i], 2) / 4;
+			score[i] += check_make_four(arr, i, yindex[i], 2) / 20;
 		}
 	}
 
@@ -425,31 +431,31 @@ int row_check_make_four(int arr[][7], int x, int y, int who)	//check whether thi
 	}
 
 	if (cnt == 3)
-		return 2000;
+		return 50000;
 	
-	cnt = 0;
+	//cnt = 0;
 
-	for (i = x + 1; i < 7; i++)
-	{
-		if (arr[y][i] == who)
-		{
-			cnt++;
-		}
-		else
-			break;
-	}
-	for (i = x - 1; i >= 0; i--)
-	{
-		if (arr[y][i] == who)
-		{
-			cnt++;
-		}
-		else
-			break;
-	}
+	//for (i = x + 1; i < 7; i++)
+	//{
+	//	if (arr[y][i] == who)
+	//	{
+	//		cnt++;
+	//	}
+	//	else
+	//		break;
+	//}
+	//for (i = x - 1; i >= 0; i--)
+	//{
+	//	if (arr[y][i] == who)
+	//	{
+	//		cnt++;
+	//	}
+	//	else
+	//		break;
+	//}
 
-	if (cnt == 3)
-		return 1000;
+	//if (cnt == 3)
+	//	return 1000;
 	else
 		return 0;
 }
@@ -479,7 +485,7 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 	}
 
 	if (cnt == 3)
-		return 2000;
+		return 50000;
 
 	cnt = 0;
 	for (i = 1; i < 4; i++)				//second, check like '| :: reverse /'
@@ -502,7 +508,7 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 	}
 
 	if (cnt == 3)
-		return 2000;
+		return 50000;
 	else
 		return 0;
 }
@@ -937,3 +943,37 @@ int diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 	return 0;
 
 } // < - 대각선 연속된 3개를 만들 수 있는지 체크 By JeongIn
+
+
+int column_check_make_three(int arr[][7], int x, int y, int who)	//simple implementation by Jongmin
+{
+	int i;
+	int cnt = 0;
+	for (i = y - 1; i >= 0; i--)
+	{
+		if (arr[i][x] == who)
+			cnt++;
+		else
+			break;
+	}
+	if (cnt == 2)
+		return 100;
+	else
+		return 0;
+}
+
+
+int check_make_three(int arr[][7], int x, int y, int who)	//control by Jongmin
+{
+	return(column_check_make_three(arr, x, y, who) + row_check_make_three(arr, x, y, who) + row_check_make_three_but_onesidebarrier(arr, x, y, who) + diagonal_check_make_three(arr, x, y, who));
+}
+
+
+
+
+
+// To do things
+/*
+1. make three score balancing
+
+*/

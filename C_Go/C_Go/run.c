@@ -13,6 +13,7 @@ int fiveStone(int arr[][7], int x, int y, int who);
 int row_check_make_four(int arr[][7], int x, int y, int who);	//it can be 4 through row
 int diagonal_check_make_four(int arr[][7], int x, int y, int who);		//check whether this position make win or not by 'diagonal - 4'			//Jongmin 
 int column_check_make_four(int arr[][7], int x, int y, int who); // 세로로 연속된 3개가 있는지 체크
+int check_make_four(int arr[][7], int x, int y, int who);	//simple check by Jongmin
 
 
 //main function
@@ -30,10 +31,25 @@ void main() {
 	// <-- 04/06 21:37 jeongin
 
 	int winner = 0;
+	int methods = 0;
 	while (winner == 0)
 	{
-		push(board, first+(turn++));
+		printf("Which method ( 1. by algorithm  2. by condition  3. by push )\n");
+		scanf_s("%d", &methods);
+		if (methods == 3)
+			push(board, first + (turn++));
+		//else if(methods == 1)
 
+		else if (methods == 2)
+		{
+			Do_by_condition(board);
+			turn++;
+		}
+		else
+		{
+			printf("wrong methods\n");
+			continue;
+		}
 		print_board(board);
 
 
@@ -296,7 +312,7 @@ int column_check_make_four(int arr[][7], int x, int y, int who) {
 	int i;
 	int count = 0;
 
-	for (i = y; i >= 0; i--) {
+	for (i = y - 1; i >= 0; i--) {		//modify Jongmin , more check needed
 		if (arr[i][x] == who)
 			count++;
 		else if (arr[i][x] != who)
@@ -342,6 +358,8 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 {
 	int yindex[7] = { -1 };
 	int score[7] = { -1 };
+	int maxIndex = 0;
+	int maxScore = 0;
 
 	int i, j;
 	for (i = 0; i < 7; i++) //i :: x index
@@ -363,15 +381,21 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 			continue;
 		else
 		{
-			
-
-
-
+			score[i] = check_make_four(arr, i, yindex[i], 1);
+			score[i] += check_make_four(arr, i, yindex[i], 2) / 4;
 		}
 	}
 
+	for (i = 0; i < 7; i++)
+	{
+		if (yindex[i] != -1 && score[i] > maxScore)
+		{
+			maxIndex = i;
+			maxScore = score[i];
+		}
+	}
 
-
+	arr[yindex[maxIndex]][maxIndex] = 1;
 }
 
 
@@ -548,3 +572,232 @@ int fiveStone(int arr[][7], int x, int y, int who) {
 }
 // < - 2017/05/03 16:30 by JeongIn
 
+
+int check_make_four(int arr[][7], int x, int y, int who)	//simple check by Jongmin
+{
+	return (column_check_make_four(arr, x, y, who) + diagonal_check_make_four(arr, x, y, who) + row_check_make_four(arr, x, y, who));
+}
+
+
+int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
+{
+	int enm = 1;
+	if (who == 1)
+		enm = 2;
+
+
+	if (x >= 0 && x < 4) // 0 1 2 3 
+	{
+		if (x == 0)
+		{
+			if (arr[y][x + 1] == who && arr[y][x + 2] == who && arr[y][x + 3] == 0)
+			{
+				if (y > 0)
+				{
+					if (arr[y - 1][x + 3] == 0)
+						return 400;
+					else
+						return 200;
+				}
+				else	//y == 0 can be difensed
+				{
+					return 200;
+				}
+			}
+		}
+		else
+		{
+			if (arr[y][x-1] ==enm && arr[y][x + 1] == who && arr[y][x + 2] == who && arr[y][x + 3] == 0)
+			{
+				if (y > 0)
+				{
+					if (arr[y - 1][x + 3] == 0)
+						return 400;
+					else
+						return 200;
+				}
+				else	//y == 0 can be difensed
+				{
+					return 200;
+				}
+			}
+		}
+	}
+	if (x >= 1 && x < 5) // 1 2 3 4
+	{
+		if (x == 1)
+		{
+			if (arr[y][0] == who && arr[y][2] == who && arr[y][3] == 0)
+			{
+				if (y > 0)
+				{
+					if (arr[y - 1][3] == 0)
+						return 400;
+					else
+						return 200;
+				}
+				else	//y == 0 can be difensed
+				{
+					return 200;
+				}
+			}
+		}
+		else
+		{
+			if (arr[y][x - 2] == enm && arr[y][x - 1] == who && arr[y][x + 1] == who && arr[y][x + 2] == 0)
+			{
+				if (y > 0)
+				{
+					if (arr[y - 1][x + 2] == 0)
+						return 400;
+					else
+						return 200;
+				}
+				else	//y == 0 can be difensed
+				{
+					return 200;
+				}
+			}
+		}
+	}
+	if (x >= 2 && x < 6) // 2 3 4 5
+	{
+		if (x == 2)
+		{
+			if (arr[y][0] == who && arr[y][1] == who && arr[y][3] == 0)
+			{
+				if (y > 0)
+				{
+					if (arr[y - 1][3] == 0)
+						return 400;
+					else
+						return 200;
+				}
+				else	//y == 0 can be difensed
+				{
+					return 200;
+				}
+			}
+		}
+		else
+		{
+			if (arr[y][x - 3] == enm && arr[y][x - 2] == who && arr[y][x - 1] == who && arr[y][x + 1] == 0)
+			{
+				if (y > 0)
+				{
+					if (arr[y - 1][x + 1] == 0)
+						return 400;
+					else
+						return 200;
+				}
+				else	//y == 0 can be difensed
+				{
+					return 200;
+				}
+			}
+		}
+	}
+
+	//case 2
+
+
+	if (x >= 1 && x < 5)	// 1 2 3 4
+	{
+		if (x == 4)
+		{
+			if (arr[y][3] == 0 && arr[y][5] == who && arr[y][6] == who)
+			{
+				if (y > 0)
+				{
+					if (arr[y - 1][3] == 0)
+						return 400;
+					else return 200;
+				}
+				else
+					return 200;
+			}
+		}
+		else
+		{
+			if (arr[y][x - 1] == 0 && arr[y][x + 1] == who && arr[y][x + 2] == who && arr[y][x + 3] == enm)
+			{
+				if (y > 0)
+				{
+					if (arr[y][x - 1] == 0)
+						return 400;
+					else
+						return 200;
+				}
+				else
+					return 200;
+			}
+		}
+	}
+	if (x >= 2 && x < 6)
+	{
+		if (x == 5)
+		{
+			if (arr[y][3] == 0 && arr[y][4] == who && arr[y][6] == who)
+			{
+				if (y > 0)
+				{
+					if (arr[y - 1][3] == 0)
+						return 400;
+					else return 200;
+				}
+				else
+					return 200;
+			}
+		}
+		else
+		{
+			if (arr[y][x - 2] == 0 && arr[y][x - 1] == who && arr[y][x + 1] == who && arr[y][x + 2] == enm)
+			{
+				if (y > 0)
+				{
+					if (arr[y][x - 2] == 0)
+						return 400;
+					else
+						return 200;
+				}
+				else
+					return 200;
+			}
+		}
+	}
+
+	if (x >= 3 && x < 7)	// 3 4 5 6
+	{
+		if (x == 6)
+		{
+			if (arr[y][3] == 0 && arr[y][4] == who && arr[y][5] == who)
+			{
+				if (y > 0)
+				{
+					if (arr[y - 1][3] == 0)
+						return 400;
+					else return 200;
+				}
+				else
+					return 200;
+			}
+		}
+		else
+		{
+			if (arr[y][x - 3] == 0 && arr[y][x - 2] == who && arr[y][x - 1] == who && arr[y][x + 1] == enm)
+			{
+				if (y > 0)
+				{
+					if (arr[y][x - 3] == 0)
+						return 400;
+					else
+						return 200;
+				}
+				else
+					return 200;
+			}
+		}
+	}
+
+	return 0;
+}

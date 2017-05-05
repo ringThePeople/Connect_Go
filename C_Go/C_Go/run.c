@@ -13,6 +13,8 @@ int fiveStone(int arr[][7], int x, int y, int who);
 int row_check_make_four(int arr[][7], int x, int y, int who);	//it can be 4 through row
 int diagonal_check_make_four(int arr[][7], int x, int y, int who);		//check whether this position make win or not by 'diagonal - 4'			//Jongmin 
 int column_check_make_four(int arr[][7], int x, int y, int who); // 세로로 연속된 3개가 있는지 체크
+int row_check_make_three(int arr[][7], int x, int y, int who); // 가로로 연속된 3개를 만들 수 있는지 체크
+int diagonal_check_make_three(int arr[][7], int x, int y, int who); // 대각선 연속된 3개를 만들 수 있는지 체크
 int check_make_four(int arr[][7], int x, int y, int who);	//simple check by Jongmin
 
 
@@ -801,3 +803,137 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 
 	return 0;
 }
+// - > 가로로 연속된 3개를 만들 수 있는지 체크 By JeongIn
+int row_check_make_three(int arr[][7], int x, int y, int who) { // 가로로 연속된 3개를 만들 수 있는지 체크
+
+	if (x > 0 && x < 6) {
+		
+		if (x < 4) { // 1,2,3
+			if (arr[y][x + 1] == who && arr[y][x + 2] == who && arr[y][x - 1] == 0 && arr[y][x + 3] == 0) {
+				if (y > 0) {
+					if (arr[y - 1][x - 1] != 0 && arr[y - 1][x + 3] != 0) {
+						return 1000;
+					}
+					else if (arr[y - 1][x - 1] == 0 && arr[y - 1][x + 3] == 0) {
+						return 150;
+					}
+					else {
+						return 15;
+					}
+				}
+				else {
+					return 1000;
+				}
+			}
+		}
+		
+		if (x > 1 && x < 5) { // 2,3,4
+			if (arr[y][x - 1] == who && arr[y][x + 1] == who && arr[y][x - 2] == 0 && arr[y][x + 2] == 0) {
+				if (y > 0) {
+					if (arr[y - 1][x - 2] != 0 && arr[y - 1][x + 2] != 0) {
+						return 1000;
+					}
+					else if (arr[y - 1][x - 2] == 0 && arr[y - 1][x + 2] == 0) {
+						return 150;
+					}
+					else {
+						return 15;
+					}
+				}
+				else {
+					return 1000;
+				}
+			}
+		}
+
+		if (x > 2) {// 3,4,5
+			if (arr[y][x - 2] == who && arr[y][x - 1] == who && arr[y][x - 3] == 0 && arr[y][x + 1] == 0) {
+				if (y > 0) {
+					if (arr[y - 1][x - 3] != 0 && arr[y - 1][x + 1] != 0) {
+						return 1000;
+					}
+					else if (arr[y - 1][x - 3] == 0 && arr[y - 1][x + 1] == 0) {
+						return 150;
+					}
+					else {
+						return 15;
+					}
+				}
+				else {
+					return 1000;
+				}
+			}
+		}
+
+	}
+
+	return 0;
+} // < - 가로로 연속된 3개를 만들 수 있는지 체크 By JeongIn
+
+// - > 대각선 연속된 3개를 만들 수 있는지 체크 By JeongIn
+int diagonal_check_make_three(int arr[][7], int x, int y, int who) {
+
+	if (x > 0 && x < 6 && y > 0 && y < 5) {
+
+		if (x < 4 && y < 3) { // x: 1,2,3	y: 1,2
+			if (arr[y + 1][x + 1] == who && arr[y + 2][x + 2] == who && arr[y - 1][x - 1] == 0 && arr[y + 3][x + 3] == 0) {
+				if (y > 1) {
+					if (arr[y - 2][x - 1] != 0 && arr[y + 2][x + 3] != 0) {
+						return 1000;
+					}
+					else if (arr[y - 2][x - 1] == 0 && arr[y + 2][x + 3] == 0) {
+						return 150;
+					}
+					else {
+						return 15;
+					}
+				}
+				else {
+					return 1000;
+				}
+			}
+		}
+
+		if (x > 1 && x < 5 && y > 1 && y < 4) { // x: 2,3,4	  y: 2,3
+			if (arr[y - 1][x - 1] == who && arr[y + 1][x + 1] == who && arr[y - 2][x - 2] == 0 && arr[y + 2][x + 2] == 0) {
+				if (y > 2) {
+					if (arr[y - 3][x - 2] != 0 && arr[y + 1][x + 2] != 0) {
+						return 1000;
+					}
+					else if (arr[y - 3][x - 2] == 0 && arr[y + 1][x + 2] == 0) {
+						return 150;
+					}
+					else {
+						return 15;
+					}
+				}
+				else {
+					return 1000;
+				}
+			}
+		}
+
+		if (x > 2 && y > 2) {// x: 3,4,5	  y: 3,4
+			if (arr[y - 2][x - 2] == who && arr[y - 1][x - 1] == who && arr[y - 3][x - 3] == 0 && arr[y + 1][x + 1] == 0) {
+				if (y > 3) {
+					if (arr[y - 4][x - 3] != 0 && arr[y][x + 1] != 0) {
+						return 1000;
+					}
+					else if (arr[y - 4][x - 3] == 0 && arr[y][x + 1] == 0) {
+						return 150;
+					}
+					else {
+						return 15;
+					}
+				}
+				else {
+					return 1000;
+				}
+			}
+		}
+
+	}
+
+	return 0;
+
+} // < - 대각선 연속된 3개를 만들 수 있는지 체크 By JeongIn

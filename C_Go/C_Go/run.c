@@ -18,7 +18,8 @@ int column_check_make_four(int arr[][7], int x, int y, int who); // 세로로 연속�
 
 int check_make_three(int arr[][7], int x, int y, int who);
 int row_check_make_three(int arr[][7], int x, int y, int who); // 가로로 연속된 3개를 만들 수 있는지 체크
-int diagonal_check_make_three(int arr[][7], int x, int y, int who); // 대각선 연속된 3개를 만들 수 있는지 체크
+int diagonal_check_make_three(int arr[][7], int x, int y, int who); // '／'대각선 연속된 3개를 만들 수 있는지 체크
+int negative_diagonal_check_make_three(int arr[][7], int x, int y, int who); // '＼'대각선 연속된 3개를 만들 수 있는지 체크
 int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who);
 int column_check_make_three(int arr[][7], int x, int y, int who);
 
@@ -814,140 +815,293 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 	return 0;
 }
 
+
 // - > 가로로 연속된 3개를 만들 수 있는지 체크 By JeongIn
 int row_check_make_three(int arr[][7], int x, int y, int who) { // 가로로 연속된 3개를 만들 수 있는지 체크
 
-	if (x > 0 && x < 6) {
-		
-		if (x < 4) { // 1,2,3
-			if (arr[y][x + 1] == who && arr[y][x + 2] == who && arr[y][x - 1] == 0 && arr[y][x + 3] == 0) {
-				if (y > 0) {
-					if (arr[y - 1][x - 1] != 0 && arr[y - 1][x + 3] != 0) {
-						return 10000;
-					}
-					else if (arr[y - 1][x - 1] == 0 && arr[y - 1][x + 3] == 0) {
-						return 2000;
-					}
-					else {
-						return 1000;
-					}
-				}
-				else {
-					return 10000;
-				}
-			}
-		}
-		
-		if (x > 1 && x < 5) { // 2,3,4
-			if (arr[y][x - 1] == who && arr[y][x + 1] == who && arr[y][x - 2] == 0 && arr[y][x + 2] == 0) {
-				if (y > 0) {
-					if (arr[y - 1][x - 2] != 0 && arr[y - 1][x + 2] != 0) {
-						return 10000;
-					}
-					else if (arr[y - 1][x - 2] == 0 && arr[y - 1][x + 2] == 0) {
-						return 2000;
-					}
-					else {
-						return 1000;
-					}
-				}
-				else {
-					return 10000;
-				}
-			}
-		}
+	int enemy = 3 - who;
+	int L_wall = 1;
+	int L_support = 1;
+	int R_wall = 1;
+	int R_support = 1;
+	int L_x = x;
+	int R_x = x;
+	int i;
+	int count = 0;
 
-		if (x > 2) {// 3,4,5
-			if (arr[y][x - 2] == who && arr[y][x - 1] == who && arr[y][x - 3] == 0 && arr[y][x + 1] == 0) {
-				if (y > 0) {
-					if (arr[y - 1][x - 3] != 0 && arr[y - 1][x + 1] != 0) {
-						return 10000;
-					}
-					else if (arr[y - 1][x - 3] == 0 && arr[y - 1][x + 1] == 0) {
-						return 2000;
-					}
-					else {
-						return 1000;
-					}
-				}
-				else {
-					return 10000;
+	for (i = 1; i <= x; i++) { // 왼쪽
+
+		if (arr[y][x - i] == who) {
+			L_x = x - i;
+			count++;
+		}
+		else if (arr[y][x - i] == enemy)
+			break;
+		else if (arr[y][x - i] == 0){
+			L_wall = 0;
+			if (L_x >= 2) {
+				if (arr[y][L_x - 2] == who) {
+					L_wall = 1;
+					break;
 				}
 			}
+			if (y - 1 >= 0) {
+				if (arr[y - 1][x - i] == 0)
+					L_support = 0;
+			}
+			break;
 		}
+	}
 
+	for (i = 1; i <= 6 - x; i++) { // 오른쪽
+
+		if (arr[y][x + i] == who) {
+			R_x = x + i;
+			count++;
+		}
+		else if (arr[y][x + i] == enemy)
+			break;
+		else if (arr[y][x + i] == 0){
+			R_wall = 0;
+			if (R_x <= 4) {
+				if (arr[y][R_x + 2] == who) {
+					R_wall = 1;
+					break;
+				}
+			}
+			if (y - 1 >= 0) {
+				if (arr[y - 1][x + i] == 0)
+					R_support = 0;
+			}
+			break;
+		}
+	}
+
+	if (count == 2) {
+
+		if (L_wall == 0 && R_wall == 0) {
+			if (L_support == 1 && R_support == 1)
+				return 10000;
+			else if (L_support == 0 && R_support == 0)
+				return 2000;
+			else
+				return 1000;
+		}
+		else if (L_wall == 0) {
+			if (L_support == 1)
+				return 1000;
+			else
+				return 500;
+		}
+		else if (R_wall == 0) {
+			if (R_support == 1)
+				return 1000;
+			else
+				return 500;
+		}
+		else
+			return 0;
 	}
 
 	return 0;
+
 } // < - 가로로 연속된 3개를 만들 수 있는지 체크 By JeongIn
 
-// - > 대각선 연속된 3개를 만들 수 있는지 체크 By JeongIn
+
+// - > '／' 대각선 연속된 3개를 만들 수 있는지 체크 By JeongIn
 int diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 
-	if (x > 0 && x < 6 && y > 0 && y < 5) {
+	int enemy = 3 - who;
+	int L_wall = 1;
+	int L_support = 1;
+	int R_wall = 1;
+	int R_support = 1;
+	int L_x = x;
+	int L_y = y;
+	int R_x = x;
+	int R_y = y;
+	int i;
+	int count = 0;
 
-		if (x < 4 && y < 3) { // x: 1,2,3	y: 1,2
-			if (arr[y + 1][x + 1] == who && arr[y + 2][x + 2] == who && arr[y - 1][x - 1] == 0 && arr[y + 3][x + 3] == 0) {
-				if (y > 1) {
-					if (arr[y - 2][x - 1] != 0 && arr[y + 2][x + 3] != 0) {
-						return 10000;
-					}
-					else if (arr[y - 2][x - 1] == 0 && arr[y + 2][x + 3] == 0) {
-						return 2000;
-					}
-					else {
-						return 1000;
-					}
-				}
-				else {
-					return 10000;
+	for (i = 1; i <= x; i++) {
+		if (y - i < 0)
+			break;
+
+		if (arr[y - i][x - i] == who) {
+			L_x = x - i;
+			L_y = y - i;
+			count++;
+		}
+		else if (arr[y - i][x - i] == enemy)
+			break;
+		else if (arr[y - i][x - i] == 0) {
+			L_wall = 0;
+			if (L_x >= 2 && L_y >= 2) {
+				if (arr[L_y - 2][L_x - 2] == who) {
+					L_wall = 1;
+					break;
 				}
 			}
+			if (y - i - 1 >= 0) {
+				if (arr[y - i - 1][x - i] == 0)
+					L_support = 0;
+			}
+			break;
 		}
+	}
 
-		if (x > 1 && x < 5 && y > 1 && y < 4) { // x: 2,3,4	  y: 2,3
-			if (arr[y - 1][x - 1] == who && arr[y + 1][x + 1] == who && arr[y - 2][x - 2] == 0 && arr[y + 2][x + 2] == 0) {
-				if (y > 2) {
-					if (arr[y - 3][x - 2] != 0 && arr[y + 1][x + 2] != 0) {
-						return 10000;
-					}
-					else if (arr[y - 3][x - 2] == 0 && arr[y + 1][x + 2] == 0) {
-						return 2000;
-					}
-					else {
-						return 1000;
-					}
-				}
-				else {
-					return 10000;
+	for (i = 1; i <= 6 - x; i++) {
+		if (y + i > 5)
+			break;
+
+		if (arr[y + i][x + i] == who) {
+			R_x = x + i;
+			R_y = y + i;
+			count++;
+		}
+		else if (arr[y + i][x + i] == enemy)
+			break;
+		else if (arr[y + i][x + i] == 0) {
+			R_wall = 0;
+			if (R_x <= 4 && R_y <= 3) {
+				if (arr[R_y + 2][R_x + 2] == who) {
+					R_wall = 1;
+					break;
 				}
 			}
+			if (arr[y + i - 1][x + i] == 0)
+				R_support = 0;
+			break;
 		}
+	}
 
-		if (x > 2 && y > 2) {// x: 3,4,5	  y: 3,4
-			if (arr[y - 2][x - 2] == who && arr[y - 1][x - 1] == who && arr[y - 3][x - 3] == 0 && arr[y + 1][x + 1] == 0) {
-				if (y > 3) {
-					if (arr[y - 4][x - 3] != 0 && arr[y][x + 1] != 0) {
-						return 10000;
-					}
-					else if (arr[y - 4][x - 3] == 0 && arr[y][x + 1] == 0) {
-						return 2000;
-					}
-					else {
-						return 1000;
-					}
-				}
-				else {
-					return 10000;
-				}
-			}
+	if (count == 2) {
+
+		if (L_wall == 0 && R_wall == 0) {
+			if (L_support == 1 && R_support == 1)
+				return 10000;
+			else if (L_support == 0 && R_support == 0)
+				return 2000;
+			else
+				return 1000;
 		}
-
+		else if (L_wall == 0) {
+			if (L_support == 1)
+				return 1000;
+			else
+				return 500;
+		}
+		else if (R_wall == 0) {
+			if (R_support == 1)
+				return 1000;
+			else
+				return 500;
+		}
+		else
+			return 0;
 	}
 
 	return 0;
 
-} // < - 대각선 연속된 3개를 만들 수 있는지 체크 By JeongIn
+} // < - '／' 대각선 연속된 3개를 만들 수 있는지 체크 By JeongIn
+
+
+  // - > '＼' 대각선 연속된 3개를 만들 수 있는지 체크 By JeongIn
+int negative_diagonal_check_make_three(int arr[][7], int x, int y, int who) {
+
+	int enemy = 3 - who;
+	int L_wall = 1;
+	int L_support = 1;
+	int R_wall = 1;
+	int R_support = 1;
+	int L_x = x;
+	int L_y = y;
+	int R_x = x;
+	int R_y = y;
+	int i;
+	int count = 0;
+
+	for (i = 1; i <= x; i++) {
+		if (y + i > 5)
+			break;
+
+		if (arr[y + i][x - i] == who) {
+			L_x = x - i;
+			L_y = y + i;
+			count++;
+		}
+		else if (arr[y + i][x - i] == enemy)
+			break;
+		else if (arr[y + i][x - i] == 0) {
+			L_wall = 0;
+			if (L_x >= 2 && L_y <= 3) {
+				if (arr[L_y + 2][L_x - 2] == who) {
+					L_wall = 1;
+					break;
+				}
+			}
+			if (arr[y + i - 1][x - i] == 0)
+				L_support = 0;
+			break;
+		}
+	}
+
+	for (i = 1; i <= 6 - x; i++) {
+		if (y - i < 0)
+			break;
+
+		if (arr[y - i][x + i] == who) {
+			R_x = x + i;
+			R_y = y - i;
+			count++;
+		}
+		else if (arr[y - i][x + i] == enemy)
+			break;
+		else if (arr[y - i][x + i] == 0) {
+			R_wall = 0;
+			if (R_x <= 4 && R_y >= 2) {
+				if (arr[R_y - 2][R_x + 2] == who) {
+					R_wall = 1;
+					break;
+				}
+			}
+			if (y - i - 1 >= 0) {
+				if (arr[y - i - 1][x + i] == 0)
+					R_support = 0;
+			}
+			break;
+		}
+	}
+
+	if (count == 2) {
+
+		if (L_wall == 0 && R_wall == 0) {
+			if (L_support == 1 && R_support == 1)
+				return 10000;
+			else if (L_support == 0 && R_support == 0)
+				return 2000;
+			else
+				return 1000;
+		}
+		else if (L_wall == 0) {
+			if (L_support == 1)
+				return 1000;
+			else
+				return 500;
+		}
+		else if (R_wall == 0) {
+			if (R_support == 1)
+				return 1000;
+			else
+				return 500;
+		}
+		else
+			return 0;
+	}
+
+	return 0;
+
+} // < - '＼' 대각선 연속된 3개를 만들 수 있는지 체크 By JeongIn
 
 
 int column_check_make_three(int arr[][7], int x, int y, int who)	//simple implementation by Jongmin
@@ -970,7 +1124,7 @@ int column_check_make_three(int arr[][7], int x, int y, int who)	//simple implem
 
 int check_make_three(int arr[][7], int x, int y, int who)	//control by Jongmin
 {
-	return(column_check_make_three(arr, x, y, who) + row_check_make_three(arr, x, y, who) + row_check_make_three_but_onesidebarrier(arr, x, y, who) + diagonal_check_make_three(arr, x, y, who));
+	return(column_check_make_three(arr, x, y, who) + row_check_make_three(arr, x, y, who) + row_check_make_three_but_onesidebarrier(arr, x, y, who) + diagonal_check_make_three(arr, x, y, who) + negative_diagonal_check_make_three(arr, x, y, who));
 }
 
 

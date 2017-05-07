@@ -1632,12 +1632,12 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 			if (yindex[i] < 5)
 			{
 				score[i] -= check_make_four(arr, i, yindex[i] + 1, 1) /2 ;
-				score[i] -= check_make_three(arr, i, yindex[i], 1) / 2;
-				score[i] -= check_make_two(arr, i, yindex[i], 1) /2;
+				score[i] -= check_make_three(arr, i, yindex[i] + 1, 1) / 2;
+				score[i] -= check_make_two(arr, i, yindex[i] + 1, 1) /2;
 
-				score[i] -= check_make_four(arr, i, yindex[i], 2) / 40;
-				score[i] -= check_make_three(arr, i, yindex[i], 2) /2;
-				score[i] -= check_make_two(arr, i, yindex[i], 2) /2;
+				score[i] -= check_make_four(arr, i, yindex[i] + 1, 2) / 40;
+				score[i] -= check_make_three(arr, i, yindex[i] + 1, 2) /2;
+				score[i] -= check_make_two(arr, i, yindex[i] + 1, 2) /2;
 
 			}
 		}

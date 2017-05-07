@@ -28,6 +28,7 @@ int check_make_two(int arr[][7], int x, int y, int who);
 int column_check_make_two(int arr[][7], int x, int y, int who);		
 int row_check_make_two(int arr[][7], int x, int y, int who);
 
+int is_only_center(int arr[][7]);
 
 //main function
 void main() {
@@ -366,50 +367,6 @@ void winnerPrint(int first, int winCheck)
 
 
 
-//connect Go :: in board :: '1'
-void Do_by_condition(int arr[][7])	//condition module by Jongmin
-{
-	int yindex[7] = { -1 };
-	int score[7] = { -1 };
-	int maxIndex = 0;
-	int maxScore = 0;
-
-	int i, j;
-	for (i = 0; i < 7; i++) //i :: x index
-	{
-		for (j = 0; j < 6; j++)
-		{
-			if (arr[j][i] == 0)
-			{
-				yindex[i] = j;
-				break;
-			}
-		}
-	} // if yindex :: -1 -> that line don't have empty position
-	//find which position can be done
-
-	for (i = 0; i < 7; i++)
-	{
-		if (yindex[i] == -1)
-			continue;
-		else
-		{
-			score[i] = check_make_four(arr, i, yindex[i], 1);
-			score[i] += check_make_four(arr, i, yindex[i], 2) / 20;
-		}
-	}
-
-	for (i = 0; i < 7; i++)
-	{
-		if (yindex[i] != -1 && score[i] > maxScore)
-		{
-			maxIndex = i;
-			maxScore = score[i];
-		}
-	}
-
-	arr[yindex[maxIndex]][maxIndex] = 1;
-}
 
 
 int row_check_make_four(int arr[][7], int x, int y, int who)	//check whether this position make win or not by 'row - 4'  //Jongmin
@@ -1622,3 +1579,80 @@ int check_make_two(int arr[][7], int x, int y, int who)
 1. make three score balancing
 
 */
+
+int is_only_center(int arr[][7])	//for only one line			//by Jongmin
+{
+	if (arr[0][0] == 0 && arr[0][1] == 0 && arr[0][2] == 0 && arr[0][4] == 0 && arr[0][5] == 0 && arr[0][6] == 0)
+	{
+		if (arr[4][3] == 0)
+			return 1000;
+
+	}
+	else return 0;
+}
+
+
+
+//connect Go :: in board :: '1'
+void Do_by_condition(int arr[][7])	//condition module by Jongmin
+{
+	int yindex[7] = { -1 };
+	int score[7] = { -1 };
+	int maxIndex = 0;
+	int maxScore = 0;
+
+	int i, j;
+	for (i = 0; i < 7; i++) //i :: x index
+	{
+		for (j = 0; j < 6; j++)
+		{
+			if (arr[j][i] == 0)
+			{
+				yindex[i] = j;
+				break;
+			}
+		}
+	} // if yindex :: -1 -> that line don't have empty position
+	  //find which position can be done
+
+	for (i = 0; i < 7; i++)
+	{
+		if (yindex[i] == -1)
+			continue;
+		else
+		{
+			score[i] = check_make_four(arr, i, yindex[i], 1);
+			score[i] += check_make_three(arr, i, yindex[i], 1);
+			score[i] += check_make_two(arr, i, yindex[i], 1);
+
+			score[i] += check_make_four(arr, i, yindex[i], 2) / 20;
+			score[i] += check_make_three(arr, i, yindex[i], 2);
+			score[i] += check_make_two(arr, i, yindex[i], 2);
+
+			if (yindex[i] < 5)
+			{
+				score[i] -= check_make_four(arr, i, yindex[i] + 1, 1) /2 ;
+				score[i] -= check_make_three(arr, i, yindex[i], 1) / 2;
+				score[i] -= check_make_two(arr, i, yindex[i], 1) /2;
+
+				score[i] -= check_make_four(arr, i, yindex[i], 2) / 40;
+				score[i] -= check_make_three(arr, i, yindex[i], 2) /2;
+				score[i] -= check_make_two(arr, i, yindex[i], 2) /2;
+
+			}
+		}
+	}
+
+	score[3] += is_only_center(arr);
+
+	for (i = 0; i < 7; i++)	//check who is max
+	{
+		if (yindex[i] != -1 && score[i] > maxScore)
+		{
+			maxIndex = i;
+			maxScore = score[i];
+		}
+	}
+
+	arr[yindex[maxIndex]][maxIndex] = 1;
+}

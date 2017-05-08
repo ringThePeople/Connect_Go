@@ -30,6 +30,8 @@ int row_check_make_two(int arr[][7], int x, int y, int who);
 int diagonal_check_make_two(int arr[][7], int x, int y, int who); // '／'대각선 연속된 2개를 만들 수 있는지 체크
 int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who); // '＼'대각선 연속된 2개를 만들 수 있는지 체크
 
+int row_check_make_only_one(int arr[][7], int x, int y, int who); // 연결이 안될 때
+
 int is_only_center(int arr[][7]);
 
 //main function
@@ -1853,6 +1855,13 @@ int check_make_two(int arr[][7], int x, int y, int who)
 1. make three score balancing
 
 */
+
+
+// - > 연결이 안될 때 By JeongIn
+int row_check_make_only_one(int arr[][7], int x, int y, int who) {
+
+}
+// <- 연결이 안될 때 By JeongIn
 
 int is_only_center(int arr[][7])	//for only one line			//by Jongmin
 {

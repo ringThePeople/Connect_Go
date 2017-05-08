@@ -27,6 +27,8 @@ int column_check_make_three(int arr[][7], int x, int y, int who);
 int check_make_two(int arr[][7], int x, int y, int who);
 int column_check_make_two(int arr[][7], int x, int y, int who);		
 int row_check_make_two(int arr[][7], int x, int y, int who);
+int diagonal_check_make_two(int arr[][7], int x, int y, int who); // '／'대각선 연속된 2개를 만들 수 있는지 체크
+int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who); // '＼'대각선 연속된 2개를 만들 수 있는지 체크
 
 int is_only_center(int arr[][7]);
 
@@ -785,27 +787,18 @@ int row_check_make_three(int arr[][7], int x, int y, int who) { // 가로로 연속된
 	int L_support = 1;
 	int R_wall = 1;
 	int R_support = 1;
-	int L_x = x;
-	int R_x = x;
 	int i;
 	int count = 0;
 
 	for (i = 1; i <= x; i++) { // 왼쪽
 
 		if (arr[y][x - i] == who) {
-			L_x = x - i;
 			count++;
 		}
 		else if (arr[y][x - i] == enemy)
 			break;
 		else if (arr[y][x - i] == 0){
 			L_wall = 0;
-			if (L_x >= 2) {
-				if (arr[y][L_x - 2] == who) {
-					L_wall = 1;
-					break;
-				}
-			}
 			if (y - 1 >= 0) {
 				if (arr[y - 1][x - i] == 0)
 					L_support = 0;
@@ -817,19 +810,12 @@ int row_check_make_three(int arr[][7], int x, int y, int who) { // 가로로 연속된
 	for (i = 1; i <= 6 - x; i++) { // 오른쪽
 
 		if (arr[y][x + i] == who) {
-			R_x = x + i;
 			count++;
 		}
 		else if (arr[y][x + i] == enemy)
 			break;
 		else if (arr[y][x + i] == 0){
 			R_wall = 0;
-			if (R_x <= 4) {
-				if (arr[y][R_x + 2] == who) {
-					R_wall = 1;
-					break;
-				}
-			}
 			if (y - 1 >= 0) {
 				if (arr[y - 1][x + i] == 0)
 					R_support = 0;
@@ -877,10 +863,6 @@ int diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 	int L_support = 1;
 	int R_wall = 1;
 	int R_support = 1;
-	int L_x = x;
-	int L_y = y;
-	int R_x = x;
-	int R_y = y;
 	int i;
 	int count = 0;
 
@@ -889,20 +871,12 @@ int diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 			break;
 
 		if (arr[y - i][x - i] == who) {
-			L_x = x - i;
-			L_y = y - i;
 			count++;
 		}
 		else if (arr[y - i][x - i] == enemy)
 			break;
 		else if (arr[y - i][x - i] == 0) {
 			L_wall = 0;
-			if (L_x >= 2 && L_y >= 2) {
-				if (arr[L_y - 2][L_x - 2] == who) {
-					L_wall = 1;
-					break;
-				}
-			}
 			if (y - i - 1 >= 0) {
 				if (arr[y - i - 1][x - i] == 0)
 					L_support = 0;
@@ -916,20 +890,12 @@ int diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 			break;
 
 		if (arr[y + i][x + i] == who) {
-			R_x = x + i;
-			R_y = y + i;
 			count++;
 		}
 		else if (arr[y + i][x + i] == enemy)
 			break;
 		else if (arr[y + i][x + i] == 0) {
 			R_wall = 0;
-			if (R_x <= 4 && R_y <= 3) {
-				if (arr[R_y + 2][R_x + 2] == who) {
-					R_wall = 1;
-					break;
-				}
-			}
 			if (arr[y + i - 1][x + i] == 0)
 				R_support = 0;
 			break;
@@ -975,10 +941,6 @@ int negative_diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 	int L_support = 1;
 	int R_wall = 1;
 	int R_support = 1;
-	int L_x = x;
-	int L_y = y;
-	int R_x = x;
-	int R_y = y;
 	int i;
 	int count = 0;
 
@@ -987,20 +949,12 @@ int negative_diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 			break;
 
 		if (arr[y + i][x - i] == who) {
-			L_x = x - i;
-			L_y = y + i;
 			count++;
 		}
 		else if (arr[y + i][x - i] == enemy)
 			break;
 		else if (arr[y + i][x - i] == 0) {
 			L_wall = 0;
-			if (L_x >= 2 && L_y <= 3) {
-				if (arr[L_y + 2][L_x - 2] == who) {
-					L_wall = 1;
-					break;
-				}
-			}
 			if (arr[y + i - 1][x - i] == 0)
 				L_support = 0;
 			break;
@@ -1012,20 +966,12 @@ int negative_diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 			break;
 
 		if (arr[y - i][x + i] == who) {
-			R_x = x + i;
-			R_y = y - i;
 			count++;
 		}
 		else if (arr[y - i][x + i] == enemy)
 			break;
 		else if (arr[y - i][x + i] == 0) {
 			R_wall = 0;
-			if (R_x <= 4 && R_y >= 2) {
-				if (arr[R_y - 2][R_x + 2] == who) {
-					R_wall = 1;
-					break;
-				}
-			}
 			if (y - i - 1 >= 0) {
 				if (arr[y - i - 1][x + i] == 0)
 					R_support = 0;
@@ -1574,9 +1520,334 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 }   
 
 
+// - > '／'대각선 연속된 2개를 만들 수 있는지 체크 By JeongIn
+int diagonal_check_make_two(int arr[][7], int x, int y, int who) {
+
+	int enemy = 3 - who;
+	int L_wall = 1;
+	int L_support = 1;
+	int L_three = 0;
+	int R_wall = 1;
+	int R_support = 1;
+	int R_three = 0;
+	int L_x = x;
+	int R_x = x;
+	int L_w_x = -1;
+	int R_w_x = 7;
+	int i;
+	int count = 0;
+
+	for (i = 1; i <= x; i++) {
+		if (y - i < 0)
+			break;
+
+		if (arr[y - i][x - i] == who && L_wall == 1) {
+			L_w_x = x - i - 1;
+			L_x = x - i;
+			count++;
+		}
+		else if (arr[y - i][x - i] == enemy) {
+			L_w_x = x - i;
+			break;
+		}
+		else if (arr[y - i][x - i] == 0) {
+			L_w_x = x - i - 1;
+			L_wall = 0;
+			if (y - i - 1 >= 0 && x - i == L_x - 1) {
+				if (arr[y - i - 1][x - i] == 0)
+					L_support = 0;
+
+				if (x - i - 1 >= 0) {
+					if (arr[y - i - 1][x - i - 1] == who) {
+						L_three = 1;
+						L_w_x = x - i - 2;
+					}
+				}
+			}
+		}
+	}
+
+	for (i = 1; i <= 6 - x; i++) {
+		if (y + i > 5)
+			break;
+
+		if (arr[y + i][x + i] == who && R_wall == 1) {
+			R_w_x = x + i + 1;
+			R_x = x + i;
+			count++;
+		}
+		else if (arr[y + i][x + i] == enemy) {
+			R_w_x = x + i;
+			break;
+		}
+		else if (arr[y + i][x + i] == 0) {
+			R_w_x = x + i + 1;
+			R_wall = 0;
+			if (arr[y + i - 1][x + i] == 0 && x + i == R_x + 1)
+				R_support = 0;
+
+			if (x + i + 1 <= 6 && y + i + 1 <= 5 && x + i == R_x + 1) {
+				if (arr[y + i + 1][x + i + 1] == who) {
+					R_three = x + i + 1;
+					R_w_x = x + i + 2;
+				}
+			}
+		}
+	}
+
+	int length = R_w_x - L_w_x - 1;
+
+	if (count == 1) {
+
+		if (length < 4)
+			return 0;
+
+		if (L_three == 1 && R_three == 1) {
+			if (L_support == 1 && R_support == 1)
+				return 10000;
+			else if (L_support == 0 && R_support == 0)
+				return 2000;
+			else
+				return 1000;
+		}
+		else if (L_three == 1) {
+			if (L_support == 1)
+				return 1000;
+			else
+				return 500;
+		}
+		else if (R_three == 1) {
+			if (R_support == 1)
+				return 1000;
+			else
+				return 500;
+		}
+
+		if (L_wall == 0 && R_wall == 0) {
+			if (L_support == 1 && R_support == 1) {
+				if (length == 4) {
+					return 150;
+				}
+				else if (length == 5) {
+					return 200;
+				}
+				else if (length == 6) {
+					return 250;
+				}
+			}
+			else if (L_support == 0 && R_support == 0) {
+				if (length == 4) {
+					return 200;
+				}
+				else if (length == 5) {
+					return 250;
+				}
+				else if (length == 6) {
+					return 300;
+				}
+			}
+			else {
+				if (length == 4) {
+					return 100;
+				}
+				else if (length == 5) {
+					return 150;
+				}
+				else if (length == 6) {
+					return 200;
+				}
+			}
+		}
+		else if (L_wall == 0) {
+			if (L_support == 1) {
+				return 100;
+			}
+			else {
+				return 150;
+			}
+		}
+		else if (R_wall == 0) {
+			if (R_support == 1)
+				return 100;
+			else
+				return 150;
+		}
+		else
+			return 0;
+	}
+
+	return 0;
+
+}
+// < - '／'대각선 연속된 2개를 만들 수 있는지 체크 By JeongIn
+
+
+// - > '＼'대각선 연속된 2개를 만들 수 있는지 체크 By JeongIn
+int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who) {
+
+	int enemy = 3 - who;
+	int L_wall = 1;
+	int L_support = 1;
+	int L_three = 0;
+	int R_wall = 1;
+	int R_support = 1;
+	int R_three = 0;
+	int L_x = x;
+	int R_x = x;
+	int L_w_x = -1;
+	int R_w_x = 7;
+	int i;
+	int count = 0;
+
+	for (i = 1; i <= x; i++) {
+		if (y + i > 5)
+			break;
+
+		if (arr[y + i][x - i] == who) {
+			L_w_x = x - i - 1;
+			L_x = x - i;
+			count++;
+		}
+		else if (arr[y + i][x - i] == enemy) {
+			L_w_x = x - i;
+			break;
+		}
+		else if (arr[y + i][x - i] == 0) {
+			L_w_x = x - i - 1;
+			L_wall = 0;
+
+			if (arr[y + i - 1][x - i] == 0 && x - i == L_x - 1)
+				L_support = 0;
+
+			if (x - i - 1 >= 0 && y + i + 1 <= 5 && x - i == L_x - 1) {
+				if (arr[y + i + 1][x - i - 1] == who) {
+					L_three = 1;
+					L_w_x = x - i - 2;
+				}
+			}
+		}
+	}
+
+	for (i = 1; i <= 6 - x; i++) {
+		if (y - i < 0)
+			break;
+
+		if (arr[y - i][x + i] == who) {
+			R_w_x = x + i + 1;
+			R_x = x + i;
+			count++;
+		}
+		else if (arr[y - i][x + i] == enemy) {
+			R_w_x = x + i;
+			break;
+		}
+		else if (arr[y - i][x + i] == 0) {
+			R_w_x = x + i + 1;
+			R_wall = 0;
+			if (y - i - 1 >= 0 && x + i == R_x + 1) {
+				if (arr[y - i - 1][x + i] == 0)
+					R_support = 0;
+
+				if (x + i + 1 <= 6) {
+					if (arr[y - i - 1][x + i + 1] == who) {
+						R_three = x + i + 1;
+						R_w_x = x + i + 2;
+					}
+				}
+			}
+		}
+	}
+
+	int length = R_w_x - L_w_x - 1;
+
+	if (count == 1) {
+
+		if (length < 4)
+			return 0;
+
+		if (L_three == 1 && R_three == 1) {
+			if (L_support == 1 && R_support == 1)
+				return 10000;
+			else if (L_support == 0 && R_support == 0)
+				return 2000;
+			else
+				return 1000;
+		}
+		else if (L_three == 1) {
+			if (L_support == 1)
+				return 1000;
+			else
+				return 500;
+		}
+		else if (R_three == 1) {
+			if (R_support == 1)
+				return 1000;
+			else
+				return 500;
+		}
+
+		if (L_wall == 0 && R_wall == 0) {
+			if (L_support == 1 && R_support == 1) {
+				if (length == 4) {
+					return 150;
+				}
+				else if (length == 5) {
+					return 200;
+				}
+				else if (length == 6) {
+					return 250;
+				}
+			}
+			else if (L_support == 0 && R_support == 0) {
+				if (length == 4) {
+					return 200;
+				}
+				else if (length == 5) {
+					return 250;
+				}
+				else if (length == 6) {
+					return 300;
+				}
+			}
+			else {
+				if (length == 4) {
+					return 100;
+				}
+				else if (length == 5) {
+					return 150;
+				}
+				else if (length == 6) {
+					return 200;
+				}
+			}
+		}
+		else if (L_wall == 0) {
+			if (L_support == 1) {
+				return 100;
+			}
+			else {
+				return 150;
+			}
+		}
+		else if (R_wall == 0) {
+			if (R_support == 1)
+				return 100;
+			else
+				return 150;
+		}
+		else
+			return 0;
+	}
+
+	return 0;
+
+}
+// < - '＼'대각선 연속된 2개를 만들 수 있는지 체크 By JeongIn
+
+
 int check_make_two(int arr[][7], int x, int y, int who)
 {
-	return (row_check_make_two(arr,x,y,who) + column_check_make_two(arr,x,y,who) /* + */  );
+	return (row_check_make_two(arr,x,y,who) + column_check_make_two(arr,x,y,who) + diagonal_check_make_two(arr,x,y,who) + negative_diagonal_check_make_two(arr,x,y,who)/* + */  );
 }
 // To do things
 /*
@@ -1594,7 +1865,6 @@ int is_only_center(int arr[][7])	//for only one line			//by Jongmin
 	
 		return 0;
 }
-
 
 
 //connect Go :: in board :: '1'

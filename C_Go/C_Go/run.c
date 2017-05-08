@@ -397,32 +397,8 @@ int row_check_make_four(int arr[][7], int x, int y, int who)	//check whether thi
 			break;
 	}
 
-	if (cnt == 3)
+	if (cnt >= 3)		//change for 5connected
 		return 500000;
-	
-	//cnt = 0;
-
-	//for (i = x + 1; i < 7; i++)
-	//{
-	//	if (arr[y][i] == who)
-	//	{
-	//		cnt++;
-	//	}
-	//	else
-	//		break;
-	//}
-	//for (i = x - 1; i >= 0; i--)
-	//{
-	//	if (arr[y][i] == who)
-	//	{
-	//		cnt++;
-	//	}
-	//	else
-	//		break;
-	//}
-
-	//if (cnt == 3)
-	//	return 1000;
 	else
 		return 0;
 }
@@ -451,7 +427,7 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 			break;
 	}
 
-	if (cnt == 3)
+	if (cnt >= 3)		//change for 5connected
 		return 500000;
 
 	cnt = 0;
@@ -474,7 +450,7 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 			break;
 	}
 
-	if (cnt == 3)
+	if (cnt >= 3)
 		return 500000;
 	else
 		return 0;
@@ -1064,13 +1040,10 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 	switch (x)
 	{
 	case 0:
-		if (arr[y][1] == who)
+		if (arr[y][1] == who && arr[y][2] != who ) //arr[y][2]!=who means, do not give double point when 3 connected
 		{
 			if (arr[y][2] == enm || arr[y][3] == enm)
 				return 0;
-			if (arr[y][4] == who)
-				return 0;
-
 
 			if (arr[y][3] == who)
 			{
@@ -1090,11 +1063,9 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 		break;
 	case 1:
 	{
-		if (arr[y][0] == who)
+		if (arr[y][0] == who && arr[y][2] != who)
 		{
 			if (arr[y][2] == enm || arr[y][3] == enm)
-				return 0;
-			if (arr[y][4] == who)
 				return 0;
 
 			if (arr[y][3] == who)
@@ -1112,13 +1083,11 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 			else
 				return 100;
 		}
-		else if (arr[y][2] == who)
+		if (arr[y][2] == who && arr[y][0] != who)
 		{
 			if (arr[y][0] == enm)
 			{
 				if (arr[y][3] == enm || arr[y][4] == enm)
-					return 0;
-				if (arr[y][5] == who)
 					return 0;
 
 				if (arr[y][4] == who)
@@ -1142,6 +1111,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 				
 				if (arr[y][4] == enm)
 					return 150;
+
 				if (arr[y][4] == who)
 				{
 					if (y == 0)
@@ -1154,16 +1124,13 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 							return 500;
 					}
 				}
-				if (arr[y][5] == who)
-					return 150;
-
 				return 300;
 			}
 		}
 	}
 		break;
 	case 2:
-		if (arr[y][1] == who)
+		if (arr[y][1] == who && arr[y][3] != who)
 		{
 			if (arr[y][3] == enm)
 				return 0;
@@ -1171,8 +1138,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 			{
 				if (arr[y][4] == enm)
 					return 0;
-				if (arr[y][5] == who)
-					return 0;
+
 				if (arr[y][4] == who)
 				{
 					if (y == 0)
@@ -1191,8 +1157,6 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 			{
 				if (arr[y][4] == enm)
 					return 150;
-				if (arr[y][5] == who)
-					return 150;
 				if (arr[y][4] == who)
 				{
 					if (y == 0)
@@ -1208,7 +1172,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 				return 300;
 			}
 		}
-		else if (arr[y][3] == who)
+		if (arr[y][3] == who && arr[y][1] != who)
 		{
 			if (arr[y][1] == enm || arr[y][4] == enm)
 				return 0;
@@ -1218,7 +1182,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 					return 500;
 				else
 				{
-					if (arr[y - 1][0] == 0)
+					if (arr[y - 1][1] == 0)
 						return 1000;
 					else
 						return 500;
@@ -1230,7 +1194,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 					return 500;
 				else
 				{
-					if (arr[y - 1][5] == 0)
+					if (arr[y - 1][4] == 0)
 						return 1000;
 					else
 						return 500;
@@ -1240,16 +1204,17 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 				return 150;
 			if (arr[y][5] == enm)
 				return 150;
-			if (arr[y][6] == who)
-				return 150;
 
 			return 300;
 		}
 
 		break;
 	case 3:
-		if (arr[y][2] == who)
+		if (arr[y][2] == who && arr[y][4] != who)
 		{
+			if (arr[y][1] == enm && arr[y][4] == enm)
+				return 0;
+
 			if (arr[y][1] == enm)
 			{
 				if (arr[y][4] == enm || arr[y][5] == enm)
@@ -1316,9 +1281,12 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 		}
 		else if (arr[y][4] == who)
 		{
+			if (arr[y][2] == enm && arr[y][5] == enm)
+				return 0;
+
 			if (arr[y][2] == enm)
 			{
-				if (arr[y][5] == enm || arr[y][6] == enm)
+				if (arr[y][6] == enm)
 					return 0;
 				if (arr[y][6] == who)
 				{
@@ -1336,9 +1304,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 			}
 			else if (arr[y][5] == enm)
 			{
-				if (arr[y][1] == enm || arr[y][2] == enm)
-					return 0;
-				if (arr[y][0] == who)
+				if (arr[y][1] == enm)
 					return 0;
 
 				if (arr[y][1] == who)
@@ -1353,6 +1319,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 							return 500;
 					}
 				}
+				return 100;
 			}
 			if (arr[y][1] == who && arr[y][5] != who)
 			{
@@ -1378,30 +1345,54 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 						return 500;
 				}
 			}
-			if (arr[y][0] == who)
-				return 150;
 
 			return 300;
 		}
 		break;
 	case 4:
-		if (arr[y][3] == who)
+		if (arr[y][3] == who && arr[y][5] != who)
 		{
 			if (arr[y][5] == enm && arr[y][2] == enm)
 				return 0;
-			if (arr[y][6] == who && arr[y][5] != enm && arr[y][2] != who)
+			if (arr[y][2] == enm)
 			{
-				if (y == 0)
-					return 500;
-				else
+				if (arr[y][6] == enm)
+					return 0;
+
+				if (arr[y][6] == who)
 				{
-					if (arr[y - 1][5] == 0)
-						return 1000;
-					else
+					if (y == 0)
 						return 500;
+					else
+					{
+						if (arr[y - 1][5] == 0)
+							return 1000;
+						else
+							return 500;
+					}
 				}
+				return 100;
 			}
-			if (arr[y][1] == who && arr[y][0] != who && arr[y][2] != enm && arr[y][5] != who)
+			
+			if (arr[y][5] == enm)
+			{
+				if (arr[y][1] == enm)
+					return 0;
+				if (arr[y][1] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][2] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+				return 100;
+			}
+			if (arr[y][1] == who)
 			{
 				if (y == 0)
 					return 500;
@@ -1413,44 +1404,47 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 						return 500;
 				}
 			}
-			
-			if (arr[y][5] == enm || arr[y][2] == enm)
-				return 100;
-			if (arr[y][6] == enm || arr[y][1] == enm)
-				return 150;
-
-			return 300;
-		}
-		else if (arr[y][5] == who)
-		{
-			if (arr[y][3] == enm)
-				return 0;
-			if (arr[y][2] == enm && arr[y][6] == enm)
-				return 0;
-			if (arr[y][2] == who && arr[y][1] != who && arr[y][6] != who)
+			if (arr[y][6] == who)
 			{
 				if (y == 0)
 					return 500;
 				else
 				{
-					if (arr[y - 1][3] == 0)
+					if (arr[y - 1][5] == 0)
 						return 1000;
 					else
 						return 500;
 				}
 			}
-			if (arr[y][6] == enm)
-				return 150;
-			if (arr[y][2] == enm)
-				return 100;
 
+
+			if (arr[y][6] == enm || arr[y][1] == enm)
+				return 150;
+
+			return 300;
 		}
-		break;
-	case 5:
-		if (arr[y][4] == who)
+		if (arr[y][5] == who && arr[y][3] != who)
 		{
 			if (arr[y][3] == enm)
 				return 0;
+			if (arr[y][6] == enm)
+			{
+				if (arr[y][2] == enm)
+					return 0;
+				if (arr[y][2] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][3] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+				return 150;
+			}
 			if (arr[y][2] == who && arr[y][6] != who)
 			{
 				if (y == 0)
@@ -1463,18 +1457,55 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 						return 500;
 				}
 			}
-			if (arr[y][6] == enm && arr[y][2] == enm)
+			if (arr[y][2] == enm)
+				return 100;
+
+			return 150;
+		}
+		break;
+	case 5:
+		if (arr[y][4] == who && arr[y][6] != who)
+		{
+			if (arr[y][3] == enm)
 				return 0;
-			if(arr[y][6] == enm || arr[y][2] == enm)
+			if (arr[y][6] == enm)
+			{
+				if (arr[y][2] == enm)
+					return 0;
+				if (arr[y][2] == who)
+				{
+					if (y == 0)
+						return 500;
+					else
+					{
+						if (arr[y - 1][3] == 0)
+							return 1000;
+						else
+							return 500;
+					}
+				}
+				return 150;
+			}
+			if (arr[y][2] == who && arr[y][6] != who)
+			{
+				if (y == 0)
+					return 500;
+				else
+				{
+					if (arr[y - 1][3] == 0)
+						return 1000;
+					else
+						return 500;
+				}
+			}
+			if(arr[y][2] == enm)
 				return 150;
 			return 300;
 
 		}
-		else if (arr[y][6] == who)
+		if (arr[y][6] == who && arr[y][4] != who)
 		{
 			if (arr[y][4] == enm || arr[y][3] == enm)
-				return 0;
-			if (arr[y][2] == who)
 				return 0;
 			if (arr[y][3] == who)
 			{
@@ -1489,7 +1520,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 				}
 			}
 
-			return 100;
+			return 150;
 		}
 		break;
 	case 6:
@@ -1497,8 +1528,6 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 		{
 			if (arr[y][3] == enm || arr[y][4] == enm)
 				return 0;
-			if (arr[y][2] == who)
-				return 0;
 			if (arr[y][3] == who)
 			{
 				if (y == 0)
@@ -1511,7 +1540,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination..
 						return 500;
 				}
 			}
-			return 100;
+			return 150;
 		}
 		break;
 	}

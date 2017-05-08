@@ -30,6 +30,8 @@ int row_check_make_two(int arr[][7], int x, int y, int who);
 int diagonal_check_make_two(int arr[][7], int x, int y, int who); // '／'대각선 연속된 2개를 만들 수 있는지 체크
 int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who); // '＼'대각선 연속된 2개를 만들 수 있는지 체크
 
+int row_check_make_only_one(int arr[][7], int x, int y, int who); // 연결이 안될 때
+
 int is_only_center(int arr[][7]);
 
 //main function
@@ -1856,6 +1858,111 @@ int check_make_two(int arr[][7], int x, int y, int who)
 1. make three score balancing
 
 */
+
+
+// - > 연결이 안될 때 By JeongIn
+int row_check_make_only_one(int arr[][7], int x, int y, int who) {
+
+	int enemy = 3 - who;
+	int L_wall = 1;
+	int L_support = 1;
+	int R_wall = 1;
+	int R_support = 1;
+	int i;
+	int L_count = 0;
+	int R_count = 0;
+
+	if (x > 1) {
+		for (i = 2; i <= x; i++) {
+			if (arr[y][x - 1] == 0) {
+
+				if (y > 0) {
+					if (arr[y - 1][x - 1] == 0)
+						L_support = 0;
+				}
+
+				if (arr[y][x - i] == who)
+					L_count++;
+				else if (arr[y][x - i] == enemy)
+					break;
+				else if (arr[y][x - i] == 0) {
+					L_wall = 0;
+					break;
+				}
+			}
+		}
+	}
+
+	if (x < 5) {
+		for (i = 1; i <= 6 - x; i++) {
+
+			if (y > 0) {
+				if (arr[y - 1][x + 1] == 0)
+					R_support = 0;
+			}
+
+			if (arr[y][x + 1] == 0) {
+				if (arr[y][x + i] == who)
+					R_count++;
+				else if (arr[y][x + i] == enemy)
+					break;
+				else if (arr[y][x + i] == 0) {
+					R_wall = 0;
+					break;
+				}
+			}
+		}
+	}
+
+	if (L_count == 2 && R_count == 2) {
+		if (L_support == 1 && R_support == 1)
+			return 10000;
+		else if (L_support == 0 && R_support == 0)
+			return 2000;
+		else
+			return 1500;
+	}
+	else if (L_count == 2) {
+		if (L_support == 0)
+			return 1000;
+		else
+			return 500;
+	}
+	else if (R_count == 2) {
+		if (R_support == 0)
+			return 1000;
+		else
+			return 500;
+	}
+	else if (L_count == 1 && R_count == 1) {
+		if (L_support == 0 && R_support == 0)
+			return 200;
+		else if (L_support == 1 && R_support == 1)
+			return 150;
+		else
+			return 100;
+	}
+	else if (L_count == 1) {
+		if (L_wall == 1 && R_wall == 1)
+			return 0;
+		else if (L_support == 0)
+			return 200;
+		else
+			return 150;
+	}
+	else if (R_count == 1) {
+		if (L_wall == 1 && R_wall == 1)
+			return 0;
+		else if (R_support == 0)
+			return 200;
+		else
+			return 150;
+	}
+	else
+		return 0;
+
+}
+// <- 연결이 안될 때 By JeongIn
 
 int is_only_center(int arr[][7])	//for only one line			//by Jongmin
 {

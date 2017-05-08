@@ -1654,52 +1654,37 @@ int diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 
 		if (L_wall == 0 && R_wall == 0) {
 			if (L_support == 1 && R_support == 1) {
-				if (length == 4) {
+				if (length == 4)
 					return 150;
-				}
-				else if (length == 5) {
-					return 200;
-				}
-				else if (length == 6) {
-					return 250;
-				}
+				else
+					return 300;
 			}
 			else if (L_support == 0 && R_support == 0) {
-				if (length == 4) {
+				if (length == 4)
 					return 200;
-				}
-				else if (length == 5) {
-					return 250;
-				}
-				else if (length == 6) {
-					return 300;
-				}
+				else
+					return 350;
 			}
 			else {
-				if (length == 4) {
-					return 100;
-				}
-				else if (length == 5) {
+				if (length == 4)
 					return 150;
-				}
-				else if (length == 6) {
-					return 200;
-				}
+				else
+					return 300;
 			}
 		}
 		else if (L_wall == 0) {
 			if (L_support == 1) {
-				return 100;
+				return 150;
 			}
 			else {
-				return 150;
+				return 200;
 			}
 		}
 		else if (R_wall == 0) {
 			if (R_support == 1)
-				return 100;
-			else
 				return 150;
+			else
+				return 200;
 		}
 		else
 			return 0;
@@ -1817,52 +1802,37 @@ int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 
 		if (L_wall == 0 && R_wall == 0) {
 			if (L_support == 1 && R_support == 1) {
-				if (length == 4) {
+				if (length == 4)
 					return 150;
-				}
-				else if (length == 5) {
-					return 200;
-				}
-				else if (length == 6) {
-					return 250;
-				}
+				else
+					return 300;
 			}
 			else if (L_support == 0 && R_support == 0) {
-				if (length == 4) {
+				if (length == 4)
 					return 200;
-				}
-				else if (length == 5) {
-					return 250;
-				}
-				else if (length == 6) {
+				else
 					return 300;
-				}
 			}
 			else {
-				if (length == 4) {
-					return 100;
-				}
-				else if (length == 5) {
+				if (length == 4)
 					return 150;
-				}
-				else if (length == 6) {
-					return 200;
-				}
+				else
+					return 300;
 			}
 		}
 		else if (L_wall == 0) {
 			if (L_support == 1) {
-				return 100;
+				return 150;
 			}
 			else {
-				return 150;
+				return 200;
 			}
 		}
 		else if (R_wall == 0) {
 			if (R_support == 1)
-				return 100;
-			else
 				return 150;
+			else
+				return 200;
 		}
 		else
 			return 0;

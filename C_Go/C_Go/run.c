@@ -989,6 +989,9 @@ int negative_diagonal_check_make_three(int arr[][7], int x, int y, int who) {
 
 int column_check_make_three(int arr[][7], int x, int y, int who)	//simple implementation by Jongmin
 {
+	if (y == 5)
+		return 0;
+
 	int i;
 	int cnt = 0;
 	for (i = y - 1; i >= 0; i--)
@@ -1020,7 +1023,7 @@ int column_check_make_two(int arr[][7], int x, int y, int who)		//Jongmin
 		if (arr[0][x] == who)
 			return 50;
 	}
-	if (y > 1)
+	if (y > 1 && y<=3) // 2 3
 	{
 		if (arr[y - 1][x] == who && arr[y - 2][x] != who)			//for checking not to give double point when connected three
 			return 50;

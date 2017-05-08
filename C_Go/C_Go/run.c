@@ -1876,7 +1876,7 @@ int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 
 int check_make_two(int arr[][7], int x, int y, int who)
 {
-	return (row_check_make_two(arr,x,y,who) + column_check_make_two(arr,x,y,who) + diagonal_check_make_two(arr,x,y,who) + negative_diagonal_check_make_two(arr,x,y,who)/* + */  );
+	return (row_check_make_two(arr,x,y,who) + column_check_make_two(arr,x,y,who) + diagonal_check_make_two(arr,x,y,who) + negative_diagonal_check_make_two(arr,x,y,who) );
 }
 // To do things
 /*
@@ -1903,7 +1903,7 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 	int score[7] = { -1,-1,-1,-1,-1,-1,-1 };
 	int maxIndex = 0;
 	int maxScore = 0;
-
+	int tempscore = 0;
 	int i, j;
 	for (i = 0; i < 7; i++) //i :: x index
 	{
@@ -1924,11 +1924,30 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 			continue;
 		else
 		{
-			score[i] = check_make_four(arr, i, yindex[i], 1);
+			tempscore = check_make_four(arr, i, yindex[i], 1);
+			if (tempscore > 10000)
+			{
+				arr[yindex[i]][i] = 1;
+				return;
+			}
+			else
+			{
+				score[i] = tempscore;
+			}
 			score[i] += check_make_three(arr, i, yindex[i], 1);
 			score[i] += check_make_two(arr, i, yindex[i], 1);
 
-			score[i] += check_make_four(arr, i, yindex[i], 2) / 20;
+			tempscore = check_make_four(arr, i, yindex[i], 2) / 10;
+			if (tempscore > 10000)
+			{
+				arr[yindex[i]][i] = 1;
+				return;
+			}
+			else
+			{
+				score[i] += tempscore;
+			}
+
 			score[i] += check_make_three(arr, i, yindex[i], 2);
 			score[i] += check_make_two(arr, i, yindex[i], 2);
 
@@ -1938,7 +1957,7 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 				score[i] -= check_make_three(arr, i, yindex[i] + 1, 1) / 2;
 				score[i] -= check_make_two(arr, i, yindex[i] + 1, 1) /2;
 
-				score[i] -= check_make_four(arr, i, yindex[i] + 1, 2) / 40;
+				score[i] -= check_make_four(arr, i, yindex[i] + 1, 2) ;
 				score[i] -= check_make_three(arr, i, yindex[i] + 1, 2) /2;
 				score[i] -= check_make_two(arr, i, yindex[i] + 1, 2) /2;
 

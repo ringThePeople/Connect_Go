@@ -153,7 +153,7 @@ void push(int board[][7], int turn)
 			return;
 		}
 	}
-	board[height][num] = (turn % 2);
+	board[height][num] = (turn % 2) + 1;
 
 }//4.06 21:46 JH
 

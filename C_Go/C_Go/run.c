@@ -1686,13 +1686,7 @@ int diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 		}
 
 		if (L_wall == 0 && R_wall == 0) {
-			if (L_support == 1 && R_support == 1) {
-				if (length == 4)
-					return 150;
-				else
-					return 300;
-			}
-			else if (L_support == 0 && R_support == 0) {
+			if (L_support == 0 && R_support == 0) {
 				if (length == 4)
 					return 200;
 				else
@@ -1952,7 +1946,7 @@ int row_check_make_only_one(int arr[][7], int x, int y, int who) {
 		else if (L_support == 0 && R_support == 0)
 			return 2000;
 		else
-			return 1500;
+			return 1000;
 	}
 	else if (L_count == 2) {
 		if (L_support == 0)
@@ -1967,9 +1961,9 @@ int row_check_make_only_one(int arr[][7], int x, int y, int who) {
 			return 500;
 	}
 	else if (L_count == 1 && R_count == 1) {
-		if (L_support == 0 && R_support == 0)
+		if (L_support == 1 && R_support == 1)
 			return 200;
-		else if (L_support == 1 && R_support == 1)
+		else if (L_support == 0 && R_support == 0)
 			return 150;
 		else
 			return 100;

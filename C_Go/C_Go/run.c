@@ -2540,7 +2540,7 @@ int wSpot(int board[][7], int x, int turn)
 			}
 		}
 	}//상대방이 놓으면 이기는 자리를 막아도 AI가 지는 경우
-/*
+
 	for (j = 0; j < 7; j++)
 	{
 		for (i = 5; i >= 0; i--)
@@ -2548,14 +2548,12 @@ int wSpot(int board[][7], int x, int turn)
 			if (check[i][j] == 0)
 			{
 				check[i][j] = (turn % 2);
-				check[i + 1][j] = turn % 2 + 1;
-				if ((winCheck(check) != 0))
-					atomResult -= 3756;
-				check[i + 1][j] = 0;
+				if (deathHeuristic(check, j, turn + 1) == 3000)
+					atomResult -= 3895;
 				check[i][j] = 0;
 			}
 		}
-	}*/
+	}
 	if (atomResult != 0)
 		return atomResult;//when 33
 	return 31 * spot;

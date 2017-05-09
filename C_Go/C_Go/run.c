@@ -2508,11 +2508,11 @@ int wSpot(int board[][7], int x, int turn)
 			if (check[i][j] == 0)
 			{
 				check[i][j] = (turn % 2);
-				if ((winCheck(board) != 0) && i < 5)
+				if ((winCheck(check) != 0) && i < 5)
 				{
 					check[i][j] = (turn % 2) + 1;
 					check[i + 1][j] = (turn % 2);
-					if (winCheck(board) != 0)
+					if (winCheck(check) != 0)
 						atomResult += 3777;
 					check[i + 1][j] = 0;
 				}
@@ -2528,11 +2528,11 @@ int wSpot(int board[][7], int x, int turn)
 			if (check[i][j] == 0)
 			{
 				check[i][j] = (turn % 2) + 1;
-				if ((winCheck(board) != 0) && i < 5)
+				if ((winCheck(check) != 0) && i < 5)
 				{
 					check[i][j] = (turn % 2);
 					check[i + 1][j] = (turn % 2) + 1;
-					if (winCheck(board) != 0)
+					if (winCheck(check) != 0)
 						atomResult -= 3891;
 					check[i + 1][j] = 0;
 				}
@@ -2540,7 +2540,22 @@ int wSpot(int board[][7], int x, int turn)
 			}
 		}
 	}//상대방이 놓으면 이기는 자리를 막아도 AI가 지는 경우
-
+/*
+	for (j = 0; j < 7; j++)
+	{
+		for (i = 5; i >= 0; i--)
+		{
+			if (check[i][j] == 0)
+			{
+				check[i][j] = (turn % 2);
+				check[i + 1][j] = turn % 2 + 1;
+				if ((winCheck(check) != 0))
+					atomResult -= 3756;
+				check[i + 1][j] = 0;
+				check[i][j] = 0;
+			}
+		}
+	}*/
 	if (atomResult != 0)
 		return atomResult;//when 33
 	return 31 * spot;

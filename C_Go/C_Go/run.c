@@ -493,7 +493,8 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 }
 
 // - > 2017/05/03 16:30 by JeongIn 
-// check 5 stone
+// check 5 stone 
+/*
 int fiveStone(int arr[][7], int x, int y, int who) {
 
 	bool check = false;
@@ -557,7 +558,8 @@ int fiveStone(int arr[][7], int x, int y, int who) {
 	}
 
 	return 0;
-}
+} 
+*/
 // < - 2017/05/03 16:30 by JeongIn
 
 

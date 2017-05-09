@@ -8,7 +8,7 @@ bool sub_check(int arr[][7], int x, int y);
 //bool sub_check(int arr[][7], int y);
 int winCheck(int arr[][7]);
 void winnerPrint(int first, int winCheck);
-void Do_by_condition(int arr[][7]);
+void Do_by_condition(int arr[][7], int who);
 int fiveStone(int arr[][7], int x, int y, int who);
 
 int check_make_four(int arr[][7], int x, int y, int who);	//simple check by Jongmin
@@ -33,6 +33,7 @@ int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who); // '�
 int row_check_make_only_one(int arr[][7], int x, int y, int who); // 연결이 안될 때
 
 int is_only_center(int arr[][7]);
+void deepmind(int arr[][7], int who, int* score);
 
 //main function
 void main() {
@@ -2047,6 +2048,7 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 		}
 	}
 
+	deepmind(arr, who, score);
 	score[3] += is_only_center(arr);
 
 	for (i = 0; i < 7; i++)
@@ -2069,4 +2071,181 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 	}
 
 	arr[yindex[maxIndex]][maxIndex] = who;
+}
+
+void deepmind(int arr[][7], int who, int* score)	//deep mind by Jongmin
+{
+	int enm = 3 - who;
+	int i;
+	if (arr[0][3] == who && arr[1][3] == enm && arr[2][3] == who && arr[3][3] == enm && arr[4][3] == who)
+	{
+		if (arr[0][0] == enm && arr[1][0] == 0 && arr[5][3] == 0)
+		{
+			for (i = 1; i < 7; i++)
+			{
+				
+				if (arr[0][i] != 0)
+					return;
+			}
+			score[2] += 1000;
+			return;
+		}	
+		if (arr[0][1] == enm && arr[1][1] == 0 && arr[5][3] == 0)
+		{
+			for (i = 0; i < 7; i++)
+			{
+				if (i == 1 || i== 3)
+					continue;
+				if (arr[0][i] != 0)
+					return;
+			}
+
+			score[1] += 1000;
+			return;
+		}
+		if (arr[0][2] == enm && arr[1][2] == 0 && arr[5][3] == 0)
+		{
+			for (i = 0; i < 7; i++)
+			{
+				if (i == 2 || i == 3)
+					continue;
+				if (arr[0][i] != 0)
+					return;
+			}
+
+			score[2] += 1000;
+			return;
+		}
+		if (arr[5][3] == enm)
+		{
+			for (i = 0; i < 7; i++)
+			{
+				if (i == 3 )
+					continue;
+				if (arr[0][i] != 0)
+					return;
+			}
+
+			score[2] += 1000;
+			return;
+		}
+		if (arr[0][4] == enm && arr[1][4] == 0 && arr[5][3] == 0)
+		{
+			for (i = 0; i < 7; i++)
+			{
+				if (i == 4 || i == 3)
+					continue;
+				if (arr[0][i] != 0)
+					return;
+			}
+
+			score[4] += 1000;
+			return;
+		}
+		if (arr[0][5] == enm && arr[1][5] == 0 && arr[5][3] == 0)
+		{
+			for (i = 0; i < 7; i++)
+			{
+				if (i == 5 || i == 3)
+					continue;
+				if (arr[0][i] != 0)
+					return;
+			}
+
+			score[5] += 1000;
+			return;
+		}
+		if (arr[0][6] == enm && arr[1][6] == 0 && arr[5][3] == 0)
+		{
+			for (i = 0; i < 7; i++)
+			{
+				if (i == 6 || i == 3)
+					continue;
+				if (arr[0][i] != 0)
+					return;
+			}
+
+			score[4] += 1000;
+			return;
+		}
+	}
+	int check = 0;
+	if (arr[0][0] == enm && arr[1][0] == 0)
+	{
+		for (i = 0; i < 7; i++)
+		{
+			if (i == 0)
+				continue;
+			check += arr[0][i];
+		}
+		if (check == 0)
+		{
+			score[1] += 1000;
+		}
+	}
+	if (arr[0][1] == enm && arr[1][1] == 0)
+	{
+		for (i = 0; i < 7; i++)
+		{
+			if (i == 1)
+				continue;
+			check += arr[0][i];
+		}
+		if (check == 0)
+		{
+			score[2] += 1000;
+		}
+	}
+	if (arr[0][2] == enm && arr[1][2] == 0)
+	{
+		for (i = 0; i < 7; i++)
+		{
+			if (i == 2)
+				continue;
+			check += arr[0][i];
+		}
+		if (check == 0)
+		{
+			score[3] += 1000;
+		}
+	}
+	if (arr[0][4] == enm && arr[1][4] == 0)
+	{
+		for (i = 0; i < 7; i++)
+		{
+			if (i == 4)
+				continue;
+			check += arr[0][i];
+		}
+		if (check == 0)
+		{
+			score[3] += 1000;
+		}
+	}
+	if (arr[0][5] == enm && arr[1][5] == 0)
+	{
+		for (i = 0; i < 7; i++)
+		{
+			if (i == 5)
+				continue;
+			check += arr[0][i];
+		}
+		if (check == 0)
+		{
+			score[4] += 1000;
+		}
+	}
+	if (arr[0][6] == enm && arr[1][6] == 0)
+	{
+		for (i = 0; i < 7; i++)
+		{
+			if (i == 6)
+				continue;
+			check += arr[0][i];
+		}
+		if (check == 0)
+		{
+			score[3] += 1000;
+		}
+	}
 }

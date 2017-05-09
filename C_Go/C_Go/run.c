@@ -42,9 +42,9 @@ int is_only_center(int arr[][7]);
 void deepmind(int arr[][7], int who, int* score);
 int* find_top_three(int*  arr);
 
-void Do_by_minMax_using_condition(int arr[][7], int who);		//Jongmin
-int minMax_by_conditions(int arr[][7], int who, int cnt);	//Jongmin
 int* calculate_score_by_condition(int arr[][7], int who);	//calculator module by Jongmin
+int minMax_by_conditions(int arr[][7], int who, int cnt);	//Jongmin
+void Do_by_minMax_using_condition(int arr[][7], int who);		//Jongmin
 
 void ai_push(int board[][7], int turn);//인공지능 push를 위함
 int ai(int board[][7], int first);//인공지능
@@ -3252,9 +3252,25 @@ void Do_by_minMax_using_condition(int arr[][7], int who)		//Jongmin
 				break;
 			}
 		}
+		if (yIndex[i] >= 0)
+		{
+			if (check_make_four(arr, i, yIndex[i], who) > 10000)
+			{
+				arr[yIndex[i]][i] = who;
+				return;
+			}
+		}
+	}
+	for (i = 0; i < 7; i++)
+	{
 		if (yIndex[i] < 0)
 			continue;
 		
+		if (check_make_four(arr, i, yIndex[i], enm) > 10000)
+		{
+			arr[yIndex[i]][i] = who;
+			return;
+		}
 		arr[yIndex[i]][i] = who;
 		score[i] = minMax_by_conditions(arr, enm, 0);
 		arr[yIndex[i]][i] = 0;
@@ -3278,5 +3294,4 @@ void Do_by_minMax_using_condition(int arr[][7], int who)		//Jongmin
 	}
 
 	arr[yIndex[maxIndex]][maxIndex] = who;
-	printf("Done\n");
 }

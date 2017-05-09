@@ -41,6 +41,7 @@ int negative_diagonal_check_make_only_one(int arr[][7], int x, int y, int who); 
 
 int is_only_center(int arr[][7]);
 void deepmind(int arr[][7], int who, int* score);
+int* find_top_three(int*  arr);
 
 
 void ai_push(int board[][7], int turn);//인공지능 push를 위함
@@ -3033,4 +3034,60 @@ void deepmind(int arr[][7], int who, int* score)	//deep mind by Jongmin
 			score[3] += 1000;
 		}
 	}
+}
+
+
+// - > JeongIn
+int* find_top_three(int* arr) {
+	int* top = (int*)malloc(sizeof(int) * 3);
+	int first = 0;
+	int second = 0;
+	int third = 0;
+
+	int i;
+
+	for (i = 0; i < 7; i++) {
+		if (arr[first] < arr[i]) {
+			first = i;
+		}
+	}
+
+	if (first == 0) {
+		second = 1;
+	}
+	for (i = 0; i < 7; i++) {
+		if (i == first)
+			continue;
+
+		if (arr[second] < arr[i]) {
+			second = i;
+		}
+	}
+
+	if (first == 0) {
+		if (second == 1)
+			third = 2;
+		else
+			third = 1;
+	}
+	else if (second == 0) {
+		if (first == 1)
+			third = 2;
+		else
+			third = 1;
+	}
+	for (i = 0; i < 7; i++) {
+		if (first == i || second == i)
+			continue;
+
+		if (arr[third] < arr[i]) {
+			third = i;
+		}
+	}
+
+	top[0] = first;
+	top[1] = second;
+	top[2] = third;
+
+	return top;
 }

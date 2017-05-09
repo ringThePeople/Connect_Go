@@ -24,9 +24,8 @@ int check_make_three(int arr[][7], int x, int y, int who);
 int row_check_make_three(int arr[][7], int x, int y, int who); // 가로로 연속된 3개를 만들 수 있는지 체크
 int diagonal_check_make_three(int arr[][7], int x, int y, int who); // '／'대각선 연속된 3개를 만들 수 있는지 체크
 int negative_diagonal_check_make_three(int arr[][7], int x, int y, int who); // '＼'대각선 연속된 3개를 만들 수 있는지 체크
-int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who);
 int column_check_make_three(int arr[][7], int x, int y, int who);
-
+int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who);
 
 int check_make_two(int arr[][7], int x, int y, int who);
 int column_check_make_two(int arr[][7], int x, int y, int who);
@@ -3030,4 +3029,153 @@ void deepmind(int arr[][7], int who, int* score)	//deep mind by Jongmin
 			score[3] += 1000;
 		}
 	}
+}
+
+
+
+int* calculate_score_by_condition(int arr[][7], int who)	//calculator module by Jongmin
+{
+	int yindex[7] = { -1,-1,-1,-1,-1,-1,-1 };
+	int score[7] = { -1,-1,-1,-1,-1,-1,-1 };
+	int maxIndex = 0;
+	int maxScore = 0;
+	int tempscore = 0;
+	int i, j;
+	int enm = 3 - who;
+
+	for (i = 0; i < 7; i++) //i :: x index
+	{
+		for (j = 0; j < 6; j++)
+		{
+			if (arr[j][i] == 0)
+			{
+				yindex[i] = j;
+				break;
+			}
+		}
+	} // if yindex :: -1 -> that line don't have empty position
+	  //find which position can be done
+
+	
+	for (i = 0; i < 7; i++)
+	{
+		if (yindex[i] == -1)
+		{
+			score[i] -= 500000; //can't do
+			continue;
+		}
+		else
+		{
+			score[i] += check_make_four(arr, i, yindex[i], who);
+			score[i] += check_make_three(arr, i, yindex[i], who);
+			score[i] += check_make_two(arr, i, yindex[i], who);
+			score[i] += check_only_one(arr, i, yindex[i], who);
+
+			score[i] = check_make_four(arr, i, yindex[i], enm);
+			score[i] += check_make_three(arr, i, yindex[i], enm);
+			score[i] += check_make_two(arr, i, yindex[i], enm);
+			score[i] += check_only_one(arr, i, yindex[i], enm);
+
+			if (yindex[i] < 5)
+			{
+				score[i] -= check_make_four(arr, i, yindex[i] + 1, who) / 2;
+				score[i] -= check_make_three(arr, i, yindex[i] + 1, who) / 2;
+				score[i] -= check_make_two(arr, i, yindex[i] + 1, who) / 4;
+				score[i] -= check_only_one(arr, i, yindex[i] + 1, who) / 4;
+
+				score[i] -= check_make_four(arr, i, yindex[i] + 1, enm);
+				score[i] -= check_make_three(arr, i, yindex[i] + 1, enm) / 2;
+				score[i] -= check_make_two(arr, i, yindex[i] + 1, enm) / 3;
+				score[i] -= check_only_one(arr, i, yindex[i] + 1, enm) / 3;
+
+			}
+		}
+	}
+
+	deepmind(arr, who, score);
+	score[3] += is_only_center(arr);
+
+	return score;
+}
+
+int minMax_by_conditions(int arr[][7], int who, int cnt)	//Jongmin
+{
+	if (cnt > 5)
+		return 0;
+	int** mMarr = find_top_three(calculate_score_by_condition(arr, who));
+	int i;
+	int enm = 3 - who;
+	int score = 0;
+	int y = -1;
+	int j;
+	for (i = 0; i < 3; i++)
+	{
+		if (mMarr[0][i] < 0)
+			continue;
+		else
+		{
+			score += mMarr[1][i];
+
+			for (j = 0; j < 6; j++)
+			{
+				if (arr[j][mMarr[1][i]] == 0)
+				{
+					y = j;
+					break;
+				}
+			}
+			arr[y][mMarr[1][i]] = who;
+			score -= minMax_by_conditions(arr, enm, cnt + 1);
+			arr[y][mMarr[1][i]] = 0;
+		}
+	}
+	return score;
+}
+
+void Do_by_minMax_using_condition(int arr[][7], int who)		//Jongmin
+{
+	int enm = 3 - who;
+	int i;
+	int j;
+	int yIndex[7] = { -1, -1, -1, -1, -1, -1, -1 };
+	int score[7] = { -1, -1, -1, -1, -1, -1, -1 };
+	int maxIndex = -1;
+	int maxScore = -1;
+
+	for (i = 0; i < 7; i++)
+	{
+		for (j = 0; j < 6; j++)
+		{
+			if (arr[j][i] == 0)
+			{
+				yIndex[i] = j;
+				break;
+			}
+		}
+		if (yIndex[i] < 0)
+			continue;
+		
+		arr[yIndex[i]][i] = who;
+		score[i] = minMax_by_conditions(arr, enm, 0);
+		arr[yIndex[i]][i] = 0;
+	}
+	for (i = 0; i < 7; i++)
+	{
+		if (yIndex[i] >= 0)
+		{
+			maxIndex = i;
+			maxScore = score[i];
+			break;
+		}
+	}
+	for (i = 0; i < 7; i++)
+	{
+		if (yIndex[i] >= 0 && maxScore < score[i])
+		{
+			maxIndex = i;
+			maxScore = score[i];
+		}
+	}
+
+	arr[yIndex[maxIndex]][maxIndex] = who;
 }

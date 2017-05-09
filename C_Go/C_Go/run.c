@@ -2219,7 +2219,10 @@ int is_only_center(int arr[][7])	//for only one line			//by Jongmin
 	if (arr[0][0] == 0 && arr[0][1] == 0 && arr[0][2] == 0 && arr[0][4] == 0 && arr[0][5] == 0 && arr[0][6] == 0)
 	{
 		if (arr[4][3] == 0)
+		{
+			printf("Rule : center is more valid\n");
 			return 1000;
+		}
 	}
 
 	return 0;
@@ -2260,6 +2263,7 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 			tempscore = check_make_four(arr, i, yindex[i], who);
 			if (tempscore > 10000)
 			{
+				printf("Rule : index [%d] make connected-four\n", i);
 				arr[yindex[i]][i] = who;
 				return;
 			}
@@ -2275,13 +2279,31 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 			continue;
 		else
 		{
-			score[i] += check_make_three(arr, i, yindex[i], who);
-			score[i] += check_make_two(arr, i, yindex[i], who);
-			score[i] += check_only_one(arr, i, yindex[i], who);
+			tempscore = check_make_three(arr, i, yindex[i], who);
+			if (tempscore > 0)
+			{
+				printf("Rule : index[%d] make connected-three\n", i);
+			}
+			score[i] += tempscore;
+
+			tempscore = check_make_two(arr, i, yindex[i], who);
+			if (tempscore > 0)
+			{
+				printf("Rule : index[%d] make connected-two\n",i);
+			}
+			score[i] += tempscore;
+
+			tempscore = check_only_one(arr, i, yindex[i], who);
+			if (tempscore > 0)
+			{
+				printf("Rule : index[%d] make connected-only one\n", i);
+			}
+			score[i] += tempscore;
 
 			tempscore = check_make_four(arr, i, yindex[i], enm);
 			if (tempscore > 10000)
 			{
+				printf("Rule : index[%d] next turn, enemy will make connected-four\n", i);
 				arr[yindex[i]][i] = who;
 				return;
 			}

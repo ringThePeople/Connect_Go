@@ -2546,7 +2546,8 @@ int wSpot(int board[][7], int x, int turn)
 			{
 				check[i][j] = (turn % 2);
 				if (deathHeuristic(check, j, turn + 1) == 3000)
-					atomResult -= 3895;
+					atomResult -= 7777;
+
 				check[i][j] = 0;
 			}
 		}
@@ -2847,7 +2848,7 @@ int ai(int board[][7], int turn)
 	{
 		frontInt = 0;
 		oriDepth = 7;
-		if (poss == 0)
+		if (poss <= 4 && board[poss][3] == 0)
 			return 3;
 		seDol = lookFront(board, turn, oriDepth);
 

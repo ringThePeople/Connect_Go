@@ -1904,14 +1904,14 @@ int row_check_make_only_one(int arr[][7], int x, int y, int who) {
 	int L_count = 0;
 	int R_count = 0;
 
+	if (y > 0) {
+		if (arr[y - 1][x - 1] == 0)
+			L_support = 0;
+	}
+
 	if (x > 1) {
 		for (i = 2; i <= x; i++) {
 			if (arr[y][x - 1] == 0) {
-
-				if (y > 0) {
-					if (arr[y - 1][x - 1] == 0)
-						L_support = 0;
-				}
 
 				if (arr[y][x - i] == who)
 					L_count++;
@@ -1925,13 +1925,13 @@ int row_check_make_only_one(int arr[][7], int x, int y, int who) {
 		}
 	}
 
-	if (x < 5) {
-		for (i = 1; i <= 6 - x; i++) {
+	if (y > 0) {
+		if (arr[y - 1][x + 1] == 0)
+			R_support = 0;
+	}
 
-			if (y > 0) {
-				if (arr[y - 1][x + 1] == 0)
-					R_support = 0;
-			}
+	if (x < 5) {
+		for (i = 2; i <= 6 - x; i++) {
 
 			if (arr[y][x + 1] == 0) {
 				if (arr[y][x + i] == who)
@@ -2009,13 +2009,17 @@ int diagonal_check_make_only_one(int arr[][7], int x, int y, int who) {
 	int L_count = 0;
 	int R_count = 0;
 
+	if (x > 0 && y > 2) {
+		if (arr[y - 2][x - 1] == 0)
+			L_support = 0;
+	}
+	if (y == 1)
+		L_support = 0;
+
 	if (x > 1 && y > 1) {
 		for (i = 2; i <= x; i++) {
 			if (y - i < 0)
 				break;
-
-			if (arr[y - 2][x - 1] == 0)
-				L_support = 0;
 
 			if (arr[y - 1][x - 1] == 0) {	
 				if (arr[y - i][x - i] == who)
@@ -2030,13 +2034,15 @@ int diagonal_check_make_only_one(int arr[][7], int x, int y, int who) {
 		}
 	}
 
+	if (x < 6 && y < 5) {
+		if (arr[y][x + 1] == 0)
+			R_support = 0;
+	}
+
 	if (x < 5 && y < 4) {
-		for (i = 1; i <= 6 - x; i++) {
+		for (i = 2; i <= 6 - x; i++) {
 			if (y + i > 5)
 				break;
-
-			if (arr[y][x + 1] == 0)
-				R_support = 0;
 
 			if (arr[y + 1][x + 1] == 0) {
 				if (arr[y + i][x + i] == who)
@@ -2107,13 +2113,15 @@ int negative_diagonal_check_make_only_one(int arr[][7], int x, int y, int who) {
 	int L_count = 0;
 	int R_count = 0;
 
+	if (x > 0 && y < 5) {
+		if (arr[y][x - 1] == 0)
+			L_support = 0;
+	}
+
 	if (x > 1 && y < 4) {
 		for (i = 2; i <= x; i++) {
 			if (y + i > 5)
 				break;
-
-			if (arr[y][x - 1] == 0)
-				L_support = 0;
 
 			if (arr[y + 1][x - 1] == 0) {
 				if (arr[y + i][x - i] == who)
@@ -2128,13 +2136,17 @@ int negative_diagonal_check_make_only_one(int arr[][7], int x, int y, int who) {
 		}
 	}
 
+	if (x < 6 && y > 1) {
+		if (arr[y - 2][x + 1] == 0)
+			R_support = 0;
+	}
+	if (y == 1)
+		R_support = 0;
+
 	if (x < 5 && y > 1) {
-		for (i = 1; i <= 6 - x; i++) {
+		for (i = 2; i <= 6 - x; i++) {
 			if (y - i < 0)
 				break;
-
-			if (arr[y - 2][x + 1] == 0)
-				R_support = 0;
 
 			if (arr[y - 1][x + 1] == 0) {
 				if (arr[y - i][x + i] == who)
@@ -2274,13 +2286,13 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 			{
 				score[i] -= check_make_four(arr, i, yindex[i] + 1, who) / 2;
 				score[i] -= check_make_three(arr, i, yindex[i] + 1, who) / 2;
-				score[i] -= check_make_two(arr, i, yindex[i] + 1, who) / 2;
-				score[i] -= check_only_one(arr, i, yindex[i] + 1, who) / 2;
+				score[i] -= check_make_two(arr, i, yindex[i] + 1, who) / 4;
+				score[i] -= check_only_one(arr, i, yindex[i] + 1, who) / 4;
 
 				score[i] -= check_make_four(arr, i, yindex[i] + 1, enm);
 				score[i] -= check_make_three(arr, i, yindex[i] + 1, enm) / 2;
-				score[i] -= check_make_two(arr, i, yindex[i] + 1, enm) / 2;
-				score[i] -= check_only_one(arr, i, yindex[i] + 1, enm) / 2;
+				score[i] -= check_make_two(arr, i, yindex[i] + 1, enm) / 3;
+				score[i] -= check_only_one(arr, i, yindex[i] + 1, enm) / 3;
 
 			}
 		}

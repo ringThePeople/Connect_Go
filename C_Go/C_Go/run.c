@@ -60,8 +60,7 @@ void main() {
 
 		else if (methods == 2)
 		{
-			Do_by_condition(board);
-			turn++;
+			Do_by_condition(board, first + (turn++));
 		}
 		else
 		{
@@ -1977,7 +1976,7 @@ int is_only_center(int arr[][7])	//for only one line			//by Jongmin
 
 
 //connect Go :: in board :: '1'
-void Do_by_condition(int arr[][7])	//condition module by Jongmin
+void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 {
 	int yindex[7] = { -1,-1,-1,-1,-1,-1,-1 };
 	int score[7] = { -1,-1,-1,-1,-1,-1,-1 };
@@ -1985,6 +1984,9 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 	int maxScore = 0;
 	int tempscore = 0;
 	int i, j;
+	who = (who % 2) + 1;
+	int enm = 3 - who;
+
 	for (i = 0; i < 7; i++) //i :: x index
 	{
 		for (j = 0; j < 6; j++)
@@ -2004,23 +2006,23 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 			continue;
 		else
 		{
-			tempscore = check_make_four(arr, i, yindex[i], 1);
+			tempscore = check_make_four(arr, i, yindex[i], who);
 			if (tempscore > 10000)
 			{
-				arr[yindex[i]][i] = 1;
+				arr[yindex[i]][i] = who;
 				return;
 			}
 			else
 			{
 				score[i] = tempscore;
 			}
-			score[i] += check_make_three(arr, i, yindex[i], 1);
-			score[i] += check_make_two(arr, i, yindex[i], 1);
+			score[i] += check_make_three(arr, i, yindex[i], who);
+			score[i] += check_make_two(arr, i, yindex[i], who);
 
-			tempscore = check_make_four(arr, i, yindex[i], 2) / 10;
+			tempscore = check_make_four(arr, i, yindex[i], enm) / 10;
 			if (tempscore > 10000)
 			{
-				arr[yindex[i]][i] = 1;
+				arr[yindex[i]][i] = who;
 				return;
 			}
 			else
@@ -2028,18 +2030,18 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 				score[i] += tempscore;
 			}
 
-			score[i] += check_make_three(arr, i, yindex[i], 2);
-			score[i] += check_make_two(arr, i, yindex[i], 2);
+			score[i] += check_make_three(arr, i, yindex[i], enm);
+			score[i] += check_make_two(arr, i, yindex[i], enm);
 
 			if (yindex[i] < 5)
 			{
-				score[i] -= check_make_four(arr, i, yindex[i] + 1, 1) /2 ;
-				score[i] -= check_make_three(arr, i, yindex[i] + 1, 1) / 2;
-				score[i] -= check_make_two(arr, i, yindex[i] + 1, 1) /2;
+				score[i] -= check_make_four(arr, i, yindex[i] + 1, who) /2 ;
+				score[i] -= check_make_three(arr, i, yindex[i] + 1, who) / 2;
+				score[i] -= check_make_two(arr, i, yindex[i] + 1, who) /2;
 
-				score[i] -= check_make_four(arr, i, yindex[i] + 1, 2) ;
-				score[i] -= check_make_three(arr, i, yindex[i] + 1, 2) /2;
-				score[i] -= check_make_two(arr, i, yindex[i] + 1, 2) /2;
+				score[i] -= check_make_four(arr, i, yindex[i] + 1, enm) ;
+				score[i] -= check_make_three(arr, i, yindex[i] + 1, enm) /2;
+				score[i] -= check_make_two(arr, i, yindex[i] + 1, enm) /2;
 
 			}
 		}
@@ -2066,5 +2068,5 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 		}
 	}
 
-	arr[yindex[maxIndex]][maxIndex] = 1;
+	arr[yindex[maxIndex]][maxIndex] = who;
 }

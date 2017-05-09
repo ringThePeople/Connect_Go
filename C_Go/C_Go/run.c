@@ -42,6 +42,7 @@ int is_only_center(int arr[][7]);
 void deepmind(int arr[][7], int who, int* score);
 int* find_top_three(int*  arr);
 
+void Do_by_minMax_using_condition(int arr[][7], int who);		//Jongmin
 
 void ai_push(int board[][7], int turn);//인공지능 push를 위함
 int ai(int board[][7], int first);//인공지능
@@ -91,6 +92,10 @@ void main()
 		else if (methods == 2)
 		{
 			Do_by_condition(board, first + (turn++));
+		}
+		else if (methods == 4)
+		{
+			Do_by_minMax_using_condition(board, first + (turn++));
 		}
 		else
 		{
@@ -3096,11 +3101,15 @@ int* find_top_three(int* arr) {
 int* calculate_score_by_condition(int arr[][7], int who)	//calculator module by Jongmin
 {
 	int yindex[7] = { -1,-1,-1,-1,-1,-1,-1 };
-	int score[7] = { -1,-1,-1,-1,-1,-1,-1 };
+	int i, j;
+	int* score = (int*)malloc(sizeof(int) * 7);
+	for (i = 0; i < 7; i++)
+	{
+		score[i] = -1;
+	}
 	int maxIndex = 0;
 	int maxScore = 0;
 	int tempscore = 0;
-	int i, j;
 	int enm = 3 - who;
 
 	for (i = 0; i < 7; i++) //i :: x index
@@ -3121,7 +3130,7 @@ int* calculate_score_by_condition(int arr[][7], int who)	//calculator module by 
 	{
 		if (yindex[i] == -1)
 		{
-			score[i] -= 500000; //can't do
+			score[i] = 0; //can't do
 			continue;
 		}
 		else
@@ -3131,7 +3140,7 @@ int* calculate_score_by_condition(int arr[][7], int who)	//calculator module by 
 			score[i] += check_make_two(arr, i, yindex[i], who);
 			score[i] += check_only_one(arr, i, yindex[i], who);
 
-			score[i] = check_make_four(arr, i, yindex[i], enm);
+			score[i] += check_make_four(arr, i, yindex[i], enm);
 			score[i] += check_make_three(arr, i, yindex[i], enm);
 			score[i] += check_make_two(arr, i, yindex[i], enm);
 			score[i] += check_only_one(arr, i, yindex[i], enm);
@@ -3160,17 +3169,27 @@ int* calculate_score_by_condition(int arr[][7], int who)	//calculator module by 
 
 int minMax_by_conditions(int arr[][7], int who, int cnt)	//Jongmin
 {
+	int i;
+	int j;
+
 	if (cnt > 5)
 		return 0;
-	int** mMarr = find_top_three(calculate_score_by_condition(arr, who));
-	int i;
+	int* scores = calculate_score_by_condition(arr, who);
+	int mMarr[2][3] = { 0 };
+	
+	int* tops = find_top_three(scores);
+	for (i = 0; i < 3; i++)
+	{
+		mMarr[0][i] = tops[i];
+		mMarr[1][i] = scores[mMarr[0][i]];
+	}
+
 	int enm = 3 - who;
 	int score = 0;
 	int y = -1;
-	int j;
 	for (i = 0; i < 3; i++)
 	{
-		if (mMarr[0][i] < 0)
+		if (arr[5][mMarr[0][i]] != 0)
 			continue;
 		else
 		{
@@ -3178,22 +3197,26 @@ int minMax_by_conditions(int arr[][7], int who, int cnt)	//Jongmin
 
 			for (j = 0; j < 6; j++)
 			{
-				if (arr[j][mMarr[1][i]] == 0)
+				if (arr[j][mMarr[0][i]] == 0)
 				{
 					y = j;
 					break;
 				}
 			}
-			arr[y][mMarr[1][i]] = who;
-			score -= minMax_by_conditions(arr, enm, cnt + 1);
-			arr[y][mMarr[1][i]] = 0;
+			arr[y][mMarr[0][i]] = who;
+			score -= minMax_by_conditions(arr, enm, cnt + 1) / 2.0;
+			arr[y][mMarr[0][i]] = 0;
 		}
 	}
+	free(scores);
+	free(tops);
+
 	return score;
 }
 
 void Do_by_minMax_using_condition(int arr[][7], int who)		//Jongmin
 {
+	who = (who % 2) + 1;
 	int enm = 3 - who;
 	int i;
 	int j;
@@ -3238,4 +3261,5 @@ void Do_by_minMax_using_condition(int arr[][7], int who)		//Jongmin
 	}
 
 	arr[yIndex[maxIndex]][maxIndex] = who;
+	printf("Done\n");
 }

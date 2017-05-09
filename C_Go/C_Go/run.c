@@ -86,8 +86,7 @@ void main() {
 
 		else if (methods == 2)
 		{
-			Do_by_condition(board);
-			turn++;
+			Do_by_condition(board, first + (turn++));
 		}
 		else
 		{
@@ -2003,7 +2002,7 @@ int is_only_center(int arr[][7])	//for only one line			//by Jongmin
 
 
 //connect Go :: in board :: '1'
-void Do_by_condition(int arr[][7])	//condition module by Jongmin
+void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 {
 	int yindex[7] = { -1,-1,-1,-1,-1,-1,-1 };
 	int score[7] = { -1,-1,-1,-1,-1,-1,-1 };
@@ -2011,6 +2010,9 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 	int maxScore = 0;
 	int tempscore = 0;
 	int i, j;
+	who = (who % 2) + 1;
+	int enm = 3 - who;
+
 	for (i = 0; i < 7; i++) //i :: x index
 	{
 		for (j = 0; j < 6; j++)
@@ -2030,23 +2032,23 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 			continue;
 		else
 		{
-			tempscore = check_make_four(arr, i, yindex[i], 1);
+			tempscore = check_make_four(arr, i, yindex[i], who);
 			if (tempscore > 10000)
 			{
-				arr[yindex[i]][i] = 1;
+				arr[yindex[i]][i] = who;
 				return;
 			}
 			else
 			{
 				score[i] = tempscore;
 			}
-			score[i] += check_make_three(arr, i, yindex[i], 1);
-			score[i] += check_make_two(arr, i, yindex[i], 1);
+			score[i] += check_make_three(arr, i, yindex[i], who);
+			score[i] += check_make_two(arr, i, yindex[i], who);
 
-			tempscore = check_make_four(arr, i, yindex[i], 2) / 10;
+			tempscore = check_make_four(arr, i, yindex[i], enm) / 10;
 			if (tempscore > 10000)
 			{
-				arr[yindex[i]][i] = 1;
+				arr[yindex[i]][i] = who;
 				return;
 			}
 			else
@@ -2054,18 +2056,18 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 				score[i] += tempscore;
 			}
 
-			score[i] += check_make_three(arr, i, yindex[i], 2);
-			score[i] += check_make_two(arr, i, yindex[i], 2);
+			score[i] += check_make_three(arr, i, yindex[i], enm);
+			score[i] += check_make_two(arr, i, yindex[i], enm);
 
 			if (yindex[i] < 5)
 			{
-				score[i] -= check_make_four(arr, i, yindex[i] + 1, 1) / 2;
+				score[i] -= check_make_four(arr, i, yindex[i] + 1, 1) /2 ;
 				score[i] -= check_make_three(arr, i, yindex[i] + 1, 1) / 2;
-				score[i] -= check_make_two(arr, i, yindex[i] + 1, 1) / 2;
+				score[i] -= check_make_two(arr, i, yindex[i] + 1, 1) /2;
 
-				score[i] -= check_make_four(arr, i, yindex[i] + 1, 2);
-				score[i] -= check_make_three(arr, i, yindex[i] + 1, 2) / 2;
-				score[i] -= check_make_two(arr, i, yindex[i] + 1, 2) / 2;
+				score[i] -= check_make_four(arr, i, yindex[i] + 1, 2) ;
+				score[i] -= check_make_three(arr, i, yindex[i] + 1, 2) /2;
+				score[i] -= check_make_two(arr, i, yindex[i] + 1, 2) /2;
 
 			}
 		}
@@ -2093,532 +2095,4 @@ void Do_by_condition(int arr[][7])	//condition module by Jongmin
 	}
 
 	arr[yindex[maxIndex]][maxIndex] = 1;
-}
-
-void ai_push(int board[][7], int turn)//hwan
-{
-	int num, height = 0;
-	int i;
-
-	num = ai(board, turn);// call ai
-
-	for (i = 0; i < 6; i++)\
-	{
-		if (board[i][num] == 0)
-		{
-			height = i;
-			break;
-		}
-	}
-	board[height][num] = (turn % 2) + 1;
-}
-
-int cal_Winning(int board[][7], int x, int turn)
-{
-	int i, j, y = 0;
-	int hValue = 0;
-	int myTurn, yourTurn;
-	for (i = 5; i >= 0; i--)//input x -> (x,y)
-	{
-		if (board[i][x] == 0)
-		{
-			y = i + 1;
-			break;
-		}
-		if (i == 0)
-			y = 0;
-	}
-	if (y == 6)
-		return Bad;
-	board[y][x] = (turn % 2);
-	myTurn = (turn % 2);
-	yourTurn = (turn % 2) + 1;
-
-	for (i = 0; i < 6; i++)
-	{
-		for (j = 0; j < 4; j++)
-		{
-			if ((board[i][j] != yourTurn) && (board[i][j + 1] != yourTurn) && (board[i][j + 2] != yourTurn) && (board[i][j + 3] != yourTurn))
-				hValue = hValue + 2;
-			if ((board[i][j] != myTurn) && (board[i][j + 1] != myTurn) && (board[i][j + 2] != myTurn) && (board[i][j + 3] != myTurn))
-				hValue = hValue - 2;
-		}
-	} //row heuristic value
-
-	for (j = 0; j < 7; j++)
-	{
-		for (i = 0; i < 3; i++)
-		{
-			if ((board[i][j] != yourTurn) && (board[i + 1][j] != yourTurn) && (board[i + 2][j] != yourTurn) && (board[i + 3][j] != yourTurn))
-				hValue = hValue + 1;
-			if ((board[i][j] != myTurn) && (board[i + 1][j] != myTurn) && (board[i + 2][j] != myTurn) && (board[i + 3][j] != myTurn))
-				hValue = hValue - 1;
-		}
-	}
-	for (i = 0; i < 3; i++)
-	{
-		for (j = 0; j < 4; j++)
-		{
-			if ((board[i][j] != yourTurn) && (board[i + 1][j + 1] != yourTurn) && (board[i + 2][j + 2] != yourTurn) && (board[i + 3][j + 3] != yourTurn))
-				hValue = hValue + 2;
-			if ((board[i][j] != myTurn) && (board[i + 1][j + 1] != myTurn) && (board[i + 2][j + 2] != myTurn) && (board[i + 3][j + 3] != myTurn))
-				hValue = hValue - 2;
-		}
-	}
-
-	board[y][x] = 0;
-	//if (turn > 13)//hmm
-	//	return hValue / 2;
-	return 7 * hValue;
-}
-
-int winHeuristic(int board[][7], int x, int turn)//x-> input number
-{
-	int i, y;
-	y = 0;
-	for (i = 5; i >= 0; i--)//input->(x,y)
-	{
-		if (board[i][x] != 0)
-		{
-			y = i + 1;
-			break;
-		}
-		if (i == 0)
-			y = 0;
-	}
-	if (y == 6)
-		return Bad;
-	board[y][x] = (turn % 2);
-	if (winCheck(board) == 1)//Player 2(AI) Win then return 4000
-	{
-		board[y][x] = 0;
-		return 4000;
-	}
-	board[y][x] = 0;
-	return 0;
-}
-int wSpot(int board[][7], int x, int turn)
-{
-	int i, j, y, start, AI_33 = 0, People_33 = 0;
-	int check[6][7];
-	int atomResult = 0;
-	int spot = 0;
-	y = 0;
-	for (i = 5; i >= 0; i--)
-	{
-		if (board[i][x] != 0)
-		{
-			y = i + 1;
-			break;
-		}
-		if (i == 0)
-			y = 0;
-	}
-	if (y == 6)
-		return Bad;
-	board[y][x] = (turn % 2);
-	if (winCheck(board) == 0)//Game not Yet Finished
-	{
-		for (i = 0; i < 7; i++)
-		{
-			start = -1;
-			for (j = 0; j < 6; j++)
-			{
-				if (board[j][i] == 0)
-				{
-					if (start == -1)
-						start = j;
-					board[j][i] = (turn % 2);
-					if (winCheck(board) == 1)
-					{
-						spot += 6 - j;
-						if (start == j)
-							AI_33++;
-					}//ai did 33
-					board[j][i] = (turn % 2) + 1;
-					if (winCheck(board) == 2)
-					{
-						spot -= 6 - j;
-						if (start == j)
-							People_33++;
-					}//enemy do 33
-					board[j][i] = 0;
-					if (start != -1)
-						break;
-				}
-			}
-		}
-	}
-
-	if ((AI_33 >= 2) && (People_33 == 0))
-		atomResult += 1700;//33 heuristic
-	if ((AI_33 == 0) && (People_33 >= 2))
-		atomResult -= 2199;
-	board[y][x] = 0;
-	copyBoard(board, check);
-
-	for (j = 0; j < 7; j++)
-	{
-		for (i = 5; i >= 0; i--)
-		{
-			if (check[i][j] == 0)
-			{
-				check[i][j] = (turn % 2);
-				if ((winCheck(check) == 1) && i < 5)
-				{
-					check[i][j] = (turn % 2) + 1;
-					check[i + 1][j] = (turn % 2);
-					if (winCheck(board) == 1)
-						atomResult += 1800;
-					check[i + 1][j] = 0;
-				}
-				check[i][j] = 0;
-			}
-		}
-	}//AI가 놓으면 이기는 자리를 막아도 AI가 이기는 경우
-
-	for (j = 0; j < 7; j++)
-	{
-		for (i = 5; i >= 0; i--)
-		{
-			if (check[i][j] == 0)
-			{
-				check[i][j] = (turn % 2) + 1;
-				if ((winCheck(check) == 2) && i < 5)
-				{
-					check[i][j] = (turn % 2);
-					check[i + 1][j] = (turn % 2) + 1;
-					if (winCheck(check) == 2)
-						atomResult -= 899;
-					check[i + 1][j] = 0;
-				}
-				check[i][j] = 0;
-			}
-		}
-	}//상대방이 놓으면 이기는 자리를 막아도 AI가 지는 경우
-
-	if (atomResult != 0)
-		return atomResult;//when 33
-	return 31 * spot;
-}
-
-int deathHeuristic(int board[][7], int x, int turn)
-{
-	int i, y;
-	y = 0;
-	for (i = 5; i >= 0; i--)
-	{
-		if (board[i][x] != 0)
-		{
-			y = i + 1;
-			break;
-		}
-		if (i == 0)
-			y = 0;
-	}
-	if (y == 6)
-		return Bad;
-	board[y][x] = (turn % 2) + 1;
-	if (winCheck(board) == 2)//player1(not AI) win then return 1000	
-	{
-		board[y][x] = 0;
-		return 1000;
-	}
-	board[y][x] = 0;
-	return 0;
-}
-
-int stopping(int board[][7], int x, int turn)
-{
-	int i, j, y;
-	int myTurn, yourTurn, hValue = 0;
-	y = 0;
-	for (i = 5; i >= 0; i--)
-	{
-		if (board[i][x] != 0)
-		{
-			y = i + 1;
-			break;
-		}
-	}
-	if (i == 0)
-		y = 0;
-	if (y == 6)
-		return Bad;
-	board[y][x] = (turn) % 2;
-
-	myTurn = (turn % 2);
-	yourTurn = turn % 2 + 1;
-	for (i = 0; i < 6; i++)
-	{
-		if ((board[i][0] == yourTurn) && (board[i][1] == yourTurn) && (board[i][2] == myTurn))
-			hValue = hValue + 2;
-		if ((board[i][1] == yourTurn) && (board[i][2] == yourTurn) && (board[i][3] == myTurn))
-			hValue = hValue + 2;
-		if ((board[i][1] == yourTurn) && (board[i][2] == yourTurn) && (board[i][0] == myTurn))
-			hValue = hValue + 1;
-		if ((board[i][3] == yourTurn) && (board[i][4] == yourTurn) && ((board[i][2] == myTurn) || (board[i][5] == myTurn)))
-			hValue = hValue + 2;
-		if ((board[i][5] == yourTurn) && (board[i][6] == yourTurn) && (board[i][4] == myTurn))
-			hValue = hValue + 2;
-		if ((board[i][4] == yourTurn) && (board[i][5] == yourTurn) && (board[i][6] == myTurn))
-			hValue = hValue + 1;
-		if ((board[i][4] == yourTurn) && (board[i][5] == yourTurn) && (board[i][3] == myTurn))
-			hValue = hValue + 2;
-	}//row 3 defense
-
-	for (j = 0; j < 7; j++)
-	{
-		if ((board[0][j] == yourTurn) && (board[1][j] != yourTurn) && (board[2][j] == myTurn))
-			hValue = hValue + 2;
-		if ((board[1][j] == yourTurn) && (board[2][j] != yourTurn) && (board[3][j] == myTurn) && (board[0][j] == myTurn))
-			hValue = hValue + 2;
-		if ((board[2][j] == yourTurn) && (board[3][j] != yourTurn) && (board[4][j] == myTurn) && (board[1][j] == myTurn))
-			hValue = hValue + 1;
-	}//high
-	for (j = 0; j < 5; j++)
-	{
-		if ((board[0][j] == yourTurn || board[0][j] == 0) && (board[1][j + 1] == yourTurn) && (board[2][j + 2] == myTurn))
-			hValue = hValue + 2;
-		if ((board[0][j + 2] == yourTurn || board[0][j + 2] == 0) && (board[1][j + 1] == yourTurn) && (board[2][j] == myTurn))
-			hValue = hValue + 2;
-		if (j != 4)
-		{
-			if ((board[0][j] == myTurn) && (board[1][j + 1] == yourTurn) && (board[2][j + 2] == yourTurn) && (board[3][j + 3] == myTurn))
-				hValue = hValue + 2;
-			if ((board[0][j + 3] == myTurn) && (board[1][j + 2] == yourTurn) && (board[2][j + 1] == yourTurn) && (board[3][j] == myTurn))
-				hValue = hValue + 2;
-		}//cross
-	}
-
-	return 5 * hValue;
-}
-
-int lookFront(int board[][7], int turn, int depth)
-{
-	int i, j, nonEmpty = 0;
-	int height = 0;
-	int x, y;
-	int cpy[6][7];
-
-	if (depth == 1)
-	{
-		copyBoard(board, cpy);
-		nonEmpty = 0;
-		for (i = 0; i < 7; i++)
-		{
-			for (x = 0; x < 6; x++)
-			{
-				for (y = 0; y < 7; y++)
-				{
-					if (cpy[x][y] != 0)
-						nonEmpty++;
-				}
-			}
-			if (nonEmpty - poss == oriDepth - 1)//7수를 내다봤다면
-			{
-				if (willLose == 1 || (winCheck(cpy) != 0 && poss <= 25))
-					cr[frontInt] = Bad;
-				else
-				{
-					cr[frontInt] = winHeuristic(cpy, i, turn) + wSpot(cpy, i, turn) + cal_Winning(cpy, i, turn) + stopping(cpy, i, turn) + deathHeuristic(cpy, i, turn);
-				}
-			}
-			else// 7수를 둘게 없네?!
-			{
-				cr[frontInt] = Bad;
-			}
-			frontInt++;
-
-		}
-
-	}
-	else
-	{
-		for (i = 0; i < 7; i++)
-		{
-			copyBoard(board, cpy);
-			for (j = 0; j < 6; j++)
-			{
-				if (cpy[j][i] == 0)
-				{
-					height = j;
-					break;
-				}
-			}
-			cpy[height][i] = (turn % 2) + 1;
-			if (depth == oriDepth)
-			{
-				if (winHeuristic(cpy, i, turn + 1) == 4000)
-				{
-					willLose = 1;
-				}
-				lookFront(cpy, turn + 1, depth - 1);
-				willLose = 0;
-			}
-			else
-			{
-				lookFront(cpy, turn + 1, depth - 1);
-			}
-		}
-	}
-	if (depth == oriDepth)
-	{
-		return minMax(cr, oriDepth);
-	}
-	return 0;
-}
-
-int minMax(int cr[], int depth)
-{
-	int i, j;
-	int min = 99999, max = -99999;
-	int rndNum;
-
-	for (i = depth; i >= 0; i--)
-	{
-		for (j = 0; j < (int)pow(7, i); j++)
-		{
-			if (i == 1)//최종 결과물 출력
-			{
-				if (j == 0)
-					printf("Heuristic Fuction Value : \n");
-				printf("%d  ", cr[j]);
-				if (j == 6)
-					printf("\n");
-			}
-
-			if (i % 2 == 0)//min값 계산
-			{
-				if (min > cr[j])
-					min = cr[j];
-			}
-			else//max값 계산
-			{
-				if (max < cr[j])
-					max = cr[j];
-			}
-			if (i == 1 && j == 6)
-			{
-				srand((unsigned int)time(NULL));
-				while (1)
-				{
-					rndNum = rand() % 7;
-					if (cr[rndNum] == max)
-						return rndNum;
-					if (cr[0] == -100000 && cr[1] == -100000 && cr[2] == -100000 && cr[3] == -100000 && cr[4] == -100000 && cr[5] == -100000 && cr[6] == -100000)
-						return -1;//죠때쓰마~
-				}
-			}
-			if (j % 7 == 6)
-			{
-				if (i % 2 == 0)
-				{
-					if (min == Bad || min == 99999)
-						cr[j / 7] = -100000;
-					//cr[(j + 1) / 7 - 1] = -100000;
-					else
-						cr[j / 7] = min;
-					//cr[(j + 1) / 7 - 1] = min;
-				}
-				else
-				{
-					if (max == Bad || max == -99999)
-						cr[j / 7] = 100000;
-					//cr[(j + 1) / 7 - 1] = 100000;
-					else
-						//cr[(j + 1) / 7 - 1] = max;
-						cr[j / 7] = max;
-				}
-				max = -99999;
-				min = 99999;
-			}
-		}
-	}
-	return cr[0];
-}
-int ai(int board[][7], int turn)
-{
-
-	int enemy, mine;
-	//int depth=7;
-	int i, j;
-	int seDol;
-	int front[7];
-	int max = -9999;
-
-	poss = 0;
-	enemy = (turn) % 2 + 1;
-	mine = (turn) % 2;
-
-	for (i = 0; i < 7; i++)
-	{
-		if (winHeuristic(board, i, turn) == 4000)
-			return i;
-	}
-	for (i = 0; i < 7; i++)
-	{
-		if (deathHeuristic(board, i, turn) == 3000)
-			return i;
-	}
-	for (i = 0; i < 6; i++)
-	{
-		for (j = 0; j < 7; j++)
-		{
-			if (board[i][j] != 0)
-				poss++;
-		}
-	}
-	if (poss >= 34)
-	{
-		frontInt = 0;
-		if (poss == 41)
-		{
-			for (i = 0; i < 7; i++)
-			{
-				if (board[5][i] == 0)
-					return i;
-			}
-		}
-		else if (poss == 40)
-			oriDepth = 1;
-		else if (poss >= 38)
-			oriDepth = 3;
-		else
-			oriDepth = 5;
-		seDol = lookFront(board, turn, oriDepth);
-	}
-	else
-	{
-		frontInt = 0;
-		oriDepth = 7;
-		if (poss == 0)
-			return 3;
-		seDol = lookFront(board, turn, oriDepth);
-
-		if (seDol == -1)
-		{
-			for (i = 0; i < 7; i++)
-			{
-				front[i] = wSpot(board, i, turn) + cal_Winning(board, i, turn) + winHeuristic(board, i, turn) + stopping(board, i, turn);
-				if (max <= front[i])
-					seDol = i;
-			}
-			return seDol;
-		}
-	}
-
-	return seDol;
-}
-
-void copyBoard(int board[][7], int cpyB[][7])
-{
-	int i, j;
-	for (i = 0; i < 6; i++)
-	{
-		for (j = 0; j < 7; j++)
-		{
-			cpyB[i][j] = board[i][j];
-		}
-	}
 }

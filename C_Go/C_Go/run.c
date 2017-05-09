@@ -2065,9 +2065,9 @@ int diagonal_check_make_only_one(int arr[][7], int x, int y, int who) {
 			return 500;
 	}
 	else if (L_count == 1 && R_count == 1) {
-		if (L_support == 0 && R_support == 0)
+		if (L_support == 1 && R_support == 1)
 			return 200;
-		else if (L_support == 1 && R_support == 1)
+		else if (L_support == 0 && R_support == 0)
 			return 150;
 		else
 			return 100;
@@ -2169,9 +2169,9 @@ int negative_diagonal_check_make_only_one(int arr[][7], int x, int y, int who) {
 			return 500;
 	}
 	else if (L_count == 1 && R_count == 1) {
-		if (L_support == 0 && R_support == 0)
+		if (L_support == 1 && R_support == 1)
 			return 200;
-		else if (L_support == 1 && R_support == 1)
+		else if (L_support == 0 && R_support == 0)
 			return 150;
 		else
 			return 100;

@@ -81,7 +81,7 @@ void main()
 	
 	while (winner == 0)
 	{
-		printf("Which method ( 1. by algorithm  2. by condition  3. by push )\n");
+		printf("Which method ( 1. by algorithm  2. by condition  3. by push  4. by Jong-max )\n");
 		scanf_s("%d", &methods);
 		
 		if (methods == 3)

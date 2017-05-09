@@ -43,6 +43,8 @@ void deepmind(int arr[][7], int who, int* score);
 int* find_top_three(int*  arr);
 
 void Do_by_minMax_using_condition(int arr[][7], int who);		//Jongmin
+int minMax_by_conditions(int arr[][7], int who, int cnt);	//Jongmin
+int* calculate_score_by_condition(int arr[][7], int who);	//calculator module by Jongmin
 
 void ai_push(int board[][7], int turn);//인공지능 push를 위함
 int ai(int board[][7], int first);//인공지능
@@ -1070,7 +1072,7 @@ int column_check_make_two(int arr[][7], int x, int y, int who)		//Jongmin
 }
 
 
-//need revision
+
 int row_check_make_two(int arr[][7], int x, int y, int who)		//big examination... by Jongmin
 {
 	int enm = 2;
@@ -1890,11 +1892,6 @@ int check_make_two(int arr[][7], int x, int y, int who)
 {
 	return (row_check_make_two(arr, x, y, who) + column_check_make_two(arr, x, y, who) + diagonal_check_make_two(arr, x, y, who) + negative_diagonal_check_make_two(arr, x, y, who));
 }
-// To do things
-/*
-1. make three score balancing
-
-*/
 
 
 // - > 가로로 연결이 안될 때 By JeongIn

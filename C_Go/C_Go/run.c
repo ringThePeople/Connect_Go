@@ -2546,7 +2546,7 @@ int wSpot(int board[][7], int x, int turn)
 			{
 				check[i][j] = (turn % 2);
 				if (winHeuristic(check, j, turn + 1) == 4000)
-					atomResult -= 7777;
+					atomResult -= 3777;
 
 				check[i][j] = 0;
 			}
@@ -2657,24 +2657,6 @@ int lookFront(int board[][7], int turn, int depth)
 	int cpy[6][7];
 	bool check_will_lose = false;
 
-	/*
-	if (depth == 7) {
-		for (i = 0; i < 7; i++) {
-			for (j = 0; j < 6; j++)
-			{
-				if (cpy[j][i] == 0)
-				{
-					height = j;
-					break;
-				}
-				cpy[j + 1][i] == (turn) % 2 + 1;
-				if (deathHeuristic(cpy, i, turn) == 3000)
-					cr[i] = 0;
-			}
-		}
-	}
-	*/
-
 	if (depth == 1)
 	{
 		copyBoard(board, cpy);
@@ -2734,6 +2716,7 @@ int lookFront(int board[][7], int turn, int depth)
 			{
 				lookFront(cpy, turn + 1, depth - 1);
 			}
+			cpy[height][i] = 0;
 		}
 	}
 	if (depth == oriDepth)

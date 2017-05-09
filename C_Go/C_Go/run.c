@@ -78,29 +78,49 @@ void main()
 
 	int winner = 0;
 	int methods = 0;
+	
 	while (winner == 0)
 	{
 		printf("Which method ( 1. by algorithm  2. by condition  3. by push )\n");
 		scanf_s("%d", &methods);
-		if (methods == 3)
-			push(board, first + (turn++));
-		else if (methods == 1)
+		if (first == 1)
 		{
-			printf("AI가 계산 중 입니다....\n");
-			ai_push(board, first + (turn++));
+			if (methods == 3)
+				push(board, first + 1 + (turn++));
+			else if (methods == 1)
+			{
+				printf("AI가 계산 중 입니다....\n");
+				ai_push(board, first + 1 + (turn++));
+			}
+			else if (methods == 2)
+			{
+				Do_by_condition(board, first + 1 + (turn++));
+			}	
+			else
+			{
+				printf("wrong methods\n");
+				continue;
+			}
 		}
-		else if (methods == 2)
+		else if (first == 2)
 		{
-			Do_by_condition(board, first + (turn++));
-		}
-		else if (methods == 4)
-		{
-			Do_by_minMax_using_condition(board, first + (turn++));
-		}
-		else
-		{
-			printf("wrong methods\n");
-			continue;
+
+			if (methods == 3)
+				push(board, first + 1+ (turn++));
+			else if (methods == 1)
+			{
+				printf("AI가 계산 중 입니다....\n");
+				ai_push(board, first +1+ (turn++));
+			}
+			else if (methods == 2)
+			{
+				Do_by_condition(board, first + 1 + (turn++));
+			}
+			else
+			{
+				printf("wrong methods\n");
+				continue;
+			}
 		}
 		print_board(board);
 
@@ -2340,7 +2360,7 @@ void ai_push(int board[][7], int turn)//hwan
 
 	num = ai(board, turn);// call ai
 
-	for (i = 0; i < 6; i++)\
+	for (i = 0; i < 6; i++)
 	{
 		if (board[i][num] == 0)
 		{
@@ -2377,7 +2397,7 @@ int cal_Winning(int board[][7], int x, int turn)
 		for (j = 0; j < 4; j++)
 		{
 			if ((board[i][j] != yourTurn) && (board[i][j + 1] != yourTurn) && (board[i][j + 2] != yourTurn) && (board[i][j + 3] != yourTurn))
-				hValue = hValue + 2;
+				hValue = hValue + 3;
 			if ((board[i][j] != myTurn) && (board[i][j + 1] != myTurn) && (board[i][j + 2] != myTurn) && (board[i][j + 3] != myTurn))
 				hValue = hValue - 2;
 		}
@@ -2388,7 +2408,7 @@ int cal_Winning(int board[][7], int x, int turn)
 		for (i = 0; i < 3; i++)
 		{
 			if ((board[i][j] != yourTurn) && (board[i + 1][j] != yourTurn) && (board[i + 2][j] != yourTurn) && (board[i + 3][j] != yourTurn))
-				hValue = hValue + 1;
+				hValue = hValue + 2;
 			if ((board[i][j] != myTurn) && (board[i + 1][j] != myTurn) && (board[i + 2][j] != myTurn) && (board[i + 3][j] != myTurn))
 				hValue = hValue - 1;
 		}
@@ -2398,7 +2418,7 @@ int cal_Winning(int board[][7], int x, int turn)
 		for (j = 0; j < 4; j++)
 		{
 			if ((board[i][j] != yourTurn) && (board[i + 1][j + 1] != yourTurn) && (board[i + 2][j + 2] != yourTurn) && (board[i + 3][j + 3] != yourTurn))
-				hValue = hValue + 2;
+				hValue = hValue + 3;
 			if ((board[i][j] != myTurn) && (board[i + 1][j + 1] != myTurn) && (board[i + 2][j + 2] != myTurn) && (board[i + 3][j + 3] != myTurn))
 				hValue = hValue - 2;
 		}
@@ -2407,7 +2427,7 @@ int cal_Winning(int board[][7], int x, int turn)
 	board[y][x] = 0;
 	//if (turn > 13)//hmm
 	//	return hValue / 2;
-	return 7 * hValue;
+	return 9 * hValue;
 }
 
 int winHeuristic(int board[][7], int x, int turn)//x-> input number
@@ -2427,7 +2447,7 @@ int winHeuristic(int board[][7], int x, int turn)//x-> input number
 	if (y == 6)
 		return Bad;
 	board[y][x] = (turn % 2);
-	if (winCheck(board) == 1)//Player 2(AI) Win then return 4000
+	if (winCheck(board) != 0)//Player 2(AI) Win then return 4000
 	{
 		board[y][x] = 0;
 		return 4000;
@@ -2468,14 +2488,14 @@ int wSpot(int board[][7], int x, int turn)
 					if (start == -1)
 						start = j;
 					board[j][i] = (turn % 2);
-					if (winCheck(board) == 1)
+					if (winCheck(board) != 0)
 					{
 						spot += 6 - j;
 						if (start == j)
 							AI_33++;
 					}//ai did 33
 					board[j][i] = (turn % 2) + 1;
-					if (winCheck(board) == 2)
+					if (winCheck(board) != 0)
 					{
 						spot -= 6 - j;
 						if (start == j)
@@ -2490,9 +2510,9 @@ int wSpot(int board[][7], int x, int turn)
 	}
 
 	if ((AI_33 >= 2) && (People_33 == 0))
-		atomResult += 1700;//33 heuristic
+		atomResult += 4100;//33 heuristic
 	if ((AI_33 == 0) && (People_33 >= 2))
-		atomResult -= 2199;
+		atomResult -= 4099;
 	board[y][x] = 0;
 	copyBoard(board, check);
 
@@ -2503,12 +2523,12 @@ int wSpot(int board[][7], int x, int turn)
 			if (check[i][j] == 0)
 			{
 				check[i][j] = (turn % 2);
-				if ((winCheck(check) == 1) && i < 5)
+				if ((winCheck(board) != 0) && i < 5)
 				{
 					check[i][j] = (turn % 2) + 1;
 					check[i + 1][j] = (turn % 2);
-					if (winCheck(board) == 1)
-						atomResult += 1800;
+					if (winCheck(board) != 0)
+						atomResult += 3777;
 					check[i + 1][j] = 0;
 				}
 				check[i][j] = 0;
@@ -2523,12 +2543,12 @@ int wSpot(int board[][7], int x, int turn)
 			if (check[i][j] == 0)
 			{
 				check[i][j] = (turn % 2) + 1;
-				if ((winCheck(check) == 2) && i < 5)
+				if ((winCheck(board) != 0) && i < 5)
 				{
 					check[i][j] = (turn % 2);
 					check[i + 1][j] = (turn % 2) + 1;
-					if (winCheck(check) == 2)
-						atomResult -= 899;
+					if (winCheck(board) != 0)
+						atomResult -= 3691;
 					check[i + 1][j] = 0;
 				}
 				check[i][j] = 0;
@@ -2558,10 +2578,10 @@ int deathHeuristic(int board[][7], int x, int turn)
 	if (y == 6)
 		return Bad;
 	board[y][x] = (turn % 2) + 1;
-	if (winCheck(board) == 2)//player1(not AI) win then return 1000	
+	if (winCheck(board) != 0)//player1(not AI) win then return 3000	
 	{
 		board[y][x] = 0;
-		return 1000;
+		return 3000;
 	}
 	board[y][x] = 0;
 	return 0;

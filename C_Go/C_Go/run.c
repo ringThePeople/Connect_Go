@@ -35,6 +35,8 @@ int diagonal_check_make_two(int arr[][7], int x, int y, int who); // '／'대각선 
 int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who); // '＼'대각선 연속된 2개를 만들 수 있는지 체크
 
 int row_check_make_only_one(int arr[][7], int x, int y, int who); // 가로로 연결이 안될 때
+int diagonal_check_make_only_one(int arr[][7], int x, int y, int who); // '／'대각선 연결이 안될 때
+int negative_diagonal_check_make_only_one(int arr[][7], int x, int y, int who); // '＼'대각선 연결이 안될 때
 
 int is_only_center(int arr[][7]);
 
@@ -1994,6 +1996,208 @@ int row_check_make_only_one(int arr[][7], int x, int y, int who) {
 }
 // < - 가로로 연결이 안될 때 By JeongIn
 
+
+// - > '＼' 대각선 연결이 안될 때 By JeongIn
+int diagonal_check_make_only_one(int arr[][7], int x, int y, int who) {
+
+	int enemy = 3 - who;
+	int L_wall = 1;
+	int L_support = 1;
+	int R_wall = 1;
+	int R_support = 1;
+	int i;
+	int L_count = 0;
+	int R_count = 0;
+
+	if (x > 1 && y > 1) {
+		for (i = 2; i <= x; i++) {
+			if (y - i < 0)
+				break;
+
+			if (arr[y - 2][x - 1] == 0)
+				L_support = 0;
+
+			if (arr[y - 1][x - 1] == 0) {	
+				if (arr[y - i][x - i] == who)
+					L_count++;
+				else if (arr[y - i][x - i] == enemy)
+					break;
+				else if (arr[y - i][x - i] == 0) {
+					L_wall = 0;
+					break;
+				}
+			}
+		}
+	}
+
+	if (x < 5 && y < 4) {
+		for (i = 1; i <= 6 - x; i++) {
+			if (y + i > 5)
+				break;
+
+			if (arr[y][x + 1] == 0)
+				R_support = 0;
+
+			if (arr[y + 1][x + 1] == 0) {
+				if (arr[y + i][x + i] == who)
+					R_count++;
+				else if (arr[y + i][x + i] == enemy)
+					break;
+				else if (arr[y + i][x + i] == 0) {
+					R_wall = 0;
+					break;
+				}
+			}
+		}
+	}
+
+	
+	if (L_count == 2) {
+		if (L_support == 0)
+			return 1000;
+		else
+			return 500;
+	}
+	else if (R_count == 2) {
+		if (R_support == 0)
+			return 1000;
+		else
+			return 500;
+	}
+	else if (L_count == 1 && R_count == 1) {
+		if (L_support == 0 && R_support == 0)
+			return 200;
+		else if (L_support == 1 && R_support == 1)
+			return 150;
+		else
+			return 100;
+	}
+	else if (L_count == 1) {
+		if (L_wall == 1 && R_wall == 1)
+			return 0;
+		else if (L_support == 0)
+			return 200;
+		else
+			return 150;
+	}
+	else if (R_count == 1) {
+		if (L_wall == 1 && R_wall == 1)
+			return 0;
+		else if (R_support == 0)
+			return 200;
+		else
+			return 150;
+	}
+	else
+		return 0;
+
+}
+// < - '＼' 대각선 연결이 안될 때 By JeongIn
+
+
+// - > '／' 대각선 연결이 안될 때 By JeongIn
+int negative_diagonal_check_make_only_one(int arr[][7], int x, int y, int who) {
+
+	int enemy = 3 - who;
+	int L_wall = 1;
+	int L_support = 1;
+	int R_wall = 1;
+	int R_support = 1;
+	int i;
+	int L_count = 0;
+	int R_count = 0;
+
+	if (x > 1 && y < 4) {
+		for (i = 2; i <= x; i++) {
+			if (y + i > 5)
+				break;
+
+			if (arr[y][x - 1] == 0)
+				L_support = 0;
+
+			if (arr[y + 1][x - 1] == 0) {
+				if (arr[y + i][x - i] == who)
+					L_count++;
+				else if (arr[y + i][x - i] == enemy)
+					break;
+				else if (arr[y + i][x - i] == 0) {
+					L_wall = 0;
+					break;
+				}
+			}
+		}
+	}
+
+	if (x < 5 && y > 1) {
+		for (i = 1; i <= 6 - x; i++) {
+			if (y - i < 0)
+				break;
+
+			if (arr[y - 2][x + 1] == 0)
+				R_support = 0;
+
+			if (arr[y - 1][x + 1] == 0) {
+				if (arr[y - i][x + i] == who)
+					R_count++;
+				else if (arr[y - i][x + i] == enemy)
+					break;
+				else if (arr[y - i][x + i] == 0) {
+					R_wall = 0;
+					break;
+				}
+			}
+		}
+	}
+
+
+	if (L_count == 2) {
+		if (L_support == 0)
+			return 1000;
+		else
+			return 500;
+	}
+	else if (R_count == 2) {
+		if (R_support == 0)
+			return 1000;
+		else
+			return 500;
+	}
+	else if (L_count == 1 && R_count == 1) {
+		if (L_support == 0 && R_support == 0)
+			return 200;
+		else if (L_support == 1 && R_support == 1)
+			return 150;
+		else
+			return 100;
+	}
+	else if (L_count == 1) {
+		if (L_wall == 1 && R_wall == 1)
+			return 0;
+		else if (L_support == 0)
+			return 200;
+		else
+			return 150;
+	}
+	else if (R_count == 1) {
+		if (L_wall == 1 && R_wall == 1)
+			return 0;
+		else if (R_support == 0)
+			return 200;
+		else
+			return 150;
+	}
+	else
+		return 0;
+
+}
+// < - '／' 대각선 연결이 안될 때 By JeongIn
+
+
+int check_only_one(int arr[][7], int x, int y, int who) {
+	return (row_check_make_only_one(arr, x, y, who) + diagonal_check_make_only_one(arr, x, y, who) + negative_diagonal_check_make_only_one(arr, x, y, who));
+}
+
+
 int is_only_center(int arr[][7])	//for only one line			//by Jongmin
 {
 	if (arr[0][0] == 0 && arr[0][1] == 0 && arr[0][2] == 0 && arr[0][4] == 0 && arr[0][5] == 0 && arr[0][6] == 0)
@@ -2049,6 +2253,7 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 			}
 			score[i] += check_make_three(arr, i, yindex[i], who);
 			score[i] += check_make_two(arr, i, yindex[i], who);
+			score[i] += check_only_one(arr, i, yindex[i], who);
 
 			tempscore = check_make_four(arr, i, yindex[i], enm) / 10;
 			if (tempscore > 10000)
@@ -2063,16 +2268,19 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 
 			score[i] += check_make_three(arr, i, yindex[i], enm);
 			score[i] += check_make_two(arr, i, yindex[i], enm);
+			score[i] += check_only_one(arr, i, yindex[i], enm);
 
 			if (yindex[i] < 5)
 			{
 				score[i] -= check_make_four(arr, i, yindex[i] + 1, who) / 2;
 				score[i] -= check_make_three(arr, i, yindex[i] + 1, who) / 2;
 				score[i] -= check_make_two(arr, i, yindex[i] + 1, who) / 2;
+				score[i] -= check_only_one(arr, i, yindex[i] + 1, who) / 2;
 
 				score[i] -= check_make_four(arr, i, yindex[i] + 1, enm);
 				score[i] -= check_make_three(arr, i, yindex[i] + 1, enm) / 2;
 				score[i] -= check_make_two(arr, i, yindex[i] + 1, enm) / 2;
+				score[i] -= check_only_one(arr, i, yindex[i] + 1, enm) / 2;
 
 			}
 		}

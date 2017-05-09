@@ -3142,7 +3142,7 @@ int* calculate_score_by_condition(int arr[][7], int who)	//calculator module by 
 	} // if yindex :: -1 -> that line don't have empty position
 	  //find which position can be done
 
-	
+	int tempScore = 0;
 	for (i = 0; i < 7; i++)
 	{
 		if (yindex[i] == -1)
@@ -3157,7 +3157,10 @@ int* calculate_score_by_condition(int arr[][7], int who)	//calculator module by 
 			score[i] += check_make_two(arr, i, yindex[i], who);
 			score[i] += check_only_one(arr, i, yindex[i], who);
 
-			score[i] += check_make_four(arr, i, yindex[i], enm);
+			tempScore = check_make_four(arr, i, yindex[i], enm);
+			if (tempScore > 10000)
+				tempScore -= 1000;
+			score[i] += tempScore;
 			score[i] += check_make_three(arr, i, yindex[i], enm);
 			score[i] += check_make_two(arr, i, yindex[i], enm);
 			score[i] += check_only_one(arr, i, yindex[i], enm);
@@ -3221,7 +3224,7 @@ int minMax_by_conditions(int arr[][7], int who, int cnt)	//Jongmin
 				}
 			}
 			arr[y][mMarr[0][i]] = who;
-			score -= minMax_by_conditions(arr, enm, cnt + 1) / 2.0;
+			score -= minMax_by_conditions(arr, enm, cnt + 1) / 2;
 			arr[y][mMarr[0][i]] = 0;
 		}
 	}
@@ -3241,6 +3244,10 @@ void Do_by_minMax_using_condition(int arr[][7], int who)		//Jongmin
 	int score[7] = { -1, -1, -1, -1, -1, -1, -1 };
 	int maxIndex = -1;
 	int maxScore = -1;
+	int* scores = calculate_score_by_condition(arr, who);
+	for (i = 0; i < 7; i++)
+		score[i] = scores[i];
+	free(scores);
 
 	for (i = 0; i < 7; i++)
 	{
@@ -3271,9 +3278,18 @@ void Do_by_minMax_using_condition(int arr[][7], int who)		//Jongmin
 			arr[yIndex[i]][i] = who;
 			return;
 		}
+
 		arr[yIndex[i]][i] = who;
-		score[i] = minMax_by_conditions(arr, enm, 0);
+		score[i] += minMax_by_conditions(arr, enm, 0);
 		arr[yIndex[i]][i] = 0;
+
+		if (yIndex[i] < 5)
+		{
+			if (check_make_four(arr, i, yIndex[i] + 1, enm) > 10000)
+			{
+				score[i] -= 500000;
+			}
+		}
 	}
 	for (i = 0; i < 7; i++)
 	{

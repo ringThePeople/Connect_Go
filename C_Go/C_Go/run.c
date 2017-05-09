@@ -34,6 +34,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who);
 int diagonal_check_make_two(int arr[][7], int x, int y, int who); // '／'대각선 연속된 2개를 만들 수 있는지 체크
 int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who); // '＼'대각선 연속된 2개를 만들 수 있는지 체크
 
+int check_only_one(int arr[][7], int x, int y, int who);
 int row_check_make_only_one(int arr[][7], int x, int y, int who); // 가로로 연결이 안될 때
 int diagonal_check_make_only_one(int arr[][7], int x, int y, int who); // '／'대각선 연결이 안될 때
 int negative_diagonal_check_make_only_one(int arr[][7], int x, int y, int who); // '＼'대각선 연결이 안될 때
@@ -160,7 +161,7 @@ void push(int board[][7], int turn)
 }//4.06 21:46 JH
 
 
- //// delete this sentence.. when 5 connected , it means win.. -> some problem ..when it is connected five.. so develope more..
+ //// delete this sentence.. when 5 connected , it means win.. -> (some problem ..when it is connected five.. so develope more..)
 bool sub_check(int arr[][7], int x, int y)	//check LeftUp, Up, RightUp, Right
 {
 	int stone = arr[y][x];
@@ -444,7 +445,7 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 		else
 			break;
 	}
-	for (i = 1; i < 4; i++)				//first, check like '/'
+	for (i = 1; i < 4; i++)				
 	{
 		if (y - i < 0 || x - i < 0)
 			break;
@@ -467,7 +468,7 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 		else
 			break;
 	}
-	for (i = 1; i < 4; i++)				//second, check like '| :: reverse /'
+	for (i = 1; i < 4; i++)				
 	{
 		if (y + i > 5 || x - i < 0)
 			break;
@@ -1037,8 +1038,9 @@ int column_check_make_three(int arr[][7], int x, int y, int who)	//simple implem
 
 int check_make_three(int arr[][7], int x, int y, int who)	//control by Jongmin
 {
-	return(column_check_make_three(arr, x, y, who) + row_check_make_three(arr, x, y, who) + row_check_make_three_but_onesidebarrier(arr, x, y, who) + diagonal_check_make_three(arr, x, y, who) + negative_diagonal_check_make_three(arr, x, y, who));
+	return(column_check_make_three(arr, x, y, who) + row_check_make_three(arr, x, y, who)  + diagonal_check_make_three(arr, x, y, who) + negative_diagonal_check_make_three(arr, x, y, who));
 }
+//+ row_check_make_three_but_onesidebarrier(arr, x, y, who)
 
 
 int column_check_make_two(int arr[][7], int x, int y, int who)		//Jongmin
@@ -2270,7 +2272,7 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 			score[i] += check_make_two(arr, i, yindex[i], who);
 			score[i] += check_only_one(arr, i, yindex[i], who);
 
-			tempscore = check_make_four(arr, i, yindex[i], enm) / 10;
+			tempscore = check_make_four(arr, i, yindex[i], enm);
 			if (tempscore > 10000)
 			{
 				arr[yindex[i]][i] = who;

@@ -83,45 +83,28 @@ void main()
 	{
 		printf("Which method ( 1. by algorithm  2. by condition  3. by push )\n");
 		scanf_s("%d", &methods);
-		if (first == 1)
+		
+		if (methods == 3)
+			push(board, first + (turn++));
+		else if (methods == 1)
 		{
-			if (methods == 3)
-				push(board, first + 1 + (turn++));
-			else if (methods == 1)
-			{
-				printf("AI가 계산 중 입니다....\n");
-				ai_push(board, first + 1 + (turn++));
-			}
-			else if (methods == 2)
-			{
-				Do_by_condition(board, first + 1 + (turn++));
-			}	
-			else
-			{
-				printf("wrong methods\n");
-				continue;
-			}
+			printf("AI가 계산 중 입니다....\n");
+			ai_push(board, first + 1 + (turn++));
 		}
-		else if (first == 2)
+		else if (methods == 2)
 		{
-
-			if (methods == 3)
-				push(board, first + 1+ (turn++));
-			else if (methods == 1)
-			{
-				printf("AI가 계산 중 입니다....\n");
-				ai_push(board, first +1+ (turn++));
-			}
-			else if (methods == 2)
-			{
-				Do_by_condition(board, first + 1 + (turn++));
-			}
-			else
-			{
-				printf("wrong methods\n");
-				continue;
-			}
+			Do_by_condition(board, first + (turn++));
+		}	
+		else if (methods == 4)
+		{
+			Do_by_minMax_using_condition(board, first + (turn++));
 		}
+		else
+		{
+			printf("wrong methods\n");
+			continue;
+		}
+		
 		print_board(board);
 
 
@@ -2368,7 +2351,7 @@ void ai_push(int board[][7], int turn)//hwan
 			break;
 		}
 	}
-	board[height][num] = (turn % 2) + 1;
+	board[height][num] = 1;
 }
 
 int cal_Winning(int board[][7], int x, int turn)

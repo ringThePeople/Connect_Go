@@ -34,12 +34,14 @@ int row_check_make_two(int arr[][7], int x, int y, int who);
 int diagonal_check_make_two(int arr[][7], int x, int y, int who); // '／'대각선 연속된 2개를 만들 수 있는지 체크
 int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who); // '＼'대각선 연속된 2개를 만들 수 있는지 체크
 
+int check_only_one(int arr[][7], int x, int y, int who);
 int row_check_make_only_one(int arr[][7], int x, int y, int who); // 가로로 연결이 안될 때
 int diagonal_check_make_only_one(int arr[][7], int x, int y, int who); // '／'대각선 연결이 안될 때
 int negative_diagonal_check_make_only_one(int arr[][7], int x, int y, int who); // '＼'대각선 연결이 안될 때
 
 int is_only_center(int arr[][7]);
 void deepmind(int arr[][7], int who, int* score);
+int* find_top_three(int*  arr);
 
 
 void ai_push(int board[][7], int turn);//인공지능 push를 위함
@@ -60,7 +62,8 @@ int onBoard = 0;
 int oriDepth = 7;//in lookFront
 int willLose = 0;//반드시 지는 값을 체크하기위한 변수
 				 //main function
-void main() {
+void main()
+{
 	int board[6][7] = { 0 }; //empty state :: 0 , player 1 :: 1 ,  player 2 :: 2
 							 //initialized by JM
 
@@ -183,7 +186,7 @@ void push(int board[][7], int turn)
 }//4.06 21:46 JH
 
 
- //// delete this sentence.. when 5 connected , it means win.. -> some problem ..when it is connected five.. so develope more..
+ //// delete this sentence.. when 5 connected , it means win.. -> (some problem ..when it is connected five.. so develope more..)
 bool sub_check(int arr[][7], int x, int y)	//check LeftUp, Up, RightUp, Right
 {
 	int stone = arr[y][x];
@@ -467,7 +470,7 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 		else
 			break;
 	}
-	for (i = 1; i < 4; i++)				//first, check like '/'
+	for (i = 1; i < 4; i++)				
 	{
 		if (y - i < 0 || x - i < 0)
 			break;
@@ -490,7 +493,7 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 		else
 			break;
 	}
-	for (i = 1; i < 4; i++)				//second, check like '| :: reverse /'
+	for (i = 1; i < 4; i++)				
 	{
 		if (y + i > 5 || x - i < 0)
 			break;
@@ -1060,8 +1063,9 @@ int column_check_make_three(int arr[][7], int x, int y, int who)	//simple implem
 
 int check_make_three(int arr[][7], int x, int y, int who)	//control by Jongmin
 {
-	return(column_check_make_three(arr, x, y, who) + row_check_make_three(arr, x, y, who) + row_check_make_three_but_onesidebarrier(arr, x, y, who) + diagonal_check_make_three(arr, x, y, who) + negative_diagonal_check_make_three(arr, x, y, who));
+	return(column_check_make_three(arr, x, y, who) + row_check_make_three(arr, x, y, who)  + diagonal_check_make_three(arr, x, y, who) + negative_diagonal_check_make_three(arr, x, y, who));
 }
+//+ row_check_make_three_but_onesidebarrier(arr, x, y, who)
 
 
 int column_check_make_two(int arr[][7], int x, int y, int who)		//Jongmin
@@ -1710,13 +1714,7 @@ int diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 		}
 
 		if (L_wall == 0 && R_wall == 0) {
-			if (L_support == 1 && R_support == 1) {
-				if (length == 4)
-					return 150;
-				else
-					return 300;
-			}
-			else if (L_support == 0 && R_support == 0) {
+			if (L_support == 0 && R_support == 0) {
 				if (length == 4)
 					return 200;
 				else
@@ -1976,7 +1974,7 @@ int row_check_make_only_one(int arr[][7], int x, int y, int who) {
 		else if (L_support == 0 && R_support == 0)
 			return 2000;
 		else
-			return 1500;
+			return 1000;
 	}
 	else if (L_count == 2) {
 		if (L_support == 0)
@@ -1991,9 +1989,9 @@ int row_check_make_only_one(int arr[][7], int x, int y, int who) {
 			return 500;
 	}
 	else if (L_count == 1 && R_count == 1) {
-		if (L_support == 0 && R_support == 0)
+		if (L_support == 1 && R_support == 1)
 			return 200;
-		else if (L_support == 1 && R_support == 1)
+		else if (L_support == 0 && R_support == 0)
 			return 150;
 		else
 			return 100;
@@ -2095,9 +2093,9 @@ int diagonal_check_make_only_one(int arr[][7], int x, int y, int who) {
 			return 500;
 	}
 	else if (L_count == 1 && R_count == 1) {
-		if (L_support == 0 && R_support == 0)
+		if (L_support == 1 && R_support == 1)
 			return 200;
-		else if (L_support == 1 && R_support == 1)
+		else if (L_support == 0 && R_support == 0)
 			return 150;
 		else
 			return 100;
@@ -2199,9 +2197,9 @@ int negative_diagonal_check_make_only_one(int arr[][7], int x, int y, int who) {
 			return 500;
 	}
 	else if (L_count == 1 && R_count == 1) {
-		if (L_support == 0 && R_support == 0)
+		if (L_support == 1 && R_support == 1)
 			return 200;
-		else if (L_support == 1 && R_support == 1)
+		else if (L_support == 0 && R_support == 0)
 			return 150;
 		else
 			return 100;
@@ -2299,7 +2297,7 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 			score[i] += check_make_two(arr, i, yindex[i], who);
 			score[i] += check_only_one(arr, i, yindex[i], who);
 
-			tempscore = check_make_four(arr, i, yindex[i], enm) / 10;
+			tempscore = check_make_four(arr, i, yindex[i], enm);
 			if (tempscore > 10000)
 			{
 				arr[yindex[i]][i] = who;
@@ -2457,6 +2455,7 @@ int winHeuristic(int board[][7], int x, int turn)//x-> input number
 	board[y][x] = 0;
 	return 0;
 }
+
 int wSpot(int board[][7], int x, int turn)
 {
 	int i, j, y, start, AI_33 = 0, People_33 = 0;
@@ -2797,6 +2796,7 @@ int minMax(int cr[], int depth)
 	}
 	return cr[0];
 }
+
 int ai(int board[][7], int turn)
 {
 
@@ -3058,4 +3058,60 @@ void deepmind(int arr[][7], int who, int* score)	//deep mind by Jongmin
 			score[3] += 1000;
 		}
 	}
+}
+
+
+// - > JeongIn
+int* find_top_three(int* arr) {
+	int* top = (int*)malloc(sizeof(int) * 3);
+	int first = 0;
+	int second = 0;
+	int third = 0;
+
+	int i;
+
+	for (i = 0; i < 7; i++) {
+		if (arr[first] < arr[i]) {
+			first = i;
+		}
+	}
+
+	if (first == 0) {
+		second = 1;
+	}
+	for (i = 0; i < 7; i++) {
+		if (i == first)
+			continue;
+
+		if (arr[second] < arr[i]) {
+			second = i;
+		}
+	}
+
+	if (first == 0) {
+		if (second == 1)
+			third = 2;
+		else
+			third = 1;
+	}
+	else if (second == 0) {
+		if (first == 1)
+			third = 2;
+		else
+			third = 1;
+	}
+	for (i = 0; i < 7; i++) {
+		if (first == i || second == i)
+			continue;
+
+		if (arr[third] < arr[i]) {
+			third = i;
+		}
+	}
+
+	top[0] = first;
+	top[1] = second;
+	top[2] = third;
+
+	return top;
 }

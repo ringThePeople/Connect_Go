@@ -84,7 +84,6 @@ void main() {
 			printf("AI가 계산 중 입니다....\n");
 			ai_push(board, first + (turn++));
 		}
-
 		else if (methods == 2)
 		{
 			Do_by_condition(board, first + (turn++));
@@ -576,7 +575,7 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 					else
 						return 500;
 				}
-				else	//y == 0 can be difensed
+				else	//y == 0 can be defensed
 				{
 					return 500;
 				}
@@ -593,7 +592,7 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 					else
 						return 500;
 				}
-				else	//y == 0 can be difensed
+				else	//y == 0 can be defensed
 				{
 					return 500;
 				}
@@ -613,7 +612,7 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 					else
 						return 500;
 				}
-				else	//y == 0 can be difensed
+				else	//y == 0 can be defensed
 				{
 					return 500;
 				}
@@ -630,7 +629,7 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 					else
 						return 500;
 				}
-				else	//y == 0 can be difensed
+				else	//y == 0 can be defensed
 				{
 					return 500;
 				}
@@ -650,7 +649,7 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 					else
 						return 500;
 				}
-				else	//y == 0 can be difensed
+				else	//y == 0 can be defensed
 				{
 					return 500;
 				}
@@ -667,7 +666,7 @@ int row_check_make_three_but_onesidebarrier(int arr[][7], int x, int y, int who)
 					else
 						return 500;
 				}
-				else	//y == 0 can be difensed
+				else	//y == 0 can be defensed
 				{
 					return 500;
 				}
@@ -2032,7 +2031,7 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 	} // if yindex :: -1 -> that line don't have empty position
 	  //find which position can be done
 
-	for (i = 0; i < 7; i++)
+	for (i = 0; i < 7; i++)		//when it can win right-now, then do that
 	{
 		if (yindex[i] == -1)
 			continue;
@@ -2048,6 +2047,14 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 			{
 				score[i] = tempscore;
 			}
+		}
+	}
+	for (i = 0; i < 7; i++)
+	{
+		if (yindex[i] == -1)
+			continue;
+		else
+		{
 			score[i] += check_make_three(arr, i, yindex[i], who);
 			score[i] += check_make_two(arr, i, yindex[i], who);
 
@@ -2101,7 +2108,7 @@ void Do_by_condition(int arr[][7], int who)	//condition module by Jongmin
 		}
 	}
 
-	arr[yindex[maxIndex]][maxIndex] = 1;
+	arr[yindex[maxIndex]][maxIndex] = who;
 }
 
 void ai_push(int board[][7], int turn)//hwan
@@ -2630,8 +2637,6 @@ void copyBoard(int board[][7], int cpyB[][7])
 			cpyB[i][j] = board[i][j];
 		}
 	}
-}
-	arr[yindex[maxIndex]][maxIndex] = who;
 }
 
 void deepmind(int arr[][7], int who, int* score)	//deep mind by Jongmin

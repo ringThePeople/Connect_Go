@@ -60,7 +60,8 @@ int onBoard = 0;
 int oriDepth = 7;//in lookFront
 int willLose = 0;//반드시 지는 값을 체크하기위한 변수
 				 //main function
-void main() {
+void main()
+{
 	int board[6][7] = { 0 }; //empty state :: 0 , player 1 :: 1 ,  player 2 :: 2
 							 //initialized by JM
 
@@ -2427,6 +2428,7 @@ int winHeuristic(int board[][7], int x, int turn)//x-> input number
 	board[y][x] = 0;
 	return 0;
 }
+
 int wSpot(int board[][7], int x, int turn)
 {
 	int i, j, y, start, AI_33 = 0, People_33 = 0;
@@ -2767,6 +2769,7 @@ int minMax(int cr[], int depth)
 	}
 	return cr[0];
 }
+
 int ai(int board[][7], int turn)
 {
 

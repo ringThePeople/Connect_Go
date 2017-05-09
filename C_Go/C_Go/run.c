@@ -30,7 +30,7 @@ int row_check_make_two(int arr[][7], int x, int y, int who);
 int diagonal_check_make_two(int arr[][7], int x, int y, int who); // '／'대각선 연속된 2개를 만들 수 있는지 체크
 int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who); // '＼'대각선 연속된 2개를 만들 수 있는지 체크
 
-int row_check_make_only_one(int arr[][7], int x, int y, int who); // 연결이 안될 때
+int row_check_make_only_one(int arr[][7], int x, int y, int who); // 가로로 연결이 안될 때
 
 int is_only_center(int arr[][7]);
 
@@ -370,9 +370,6 @@ void winnerPrint(int first, int winCheck)
 	else
 		printf("Connect-GO resign\n\n");
 }// 04/06 23:14		by Jongmin
-
-
-
 
 
 int row_check_make_four(int arr[][7], int x, int y, int who)	//check whether this position make win or not by 'row - 4'  //Jongmin
@@ -1566,8 +1563,8 @@ int diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 	int R_three = 0;
 	int L_x = x;
 	int R_x = x;
-	int L_w_x = -1;
-	int R_w_x = 7;
+	int L_w_x = x - 1;
+	int R_w_x = x + 1;
 	int i;
 	int count = 0;
 
@@ -1575,10 +1572,12 @@ int diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 		if (y - i < 0)
 			break;
 
-		if (arr[y - i][x - i] == who && L_wall == 1) {
+		if (arr[y - i][x - i] == who) {
 			L_w_x = x - i - 1;
-			L_x = x - i;
-			count++;
+			if (L_wall == 1) {
+				L_x = x - i;
+				count++;
+			}
 		}
 		else if (arr[y - i][x - i] == enemy) {
 			L_w_x = x - i;
@@ -1605,10 +1604,12 @@ int diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 		if (y + i > 5)
 			break;
 
-		if (arr[y + i][x + i] == who && R_wall == 1) {
+		if (arr[y + i][x + i] == who) {
 			R_w_x = x + i + 1;
-			R_x = x + i;
-			count++;
+			if (R_wall == 1) {
+				R_x = x + i;
+				count++;
+			}
 		}
 		else if (arr[y + i][x + i] == enemy) {
 			R_w_x = x + i;
@@ -1713,8 +1714,8 @@ int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 	int R_three = 0;
 	int L_x = x;
 	int R_x = x;
-	int L_w_x = -1;
-	int R_w_x = 7;
+	int L_w_x = x - 1;
+	int R_w_x = x + 1;
 	int i;
 	int count = 0;
 
@@ -1724,8 +1725,10 @@ int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 
 		if (arr[y + i][x - i] == who) {
 			L_w_x = x - i - 1;
-			L_x = x - i;
-			count++;
+			if (L_wall == 1) {
+				L_x = x - i;
+				count++;
+			}
 		}
 		else if (arr[y + i][x - i] == enemy) {
 			L_w_x = x - i;
@@ -1753,8 +1756,10 @@ int negative_diagonal_check_make_two(int arr[][7], int x, int y, int who) {
 
 		if (arr[y - i][x + i] == who) {
 			R_w_x = x + i + 1;
-			R_x = x + i;
-			count++;
+			if (R_wall == 1) {
+				R_x = x + i;
+				count++;
+			}
 		}
 		else if (arr[y - i][x + i] == enemy) {
 			R_w_x = x + i;
@@ -1860,7 +1865,7 @@ int check_make_two(int arr[][7], int x, int y, int who)
 */
 
 
-// - > 연결이 안될 때 By JeongIn
+// - > 가로로 연결이 안될 때 By JeongIn
 int row_check_make_only_one(int arr[][7], int x, int y, int who) {
 
 	int enemy = 3 - who;
@@ -1962,7 +1967,7 @@ int row_check_make_only_one(int arr[][7], int x, int y, int who) {
 		return 0;
 
 }
-// <- 연결이 안될 때 By JeongIn
+// < - 가로로 연결이 안될 때 By JeongIn
 
 int is_only_center(int arr[][7])	//for only one line			//by Jongmin
 {

@@ -2537,7 +2537,7 @@ int wSpot(int board[][7], int x, int turn)
 			}
 		}
 	}//상대방이 놓으면 이기는 자리를 막아도 AI가 지는 경우
-/*
+
 	for (j = 0; j < 7; j++)
 	{
 		for (i = 5; i >= 0; i--)
@@ -2545,14 +2545,13 @@ int wSpot(int board[][7], int x, int turn)
 			if (check[i][j] == 0)
 			{
 				check[i][j] = (turn % 2);
-				check[i + 1][j] = turn % 2 + 1;
-				if ((winCheck(check) != 0))
-					atomResult -= 3756;
-				check[i + 1][j] = 0;
+				if (winHeuristic(check, j, turn + 1) == 4000)
+					atomResult -= 7777;
+
 				check[i][j] = 0;
 			}
 		}
-	}*/
+	}
 	if (atomResult != 0)
 		return atomResult;//when 33
 	return 31 * spot;
@@ -2656,6 +2655,25 @@ int lookFront(int board[][7], int turn, int depth)
 	int height = 0;
 	int x, y;
 	int cpy[6][7];
+	bool check_will_lose = false;
+
+	/*
+	if (depth == 7) {
+		for (i = 0; i < 7; i++) {
+			for (j = 0; j < 6; j++)
+			{
+				if (cpy[j][i] == 0)
+				{
+					height = j;
+					break;
+				}
+				cpy[j + 1][i] == (turn) % 2 + 1;
+				if (deathHeuristic(cpy, i, turn) == 3000)
+					cr[i] = 0;
+			}
+		}
+	}
+	*/
 
 	if (depth == 1)
 	{
@@ -2849,7 +2867,7 @@ int ai(int board[][7], int turn)
 	{
 		frontInt = 0;
 		oriDepth = 7;
-		if (poss == 0)
+		if (poss <= 4 && board[poss][3] == 0)
 			return 3;
 		seDol = lookFront(board, turn, oriDepth);
 

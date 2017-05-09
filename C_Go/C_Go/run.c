@@ -11,7 +11,7 @@ void push(int board[][7], int turn);
 bool sub_check(int arr[][7], int x, int y);
 //bool sub_check(int arr[][7], int y);
 int winCheck(int arr[][7]);
-void winnerPrint(int first, int winCheck);
+void winnerPrint(int winCheck);
 void Do_by_condition(int arr[][7], int who);
 int fiveStone(int arr[][7], int x, int y, int who);
 
@@ -112,7 +112,7 @@ void main()
 	}
 	//winner 1or2 -> 1or 2 win ,,  3 -> draw
 
-	winnerPrint(first, winner);
+	winnerPrint(winner);
 
 	getchar();
 }
@@ -396,7 +396,7 @@ int column_check_make_four(int arr[][7], int x, int y, int who) {
 	return 0;
 } // <-- 2017/05/03 15:19 세로로 연속된 3개가 있는지 체크 by JeongIn. 
 
-void winnerPrint(int first, int winCheck)
+void winnerPrint(int winCheck)
 {
 	printf("\n\n");
 

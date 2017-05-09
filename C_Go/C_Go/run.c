@@ -83,7 +83,7 @@ void main()
 	
 	while (winner == 0)
 	{
-		printf("Which method ( 1. by algorithm  2. by condition  3. by push )\n");
+		printf("Which method ( 1. by algorithm  2. by condition  3. by push  4. by Jong-max )\n");
 		scanf_s("%d", &methods);
 		
 		if (methods == 3)
@@ -495,7 +495,8 @@ int diagonal_check_make_four(int arr[][7], int x, int y, int who)		//check wheth
 }
 
 // - > 2017/05/03 16:30 by JeongIn 
-// check 5 stone
+// check 5 stone 
+/*
 int fiveStone(int arr[][7], int x, int y, int who) {
 
 	bool check = false;
@@ -559,7 +560,8 @@ int fiveStone(int arr[][7], int x, int y, int who) {
 	}
 
 	return 0;
-}
+} 
+*/
 // < - 2017/05/03 16:30 by JeongIn
 
 
@@ -2503,11 +2505,11 @@ int wSpot(int board[][7], int x, int turn)
 			if (check[i][j] == 0)
 			{
 				check[i][j] = (turn % 2);
-				if ((winCheck(board) != 0) && i < 5)
+				if ((winCheck(check) != 0) && i < 5)
 				{
 					check[i][j] = (turn % 2) + 1;
 					check[i + 1][j] = (turn % 2);
-					if (winCheck(board) != 0)
+					if (winCheck(check) != 0)
 						atomResult += 3777;
 					check[i + 1][j] = 0;
 				}
@@ -2523,19 +2525,34 @@ int wSpot(int board[][7], int x, int turn)
 			if (check[i][j] == 0)
 			{
 				check[i][j] = (turn % 2) + 1;
-				if ((winCheck(board) != 0) && i < 5)
+				if ((winCheck(check) != 0) && i < 5)
 				{
 					check[i][j] = (turn % 2);
 					check[i + 1][j] = (turn % 2) + 1;
-					if (winCheck(board) != 0)
-						atomResult -= 3691;
+					if (winCheck(check) != 0)
+						atomResult -= 3891;
 					check[i + 1][j] = 0;
 				}
 				check[i][j] = 0;
 			}
 		}
 	}//상대방이 놓으면 이기는 자리를 막아도 AI가 지는 경우
-
+/*
+	for (j = 0; j < 7; j++)
+	{
+		for (i = 5; i >= 0; i--)
+		{
+			if (check[i][j] == 0)
+			{
+				check[i][j] = (turn % 2);
+				check[i + 1][j] = turn % 2 + 1;
+				if ((winCheck(check) != 0))
+					atomResult -= 3756;
+				check[i + 1][j] = 0;
+				check[i][j] = 0;
+			}
+		}
+	}*/
 	if (atomResult != 0)
 		return atomResult;//when 33
 	return 31 * spot;
@@ -2591,19 +2608,19 @@ int stopping(int board[][7], int x, int turn)
 	for (i = 0; i < 6; i++)
 	{
 		if ((board[i][0] == yourTurn) && (board[i][1] == yourTurn) && (board[i][2] == myTurn))
-			hValue = hValue + 2;
+			hValue = hValue + 3;
 		if ((board[i][1] == yourTurn) && (board[i][2] == yourTurn) && (board[i][3] == myTurn))
-			hValue = hValue + 2;
+			hValue = hValue + 3;
 		if ((board[i][1] == yourTurn) && (board[i][2] == yourTurn) && (board[i][0] == myTurn))
 			hValue = hValue + 1;
 		if ((board[i][3] == yourTurn) && (board[i][4] == yourTurn) && ((board[i][2] == myTurn) || (board[i][5] == myTurn)))
-			hValue = hValue + 2;
+			hValue = hValue + 3;
 		if ((board[i][5] == yourTurn) && (board[i][6] == yourTurn) && (board[i][4] == myTurn))
-			hValue = hValue + 2;
+			hValue = hValue + 3;
 		if ((board[i][4] == yourTurn) && (board[i][5] == yourTurn) && (board[i][6] == myTurn))
 			hValue = hValue + 1;
 		if ((board[i][4] == yourTurn) && (board[i][5] == yourTurn) && (board[i][3] == myTurn))
-			hValue = hValue + 2;
+			hValue = hValue + 3;
 	}//row 3 defense
 
 	for (j = 0; j < 7; j++)
@@ -2618,19 +2635,19 @@ int stopping(int board[][7], int x, int turn)
 	for (j = 0; j < 5; j++)
 	{
 		if ((board[0][j] == yourTurn || board[0][j] == 0) && (board[1][j + 1] == yourTurn) && (board[2][j + 2] == myTurn))
-			hValue = hValue + 2;
+			hValue = hValue + 3;
 		if ((board[0][j + 2] == yourTurn || board[0][j + 2] == 0) && (board[1][j + 1] == yourTurn) && (board[2][j] == myTurn))
-			hValue = hValue + 2;
+			hValue = hValue + 3;
 		if (j != 4)
 		{
 			if ((board[0][j] == myTurn) && (board[1][j + 1] == yourTurn) && (board[2][j + 2] == yourTurn) && (board[3][j + 3] == myTurn))
-				hValue = hValue + 2;
+				hValue = hValue + 3;
 			if ((board[0][j + 3] == myTurn) && (board[1][j + 2] == yourTurn) && (board[2][j + 1] == yourTurn) && (board[3][j] == myTurn))
-				hValue = hValue + 2;
+				hValue = hValue + 3;
 		}//cross
 	}
 
-	return 5 * hValue;
+	return 7 * hValue;
 }
 
 int lookFront(int board[][7], int turn, int depth)
